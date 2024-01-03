@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+    <div class=" ">
+        <div class="">
+            <div class="flex items-right mx-auto">
+                <ul class="hidden md:flex md:flex-row list-none md:ml-auto my-5 mx-16">
+                    <li class="text-2xl mr-8 flex flex-row">
+                        <a routerLink=""><i class="text-[#446393] fa-solid fa-phone"></i>
+                            <span class="text-lg ml-1">+0909090909</span>
+                    </a>
+                    </li>
+                    <li class="text-2xl ml-3">
+                        <a routerLink=""><i class="text-[#ffc05c] fa-solid fa-envelope"></i></a>
+                    </li>
+                    <li class="text-2xl ml-3">
+                        <a routerLink=""><i class="text-[#4b8bf5] fa-brands fa-facebook"></i></a>
+                    </li>
+                    <li class="text-2xl ml-3">
+                        <a routerLink=""><i class="text-[#ff0000] fa-brands fa-youtube"></i></a>
+                    </li>
+                    <li class="text-2xl ml-3">
+                        <a routerLink=""><i class="text-[#64e8ff] fa-brands fa-twitter"></i></a>
+                    </li>
+                </ul>
+                
+            </div>
+            
+        </div>
+    </div>
+    <nav class=" bg-gradient-to-r from-blue-300 to-cyan-200 ...">
+        <div class="">
+            <div class="lg:hidden block grid grid-cols-4">
+                <a class="col-span-2 text-xl font-bold" routerLink="/home">
+                    <img class="h-24 ml-20" src="../../../assets/images/Logo2.png" alt="Excell-on" />
+                </a>
+                <button class="col-span-2 justify-end" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="fa-solid fa-list"></i>
+                    </span>
+                </button>
+            </div>
+
+            <div class="hidden lg:flex lg:items-center lg:w-auto lg:mx-auto" id="navbarSupportedContent">
+                <a class="lg:ml-16 text-center my-1" routerLink="/home">
+                    <img class="h-16 img-logo" src="../../../assets/images/Logo2.png" alt="Excell-on" />
+                </a>
+                <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
+                    <li class="nav-item mx-3 p-2">
+                        <a class="nav-link active uppercase" aria-current="page" routerLink="/home">Home</a>
+                    </li>
+                    <li class="nav-item mx-3 p-2">
+                        <a class="nav-link uppercase  hover:text-blue-500 " routerLink="/services">Services</a>
+                    </li>
+                    <li class="nav-item mx-3 p-2">
+                        <a class="nav-link uppercase hover:text-blue-500 " routerLink="#">Order</a>
+                    </li>
+                    <li class="nav-item mx-3 p-2">
+                        <a class="nav-link uppercase hover:text-blue-500 " routerLink="/profile">Information</a>
+                    </li>
+
+                    <li class="nav-item group mx-3 p-2">
+                        <a class="nav-link uppercase hover:text-blue-500 " role="button">
+                            Payment
+                        </a>
+                        <ul class="hidden group-hover:block absolute z-10 bg-white text-gray-700">
+                            <li><a class="block px-4 py-2" routerLink="/payment">Payment</a></li>
+                            <li><a class="block px-4 py-2" routerLink="/paymentHistory">Payment history</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-3 p-2">
+                        <a class="nav-link uppercase hover:text-blue-500" routerLink="/reports">Reports</a>
+                    </li>
+                    <li class="nav-item mx-3 p-2">
+                        <a class="nav-link uppercase hover:text-blue-500" routerLink="/about">About</a>
+                    </li>
+                    <li class="nav-item md:mr-3 lg:mr-14">
+                        <a class="nav-link uppercase hover:text-blue-500" routerLink="/login">
+                            <img src="../../../../assets/images/avatar.png" width="32px" height="32px" alt="">
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</body>
+
+</html>

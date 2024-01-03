@@ -1,0 +1,36 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.img-hero {
+  margin: 0px;
+}
+.bg-holder {
+  background-image: url("../../../../assets/images/hero-bg.png");
+  background-size: contain;
+  background-repeat: repeat-x;
+  min-height: 90vh;
+  max-height: max-content;
+}
+.button-event {
+  width: 300px;
+}
+.text-event {
+  position: relative;
+  padding-bottom: 25px;
+  margin-top: 50px;
+}
+.text-event:after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-block;
+  width: 120px;
+  border-bottom: #2884da solid 4px;
+  border-radius: 50px;
+}

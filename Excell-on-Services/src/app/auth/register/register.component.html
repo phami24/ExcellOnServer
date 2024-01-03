@@ -1,0 +1,91 @@
+<!-- <div class="container mx-auto min-h-[100vh] bg-[url('/assets/images/bgr2.png')] bg-cover bg-no-repeat">
+    <div class="flex justify-center mx-auto min-h-[100vh] bg-[url('/assets/images/bgr3.png')] bg-cover bg-no-repeat">
+        <div
+            class="w-2/3 my-20 rounded-[25px] min-h-[400px] bg-[url('/assets/images/servicesBg.png')] bg-cover bg-no-repeat">
+            <div class="grid grid-cols-12 leading-loose">
+
+                <div class="col-span-5 h-[73vh] pt-4 md:block bg-[#cfdcfb] rounded-r-[25px]">
+                    <a routerLink="/home" class="flex ml-5 text-2xl text-[#4476bd]"><i class="fa-solid fa-house"></i></a>
+                    <div class="text-center pt-16 grid grid-cols-12">
+                        <h2 class="col-span-12 text-3xl">Sign up</h2>
+                        <p class="col-span-12">If you don't have an account, please register for a new account
+                            here.</p>
+                        <button routerLink="/register" type="button"
+                            class="col-span-12 bg-blue-500 text-white mx-2 py-2 rounded-full text-center">Register
+                            Now!</button>
+                    </div>
+                </div>
+
+                <div class="col-span-7 p-4 ">
+                    <h1 class="text-3xl text-center">Register</h1>
+                    <p class="text-gray-500">Register your account!</p>
+                    <div class="mb-3">
+                        <div class="flex items-center border-b border-blue-200 py-2">
+                            <span class="mr-3"><i class="fas fa-user"></i></span>
+                            <input type="text"
+                                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex items-center border-b border-blue-200 py-2">
+                            <span class="mr-3"><i class="fas fa-lock"></i></span>
+                            <input type="password"
+                                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12">
+                        <div class="col-span-12 bg-blue-500 text-white px-4 py-2 rounded-full text-center mr-2">
+                            <button type="button" class="">Register</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<form [formGroup]="registerform" (ngSubmit)="Proceedregister()">
+    <mat-card>
+        <mat-card-header>
+            <h1>User Registeration</h1>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input formControlName="firstName" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Last name</mat-label>
+                <input formControlName="lastName" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input formControlName="email" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Phone</mat-label>
+                <input formControlName="password" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput>
+            </mat-form-field>
+          </mat-card-content> 
+
+    </mat-card>
+</form>
+
+
