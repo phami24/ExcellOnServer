@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .text-event {
   position: relative;
   color: #0d3051;

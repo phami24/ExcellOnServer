@@ -26,6 +26,7 @@ import { AppEffects } from './auths/store/Common/App.Effects';
 import { CustomerEffects } from './auths/store/Customer/Customer.Effects';
 import { UserEffect } from './auth/user/user.effects';
 import { AuthsModule } from './auths/auths.module';
+import { SidebarComponent } from './admin/shared/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { AuthsModule } from './auths/auths.module';
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    SidebarComponent,
     LoginComponent,
     RegisterComponent,
     HomeComponent,

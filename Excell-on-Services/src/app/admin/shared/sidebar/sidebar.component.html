@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+</head>
+
+<body>
+    <div class="grid grid-cols-12">
+        <nav class="col-span-2">
+            <div class="grid grid-cols-12">
+                <div class="col-span-3">
+                    <div class="sm:hidden max-w-7xl px-2 sm:px-6 min-h-screen h-full">
+                        <div class="relative flex h-16 items-center justify-between">
+                            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                                <!-- Mobile menu button-->
+                                <button type="button"
+                                    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                    aria-controls="mobile-menu" aria-expanded="false">
+                                    <span class="absolute -inset-0.5"></span>
+                                    <span class="sr-only">Open main menu</span>
+                                    <i class="fa-solid fa-list"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden sm:block bg-gray-800 w-fit m-0 min-h-screen h-full">
+                        <div class="space-y-1 px-2 pb-3 pt-2">
+                            <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                                aria-current="page">Dashboard</a>
+                            <a href="#"
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
+                            <a href="#"
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
+                            <a href="#"
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class=" block col-span-9">
+                    <div class="bg-sky-700">dfghjm</div>
+                </div>
+            </div>
+        </nav>
+        <div class="col-span-10">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</body>
+
+</html>

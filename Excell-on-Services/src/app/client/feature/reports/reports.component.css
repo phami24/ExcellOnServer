@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .text-event {
   position: relative;
   color: #0d3051;
@@ -15,6 +19,4 @@
   border-bottom: #2884da solid 4px;
   border-radius: 50px;
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
