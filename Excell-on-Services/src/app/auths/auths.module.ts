@@ -36,6 +36,7 @@ import { AppRoutingModule } from '../app-routing.module';
     RegisterComponent
   ],
   imports: [
+    HttpClientModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

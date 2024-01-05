@@ -10,6 +10,7 @@ import { PaymentHistoryComponent } from './client/feature/payment-history/paymen
 import { MainComponent } from './admin/feature/main/main.component';
 import { LoginComponent } from './auths/components/login/login.component';
 import { RegisterComponent } from './auths/components/register/register.component';
+import { CustomerManagementComponent } from './admin/feature/customer-management/customer-management.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,11 @@ const routes: Routes = [
   {
     path: 'admin', 
     component: MainComponent, 
+    data: {title: 'Ad page'}     
+  },
+  {
+    path: 'customer', 
+    component: CustomerManagementComponent, 
     data: {title: 'Ad page'}     
   },
   // {

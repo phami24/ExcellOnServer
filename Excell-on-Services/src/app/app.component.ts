@@ -16,4 +16,10 @@ export class AppComponent {
   isRegisterPage(): boolean {
     return this.router.url.includes('/register');
   }
+  isAdminPage(): boolean {
+    return this.router.url.includes('/admin');
+  }
+  isCustomerPage(): boolean {
+    return this.router.url.includes('/customer');
+  }
 }

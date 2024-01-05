@@ -1,54 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
-</head>
+<div class="sidebar">
+    <a  routerLink="/admin" class="logo">
+        <img class="mx-12 my-3" src="../../../../assets/images/Logo3.png" width="124px" alt="">
+    </a>
+    <ul class="side-menu">
+        <li><a  routerLink="/admin"><i class='bx bxs-dashboard fa-gauge fa-solid'></i>Dashboard</a></li>
+        <li><a  routerLink="/customerManagement"><i class='bx bx-store-alt fa-solid fa-bars-progress'></i>Service </a></li>
+        <li class="active"><a  routerLink="/customerManagement"><img class="mx-2" src="../../../../assets/images/hierarchy.png" width="25px" alt="">Department </a></li>
+        <li><a  routerLink="/customerManagement"><img class="mx-2" src="../../../../assets/images/resources.png" width="27px" alt="">HR </a></li>
+        <li><a routerLink="/customer"><img class="mx-2" src="../../../../assets/images/satisfaction.png" width="24px" alt="">Customer </a></li>
+        <li><a  routerLink="/customerManagement"><img class="mx-2" src="../../../../assets/images/credit-card.png" width="24px" alt="">Payment </a></li>
+        <li><a  routerLink="/customerManagement"><img class="mx-2" src="../../../../assets/images/profit-report.png" width="24px" alt="">Report and Statistics</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a  routerLink="/customerManagement" class="logout ml-1">
+                <i class="bx fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
+    </ul>
+</div>
 
-<body>
-    <div class="grid grid-cols-12">
-        <nav class="col-span-2">
-            <div class="grid grid-cols-12">
-                <div class="col-span-3">
-                    <div class="sm:hidden max-w-7xl px-2 sm:px-6 min-h-screen h-full">
-                        <div class="relative flex h-16 items-center justify-between">
-                            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                                <!-- Mobile menu button-->
-                                <button type="button"
-                                    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                                    aria-controls="mobile-menu" aria-expanded="false">
-                                    <span class="absolute -inset-0.5"></span>
-                                    <span class="sr-only">Open main menu</span>
-                                    <i class="fa-solid fa-list"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hidden sm:block bg-gray-800 w-fit m-0 min-h-screen h-full">
-                        <div class="space-y-1 px-2 pb-3 pt-2">
-                            <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                                aria-current="page">Dashboard</a>
-                            <a href="#"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
-                            <a href="#"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-                            <a href="#"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
-                        </div>
-                    </div>
-                </div>
-                <div class=" block col-span-9">
-                    <div class="bg-sky-700">dfghjm</div>
-                </div>
-            </div>
-        </nav>
-        <div class="col-span-10">
-            <router-outlet></router-outlet>
-        </div>
-    </div>
-</body>
-
-</html>
+<div class="">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+</div>
