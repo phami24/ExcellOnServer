@@ -17,11 +17,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
-  {
-    path: 'auth',
-    loadChildren: () =>
-      import('./auths/auths.module').then((m) => m.AuthsModule),
-  },
+  // {
+  //   path: 'auth',
+  //   loadChildren: () =>
+  //     import('./auth/auth.module').then((m) => m.AuthModule),
+  // },
 ];
 
 @NgModule({
