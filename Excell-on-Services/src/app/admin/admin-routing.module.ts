@@ -1,35 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './feature/main/main.component';
+import { CustomerManagementComponent } from './feature/customer-management/customer-management.component';
 
 
 
 const routes: Routes = [
   {
-    path:'', 
-    redirectTo:'/main', 
-    pathMatch: 'full'  
+    path: '',
+    children: [
+      {
+        path: 'main',
+        component: MainComponent,
+        data: { title: 'Main' },
+      },
+      {
+        path: 'customer',
+        component: CustomerManagementComponent,
+        data: { title: 'Customer management' },
+      },
+    ],
   },
-  {
-    path: 'main', 
-    component: MainComponent ,
-    data: {title: 'Main page'}    
-  },
-  // {
-  //   path: 'main', 
-  //   component: StaffComponent ,
-  //   data: {title: 'Main page'}    
-  // },
-  // {
-  //   path: 'main', 
-  //   component: ClientsComponent ,
-  //   data: {title: 'Main page'}    
-  // },
+
   
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class AdminRoutingModule { }

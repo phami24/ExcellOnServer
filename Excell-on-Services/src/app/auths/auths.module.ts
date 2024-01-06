@@ -23,6 +23,7 @@ import { CustomerEffects } from './store/Customer/Customer.Effects';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
+import { AuthsRoutingModule } from './auths-routing.module';
 
 
 
@@ -36,6 +37,7 @@ import { AppRoutingModule } from '../app-routing.module';
     RegisterComponent
   ],
   imports: [
+    AuthsRoutingModule,
     HttpClientModule,
     AppRoutingModule,
     HttpClientModule,

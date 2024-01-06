@@ -5,13 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './client/shared/header/header.component';
-import { FooterComponent } from './client/shared/footer/footer.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './client/feature/home/home.component';
-import { AboutComponent } from './client/feature/about/about.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -26,22 +22,16 @@ import { AppEffects } from './auths/store/Common/App.Effects';
 import { CustomerEffects } from './auths/store/Customer/Customer.Effects';
 import { UserEffect } from './auth/user/user.effects';
 import { AuthsModule } from './auths/auths.module';
-import { SidebarComponent } from './admin/shared/sidebar/sidebar.component';
-import { NavbarComponent } from './admin/shared/navbar/navbar.component';
+import { AdminModule } from './admin/admin.module';
+import { ClientModule } from './client/client.module';
 
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent,
-    NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
-    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +45,10 @@ import { NavbarComponent } from './admin/shared/navbar/navbar.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
 
+    
     AuthsModule,
+    AdminModule,
+    ClientModule,
    
   ],
   providers: [],

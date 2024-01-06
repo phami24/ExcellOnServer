@@ -1,92 +1,31 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './client/feature/home/home.component';
-import { ServicesPricingComponent } from './client/feature/services-pricing/services-pricing.component';
-import { AboutComponent } from './client/feature/about/about.component';
-import { PaymentsComponent } from './client/feature/payments/payments.component';
-import { ReportsComponent } from './client/feature/reports/reports.component';
-import { ProfileComponent } from './client/feature/profile/profile.component';
-import { PaymentHistoryComponent } from './client/feature/payment-history/payment-history.component';
-import { MainComponent } from './admin/feature/main/main.component';
-import { LoginComponent } from './auths/components/login/login.component';
-import { RegisterComponent } from './auths/components/register/register.component';
-import { CustomerManagementComponent } from './admin/feature/customer-management/customer-management.component';
 
 const routes: Routes = [
   {
-    path:'', 
-    redirectTo:'/home', 
-    pathMatch: 'full'  
+    path: '',
+    redirectTo: '/client',
+    pathMatch: 'full',
   },
   {
-    path: 'home', 
-    component: HomeComponent ,
-    data: {title: 'Home page'}    
+    path: 'client',
+    loadChildren: () =>
+      import('./client/client.module').then((m) => m.ClientModule),
   },
   {
-    path: 'login', 
-    component: LoginComponent ,
-    data: {title: 'Login'}    
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
-    path: 'register', 
-    component: RegisterComponent ,
-    data: {title: 'Register'}    
+    path: 'auth',
+    loadChildren: () =>
+      import('./auths/auths.module').then((m) => m.AuthsModule),
   },
-  {
-    path: 'services', 
-    component: ServicesPricingComponent , 
-    data: {title: 'Service-Pricing page'}    
-  },
-  {
-    path: 'about', 
-    component: AboutComponent , 
-    data: {title: 'About page'}     
-  },
-  {
-    path: 'payment', 
-    component: PaymentsComponent, 
-    data: {title: 'Payment page'}     
-  },
-  {
-    path: 'paymentHistory', 
-    component: PaymentHistoryComponent, 
-    data: {title: 'Pay History page'}    
-  },
-  {
-    path: 'reports', 
-    component: ReportsComponent, 
-    data: {title: 'Reports page'}    
-  },
-  {
-    path: 'profile', 
-    component: ProfileComponent, 
-    data: {title: 'Profile page'}     
-  },
-  {
-    path: 'admin', 
-    component: MainComponent, 
-    data: {title: 'Ad page'}     
-  },
-  {
-    path: 'customer', 
-    component: CustomerManagementComponent, 
-    data: {title: 'Ad page'}     
-  },
-  // {
-  //   path: 'admin',
-  //   children: [
-  //     {
-  //       path: 'admin',
-  //       loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
-  //     },
-      
-  //   ]
-  // }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

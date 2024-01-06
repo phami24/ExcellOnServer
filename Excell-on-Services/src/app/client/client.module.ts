@@ -12,6 +12,7 @@ import { ServicesPricingComponent } from './feature/services-pricing/services-pr
 import { PaymentsComponent } from './feature/payments/payments.component';
 import { PaymentHistoryComponent } from './feature/payment-history/payment-history.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClientRoutingModule } from './client-routing.module';
 
 
 
@@ -32,11 +33,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     HttpClientModule,
+    ClientRoutingModule,
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [
-    HomeComponent
-  ],
+  exports:[
+    HeaderComponent,
+    FooterComponent,
+  ]
 })
 export class ClientModule { }
