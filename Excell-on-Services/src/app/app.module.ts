@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { CommonModule } from '@angular/common';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,10 +12,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AdminModule } from './admin/admin.module';
 import { ClientModule } from './client/client.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [
+    AppComponent, 
+  ],
   imports: [
     BrowserModule,
     CommonModule,
@@ -28,6 +29,7 @@ import { ClientModule } from './client/client.module';
 
     AdminModule,
     ClientModule,
+    AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

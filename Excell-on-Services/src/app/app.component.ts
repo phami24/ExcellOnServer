@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,18 +8,18 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Excell-on';
-  constructor(private router: Router) {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
-  isLoginPage(): boolean {
-    return this.router.url.includes('/login');
-  }
-  isRegisterPage(): boolean {
-    return this.router.url.includes('/register');
-  }
   isAdminPage(): boolean {
-    return this.router.url.includes('/admin');
+    return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'admin';
   }
-  isCustomerPage(): boolean {
-    return this.router.url.includes('/customer');
+
+  isLoginPage(): boolean {    
+    return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'auth';
   }
+
+  // isRegisterPage(): boolean {    
+  //   return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'register';
+  // }
+  
 }

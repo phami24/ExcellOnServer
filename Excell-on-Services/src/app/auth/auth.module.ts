@@ -1,5 +1,4 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
@@ -10,9 +9,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { HomeComponent } from '../client/feature/home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { AuthRoutingModule } from './auth-routing.module';
 
 
 @NgModule({
@@ -20,19 +19,18 @@ import { LoginComponent } from './login/login.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
   ],
   imports: [
-    BrowserModule,
+    AuthRoutingModule,
     CommonModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([]),
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatSnackBarModule,
+    // StoreModule.forRoot({}, {}),
+    // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    // StoreRouterConnectingModule.forRoot(),
+    // EffectsModule.forRoot([]),
+    // ReactiveFormsModule,
+    // BrowserAnimationsModule,
+    // MatSnackBarModule,
     
   ],
   providers: [],

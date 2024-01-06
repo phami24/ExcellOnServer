@@ -7,7 +7,7 @@ import { CustomerManagementComponent } from './feature/customer-management/custo
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'admin',
     children: [
       {
         path: 'main',
