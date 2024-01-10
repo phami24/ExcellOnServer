@@ -1,30 +1,41 @@
 <div class="container mx-auto min-h-[100vh] bg-[url('/assets/images/bgr2.png')] bg-cover bg-no-repeat">
+    <form (submit)="submit()" [formGroup]="loginForm">
     <div class="flex justify-center mx-auto min-h-[100vh] bg-[url('/assets/images/bgr3.png')] bg-cover bg-no-repeat">
         <div
             class="w-2/3 my-20 rounded-[25px] min-h-[400px] bg-[url('/assets/images/servicesBg.png')] bg-cover bg-no-repeat">
             <div class="grid grid-cols-12 leading-loose">
+               
                 <div class="col-span-7 p-4 ">
                     <h1 class="text-3xl text-center">Login</h1>
                     <p class="text-gray-500">Sign In to your account</p>
-                    <div class="mb-3">
-                        <div class="flex items-center border-b border-blue-200 py-2">
-                            <span class="mr-3"><i class="fas fa-user"></i></span>
-                            <input type="text"
-                                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                placeholder="Username">
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <div class="flex items-center border-b border-blue-200 py-2">
-                            <span class="mr-3"><i class="fas fa-lock"></i></span>
-                            <input type="password"
-                                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                placeholder="Password">
-                        </div>
+                    <div class="login-form">
+                        
+                            <div class="mb-3 form-group">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <input type="text" id="username"
+                                        class="form-control appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Enter email" formControlName="email">
+                                </div>
+                            </div>
+                            <div class="mb-4 form-group">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-lock"></i></span>
+                                    <input type="password" id="password"
+                                        class="form-control appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Password" formControlName="password">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="spinner-border" role="status" *ngIf="loading$ | async">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        
                     </div>
                     <div class="grid grid-cols-12">
                         <div class="col-span-6 bg-blue-500 text-white px-4 py-2 rounded-full text-center mr-2">
-                            <button type="button" class="">Login</button>
+                            <button type="submit" [disabled]="loading$ | async" >Login</button>
                         </div>
                         <div class="col-span-6 bg-transparent text-right">
                             <button type="button" class="">Forgot password?</button>
@@ -32,12 +43,13 @@
                     </div>
                 </div>
                 <div class="col-span-5 h-[73vh] pt-4 md:block bg-[#cfdcfb] rounded-r-[25px]">
-                    <a routerLink="/home" class="flex justify-end mr-5 text-2xl text-[#4476bd]"><i class="fa-solid fa-house"></i></a>
+                    <a routerLink="/home" class="flex justify-end mr-5 text-2xl text-[#4476bd]"><i
+                            class="fa-solid fa-house"></i></a>
                     <div class="text-center pt-16 grid grid-cols-12">
                         <h2 class="col-span-12 text-3xl">Sign up</h2>
                         <p class="col-span-12">If you don't have an account, please register for a new account
                             here.</p>
-                        <button routerLink="/register" type="button"
+                        <button routerLink="/auth/register" type="button"
                             class="col-span-12 bg-blue-500 text-white mx-2 py-2 rounded-full text-center">Register
                             Now!</button>
                     </div>
@@ -45,4 +57,33 @@
             </div>
         </div>
     </div>
+    </form>
 </div>
+
+
+<!-- <h3 class="text-center">Login Page</h3>
+<div class="alert alert-danger" *ngIf="error$ | async">
+    Login fail
+</div>
+<div class="alert alert-success" *ngIf="success$ | async">
+    Login success
+</div>
+<div class="login-form">
+    <form (submit)="submit()" [formGroup]="loginForm">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" placeholder="Enter email" formControlName="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+        </div>
+        <div class="text-center">
+            <div class="spinner-border" role="status" *ngIf="loading$ | async">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <button type="submit" class="bg-blue-500" [disabled]="loading$ | async">Login</button>
+
+    </form>
+</div> -->

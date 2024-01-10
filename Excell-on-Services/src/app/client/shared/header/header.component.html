@@ -15,7 +15,7 @@
                     <li class="text-2xl mr-8 flex flex-row">
                         <a routerLink=""><i class="text-[#446393] fa-solid fa-phone"></i>
                             <span class="text-lg ml-1">+0909090909</span>
-                    </a>
+                        </a>
                     </li>
                     <li class="text-2xl ml-3">
                         <a routerLink=""><i class="text-[#ffc05c] fa-solid fa-envelope"></i></a>
@@ -30,9 +30,9 @@
                         <a routerLink=""><i class="text-[#64e8ff] fa-brands fa-twitter"></i></a>
                     </li>
                 </ul>
-                
+
             </div>
-            
+
         </div>
     </div>
     <nav class=" bg-gradient-to-r from-blue-300 to-cyan-200 ...">
@@ -65,29 +65,48 @@
                         <a class="nav-link uppercase hover:text-blue-500 " routerLink="#">Order</a>
                     </li>
                     <li class="nav-item mx-3 p-2">
-                        <a class="nav-link uppercase hover:text-blue-500 " routerLink="/profile">Information</a>
-                    </li>
-
-                    <li class="nav-item group mx-3 p-2">
-                        <a class="nav-link uppercase hover:text-blue-500 " role="button">
-                            Payment
-                        </a>
-                        <ul class="hidden group-hover:block absolute z-10 bg-white text-gray-700">
-                            <li><a class="block px-4 py-2" routerLink="/payment">Payment</a></li>
-                            <li><a class="block px-4 py-2" routerLink="/paymentHistory">Payment history</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item mx-3 p-2">
-                        <a class="nav-link uppercase hover:text-blue-500" routerLink="/reports">Reports</a>
-                    </li>
-                    <li class="nav-item mx-3 p-2">
                         <a class="nav-link uppercase hover:text-blue-500" routerLink="/about">About</a>
                     </li>
-                    <li class="nav-item md:mr-3 lg:mr-14">
-                        <a class="nav-link uppercase hover:text-blue-500" routerLink="/auth/login">
-                            <img src="../../../../assets/images/avatar.png" width="32px" height="32px" alt="">
-                        </a>
+
+
+                    <li *ngIf="isLoggedOut; else loggedIn">
+                        <div class="nav-item md:mr-3 lg:mr-14 p-2">
+                            <a class=" nav-link uppercase hover:text-blue-900" routerLink="/auth/login">
+                                Login
+                            </a>
+                            |
+                            <a class=" nav-link uppercase hover:text-blue-900" routerLink="/auth/register">
+                                Register
+                            </a>
+                        </div>
                     </li>
+
+                    <ng-template #loggedIn>
+
+                        <!-- <div>Welcome, {{ userEmail$ | async }}! <button (click)="logout()">Logout</button></div> -->
+                        <li class="nav-item group mx-3 p-2">
+                            <a class="nav-link uppercase hover:text-blue-500 " role="button">
+                                Payment
+                            </a>
+                            <ul class="hidden group-hover:block absolute z-10 bg-white text-gray-700">
+                                <li><a class="block px-4 py-2" routerLink="/payment">Payment</a></li>
+                                <li><a class="block px-4 py-2" routerLink="/paymentHistory">Payment history</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item mx-3 p-2">
+                            <a class="nav-link uppercase hover:text-blue-500" routerLink="/reports">Reports</a>
+                        </li>
+                        <li class="nav-item group mx-3 md:mr-3 lg:mr-14">
+                            <a class="nav-link uppercase hover:text-blue-500 " role="button">
+                                <img src="../../../../assets/images/avatar.png" width="32px" height="32px" alt="">
+                            </a>
+                            <ul class="hidden group-hover:block absolute z-10 bg-white text-gray-700">
+                                <li><a class="block px-4 py-2" routerLink="/profile">Profile</a></li>
+                                <li><button class="block px-4 py-2" (click)="logout()">Logout</button></li>
+                            </ul>
+                        </li>
+
+                    </ng-template>
 
                 </ul>
             </div>

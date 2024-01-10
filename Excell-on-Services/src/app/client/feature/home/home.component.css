@@ -7,12 +7,13 @@
 
 .img-hero {
   margin: 0px;
+  width: 800px;
 }
 .bg-holder {
   background-image: url("../../../../assets/images/hero-bg.png");
   background-size: contain;
   background-repeat: repeat-x;
-  min-height: 90vh;
+  min-height: 80vh;
   max-height: max-content;
 }
 .button-event {

@@ -8,8 +8,8 @@
                         </h1>
                         <p class="mx-1 text-3xl">Helps organizations develop innovative business and solutions <br
                                 class="d-none lg:d-block" />focused on defining, and optimizing clients.</p>
-                        <p class="text-center my-5 text-white bg-[#46b9ef] rounded-full ... p-3 hover:bg-[#4e99f7]">
-                            <a class="btn btn-lg  " href="#" role="button">Read more</a>
+                        <p class="text-center my-5 text-white bg-[#93c7fd] rounded-full ... p-3 hover:bg-[#46b9ef]">
+                            <a class="btn btn-lg  " routerLink="/about" role="button">Read more</a>
                         </p>
                     </div>
 
@@ -17,28 +17,28 @@
             </div>
             <div class="hidden lg:flex lg:relative ">
                 <div class="flex ">
-                    <div class="order-2 order-none text-left text-left px-10 mt-10">
+                    <div class="order-2 order-none text-left text-left pl-14 mt-10">
                         <!-- <div *ngFor="let item of banner; let i = index">
                             <p>{{i}}</p>
                             <h1 class="mb-3 text-5xl font-bold leading-tight">{{ item.title }}
                             </h1>
                         </div> -->
-                        
+
                         <h1 class="mb-3 text-5xl font-bold leading-tight">Excell-on Consulting Services (ECS)
                         </h1>
                         <p class="mx-1 text-3xl">Helps organizations develop innovative business and solutions <br
                                 class="d-none lg:d-block" />focused on defining, and optimizing clients.</p>
                         <div class="flex mx-10 mt-5 space-x-8">
-                            <p class="text-white bg-[#46b9ef] rounded-full ... p-3 hover:bg-[#4e99f7]">
-                                <a class="btn btn-lg  " href="#" role="button">Read more</a>
+                            <p class="px-10 text-lg text-white bg-[#93c5fd] rounded-full ... p-2 hover:bg-[#4476bd]">
+                                <a class="btn btn-lg  " routerLink="/about" role="button">Read more</a>
                             </p>
-                            <p class="text-white bg-[#46b9ef] rounded-full ... p-3 hover:bg-[#4e99f7]">
-                                <a class="btn btn-link" href="#" role="button">Services</a>
+                            <p class="px-10 text-lg text-white bg-[#93c5fd] rounded-full ... p-2 hover:bg-[#4476bd]">
+                                <a class="btn btn-link" routerLink="/services" role="button">Services</a>
                             </p>
                         </div>
                     </div>
                     <div class="order-1 md:order-none text-center md:text-right">
-                        <img class="img-fluid img-hero" src="../../../assets/images/services.jpg" width="500" alt="" />
+                        <img class="img-fluid img-hero" src="../../../assets/images/services.png" width="500" alt="" />
                     </div>
                 </div>
             </div>
@@ -47,13 +47,14 @@
 
 
 
-    <section class=" pt-20" id="features">
+    <section class=" pt-3" id="features">
         <div class="bg-[url('/assets/images/bgr3.png')] bg-no-repeat bg-cover ">
             <div class="flex flex-row items-center">
-                <div class="basis-1/3 order-1 md:order-none text-center md:text-left md:mx-8 hidden sm:hidden md:hidden lg:block">
-                    <img class="img-fluid" src="../../../assets/images/banner.png" width="550" alt="" />
+                <div
+                    class="basis-1/3 order-1 md:order-none text-center md:text-left md:mx-3 hidden sm:hidden md:hidden lg:block">
+                    <img class="img-fluid" src="../../../assets/images/banner.png" width="900" alt="" />
                 </div>
-                <div class="basis-2/3 order-2 md:order-none px-5 md:mx-8">
+                <div class="basis-2/3 order-2 md:order-none pl-3 pr-5 md:mx-8">
                     <h3 class="text-center uppercase text-xl md:text-4xl font-bold leading-loose text-event">Services
                     </h3>
                     <p class="my-4 text-xl">Excel-on the various services that they offer to their clients,
@@ -104,7 +105,9 @@
             <div class="mx-auto max-w-7xl px-4 lg:px-6">
                 <dl class="grid grid-cols-12 gap-x-6 gap-y-12 text-center">
                     <div class="mx-auto flex max-w-xs flex-col gap-y-4 col-span-3">
-                        <i class="fa-solid fa-thumbs-up text-4xl text-[#4476bd]"></i>
+                        <div class="flex justify-center">
+                            <img class="" src="../../../../assets/images/talking.png" width="48" alt="">
+                        </div>
                         <div>
                             <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">100%
                             </dd>
@@ -114,7 +117,9 @@
                         </div>
                     </div>
                     <div class="mx-auto flex max-w-xs flex-col gap-y-4 col-span-3">
-                        <i class="fa-solid fa-calendar-days text-4xl text-[#f19959]"></i>
+                        <div class="flex justify-center">
+                            <img class="" src="../../../../assets/images/calendar.png" width="48" alt="">
+                        </div>
                         <div>
                             <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">8
                             </dd>
@@ -124,7 +129,9 @@
                         </div>
                     </div>
                     <div class="mx-auto flex max-w-xs flex-col gap-y-4 col-span-3">
-                        <i class="fa-solid fa-users text-4xl text-[#df584d]"></i>
+                        <div class="flex justify-center">
+                            <img class="" src="../../../../assets/images/customer-review.png" width="48" alt="">
+                        </div>
                         <div>
                             <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
                                 2000+
@@ -135,7 +142,9 @@
                         </div>
                     </div>
                     <div class="mx-auto flex max-w-xs flex-col gap-y-4 col-span-3">
-                        <i class="fa-solid fa-building text-4xl text-[#9dd49a]"></i>
+                        <div class="flex justify-center">
+                            <img class="" src="../../../../assets/images/participant.png" width="48" alt="">
+                        </div>
                         <div>
                             <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
                                 1000+
@@ -153,7 +162,7 @@
     <section class="py-0">
         <div class="">
             <div class="flex md:flex-row items-center">
-                <div class="md:w-4/12 px-14 text-center md:text-start md:offset-1">
+                <div class="md:w-4/12 px-14 ml-2 text-center md:text-start md:offset-1">
                     <h2 class="text-4xl font-bold leading-loose">
                         Call for Excell-on Consulting Services
                     </h2>
@@ -164,78 +173,121 @@
                     </div>
 
                 </div>
-                <div class="md:w-8/12 order-first md:order-none text-center md:text-start"><img class="w-full md:mb-4"
-                        src="../../../assets/images/servicesItem.png" alt="" />
+                <div class="md:w-8/12 order-first md:order-none mr-2 text-center md:text-start"><img
+                        class="w-full md:mb-4" src="../../../assets/images/servicesItem.png" alt="" />
                 </div>
             </div>
         </div>
     </section>
 
+
     <section class="mx-14">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3 text-center">
-            <div class="col">
-                <div class="card pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg">
-                    <div class="card-header bg-[#c0ddfe] py-3 rounded-lg">
-                        <h4 class="my-1 text-2xl">In-bound Services</h4>
+        <div class="grid grid-cols-12 gap-3 mb-3">
+            <div
+                class="col-span-6 lg:col-span-4 grid grid-cols content-between pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg h-80">
+                <div>
+                    <div class=" bg-[#c0ddfe] py-3 rounded-lg">
+                        <h4 class="my-1 text-2xl text-center">In-bound Services</h4>
                     </div>
-                    <div class="card-body">
-                        <h1 class="card-title text-[#444] pricing-card-title mt-3 font-bold text-xl">4500$<small
-                                class="text-body-secondary font-light">/day</small></h1>
-                        <ul class="list-none mt-3 mb-4">
-                            <li>10 users included</li>
-                            <li>2 GB of storage</li>
-                            <li>Email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <a href="#" class="w-full text-white bg-[#46b9ef] rounded-full ... p-2 hover:bg-[#4e99f7]">See
-                            more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg">
-                    <div class="card-header bg-[#c0ddfe] py-3 rounded-lg">
-                        <h3 class="my-1 text-2xl">Out-bound Services</h3>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title text-[#444] pricing-card-title mt-3 font-bold text-xl">6000$<small
-                                class="text-body-secondary font-light">/day</small></h1>
-                        <ul class="list-none mt-3 mb-4">
-                            <li>10 users included</li>
-                            <li>2 GB of storage</li>
-                            <li>Email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <a href="#" class="w-full text-white bg-[#46b9ef] rounded-full ... p-2 hover:bg-[#4e99f7]">See
-                            more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg">
-                    <div class="card-header bg-[#c0ddfe] py-3 rounded-lg">
-                        <h4 class="my-1 text-2xl">Tele Marketing Services</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title text-[#444] pricing-card-title mt-3 font-bold text-xl">5500$<small
-                                class="text-body-secondary font-light">/day</small></h1>
-                        <ul class="list-none mt-3 mb-4">
-                            <li>10 users included</li>
-                            <li>2 GB of storage</li>
-                            <li>Email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <div class="relative">
-                            <a href="#" class="text-white bg-[#46b9ef] rounded-full ... p-2 hover:bg-[#4e99f7]">See
-                                more</a>
-                        </div>
 
+                    <h1 class=" text-[#444] pricing-card-title mt-3 font-bold text-xl text-center">4500$<small
+                            class="text-body-secondary font-light">/day</small></h1>
+                    <ul class="list-disc px-5 mt-3 mb-4">
+                        <li>The In-bound service is a service in which one can only receive the calls from the
+                            customers.</li>
+                        <li>These call centers provide 24 hours service to all customers.</li>
+                    </ul>
+                </div>
+                <div class="grid grid-cols-12 divide-x-2 divide-blue-200 text-center">
+                    <div class="col-span-6">
+                        <a routerLink="/payment" class="font-medium text-base">
+                            Add to cart <i class="fa-solid fa-cart-plus text-sky-400 mx-2"></i>
+                        </a>
+                    </div>
+                    <div class="col-span-6">
+                        <a routerLink="" class="font-medium text-base flex justify-end bg-transparent  ... pr-10">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-
+            <div
+                class="col-span-6 lg:col-span-4 grid grid-cols content-between pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg h-80">
+                <div>
+                    <div class=" bg-[#c0ddfe] py-3 rounded-lg">
+                        <h3 class="my-1 text-2xl text-center">Out-bound Services</h3>
+                    </div>
+                    <h1 class="text-center text-[#444] pricing-card-title mt-3 font-bold text-xl">6000$<small
+                            class="text-body-secondary font-light">/day</small></h1>
+                    <ul class="list-disc px-5 mt-3 mb-4">
+                        <li>The Out-bound service is a service in which the employees of Excell-on call the
+                            customers for product promotions</li>
+                        <li>Outbound Call Centers depends on the technological solutions, extensive experience,
+                            quality assurance programs</li>
+                    </ul>
+                </div>
+                <div class="grid grid-cols-12 divide-x-2 divide-blue-200 text-center">
+                    <div class="col-span-6">
+                        <a routerLink="/payment" class="font-medium text-base">
+                            Add to cart <i class="fa-solid fa-cart-plus text-sky-400 mx-2"></i>
+                        </a>
+                    </div>
+                    <div class="col-span-6">
+                        <a routerLink="" class="font-medium text-base flex justify-end bg-transparent  ... pr-10">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="col-span-6 lg:col-span-4 grid grid-cols content-between pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg h-80">
+                <div>
+                    <div class=" bg-[#c0ddfe] py-3 rounded-lg">
+                        <h4 class="my-1 text-2xl text-center">Tele Marketing Services</h4>
+                    </div>
+                    <h1 class="text-[#444] pricing-card-title mt-3 font-bold text-xl text-center">5500$<small
+                            class="text-body-secondary font-light">/day</small></h1>
+                    <ul class="list-disc px-5 mt-3 mb-4">
+                        <li>The Tele Marketing service is a service which is purely for the promotion of marketing
+                            or sales of the products and services.</li>
+                    </ul>
+                </div>
+                <div class="grid grid-cols-12 divide-x-2 divide-blue-200 text-center">
+                    <div class="col-span-6">
+                        <a routerLink="/payment" class="font-medium text-base">
+                            Add to cart <i class="fa-solid fa-cart-plus text-sky-400 mx-2"></i>
+                        </a>
+                    </div>
+                    <div class="col-span-6">
+                        <a routerLink="" class="font-medium text-base flex justify-end bg-transparent  ... pr-10">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
+    </section>
+
+    <section class="mx-14 mt-10">
+        <h2 class="sm:text-3xl text-3xl font-medium title-font mb-4 text-gray-900 font-bold text-center">
+            Customers to cooperate with Excell-on Consulting Services
+        </h2>
+        <swiper-container class="mySwiper" space-between="0" loop="true" centered-slides="true" autoplay-delay="1000"
+            autoplay-disable-on-interaction="false" slides-per-view="6">
+            <swiper-slide *ngFor="let customer of customers">
+                <div class="wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="flex flex-col items-center text-center rounded p-4">
+                        <div class="flex-shrink-0 grayscale w-24">
+                            <img class="" [src]="customer.imageSrc" alt="{{ customer.altText }}">
+                        </div>
+                    </div>
+                </div>
+            </swiper-slide>
+        </swiper-container>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     </section>
 
     <section class=" relative bg-[url('/assets/images/ultimatebg.png')] bg-no-repeat bg-cover">
@@ -286,9 +338,11 @@
                             rows="3" placeholder="Enter some long form content."></textarea>
                     </label>
 
-                    <div class="">
-                        <a href="#"
-                            class="uppercase text-white bg-[#46b9ef] rounded-[20px] ... p-2 hover:bg-[#4e99f7]">Send</a>
+                    <div class="grid grid-cols-12">
+                        <button class="text-2xl col-span-6 bg-blue-300 rounded-full p-2 hover:text-white">
+                            Send
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
                     </div>
                 </div>
             </form>

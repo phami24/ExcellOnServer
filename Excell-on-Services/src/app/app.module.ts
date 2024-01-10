@@ -13,6 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './admin/admin.module';
 import { ClientModule } from './client/client.module';
 import { AuthModule } from './auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './State';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './Effects';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -30,6 +34,11 @@ import { AuthModule } from './auth/auth.module';
     AdminModule,
     ClientModule,
     AuthModule,
+
+
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot(AppEffects),
+
   ],
   providers: [],
   bootstrap: [AppComponent],
