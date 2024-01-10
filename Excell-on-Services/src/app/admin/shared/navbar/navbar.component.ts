@@ -1,4 +1,7 @@
-import { Component, ElementRef, Renderer2,  } from '@angular/core';
+import * as fromUser from '../../../store/user/admin.reducer';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Component, ElementRef, Renderer2,OnInit  } from '@angular/core';
 import Popper from 'popper.js';
 
 @Component({
@@ -6,9 +9,15 @@ import Popper from 'popper.js';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-  
+export class NavbarComponent implements OnInit {
+  userState$!: Observable<fromUser.IUserState | undefined>; 
+
+  constructor(private store: Store<fromUser.IUserState> ,private el: ElementRef, private renderer: Renderer2) {}
+
+  ngOnInit(): void {
+    this.userState$ = this.store.select(fromUser.selectUser);
+  }
+
   isSearchVisible: boolean = false;
   isNotificationVisible: boolean = false;
   isProfileVisible: boolean = false;

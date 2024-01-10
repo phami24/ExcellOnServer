@@ -16,4 +16,8 @@ export class ClientService {
   getBanner(): Observable<Banner[]> {
     return this.http.get<Banner[]>(baseUrl);
   }
+
+  onLogin(obj:any) : Observable<any>{
+    return this.http.post('https://localhost:7180/api/Auth/Login', obj);
+  }
 }
