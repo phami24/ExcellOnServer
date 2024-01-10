@@ -14,8 +14,15 @@
         <a href="#" class="notif">
             <i class="fa-solid fa-bell"></i>
         </a>
-        <a href="#" class="profile">
-            <img src="../../../../assets/images/avatar.png">
-        </a>
+        <div *ngIf="!(userState$ | async)?.isLoggedIn">
+            <a routerLink="/auth/adminlogin" class="profile">
+                <img src="../../../../assets/images/avatar.png">
+            </a>
+        </div>
+        <div *ngIf="(userState$ | async)?.isLoggedIn" class="user-info">
+            <a class="profile">
+                <span>{{ (userState$ | async)?.email }}</span>
+            </a>
+        </div>
     </nav>
 </div>

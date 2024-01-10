@@ -14,10 +14,12 @@
     </ul>
     <ul class="side-menu">
         <li>
-            <a  routerLink="admin/customer" class="logout ml-1">
+            <div>
+            <a (click)="confirmLogout()" class="logout ml-1">
                 <i class="bx fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
+        </div>
         </li>
     </ul>
 </div>
