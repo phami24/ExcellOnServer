@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~remixicon/fonts/remixicon.css';
+
 *,
 *::before,
 *::after {

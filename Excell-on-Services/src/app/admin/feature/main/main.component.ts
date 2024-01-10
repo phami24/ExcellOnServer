@@ -1,73 +1,88 @@
-import {Component} from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
-
-
+import { Component, AfterViewInit } from '@angular/core';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
-  standalone: true,
-  imports: [MatTabsModule],
 })
-export class MainComponent {
-  columnChartOptions = {
-    animationEnabled: true,
-    title: {
-      text: 'Angular Column Chart in Material UI Tabs',
-    },
-    data: [
-      {
-        // Change type to "doughnut", "line", "splineArea", etc.
-        type: 'column',
-        dataPoints: [
-          { label: 'apple', y: 10 },
-          { label: 'orange', y: 15 },
-          { label: 'banana', y: 25 },
-          { label: 'mango', y: 30 },
-          { label: 'grape', y: 28 },
-        ],
-      },
-    ],
-  };
+export class MainComponent implements AfterViewInit {
+  ngAfterViewInit() {
+    const chartElement = document.getElementById('order-chart') as HTMLCanvasElement;
 
-  pieChartOptions = {
-    animationEnabled: true,
-    title: {
-      text: 'Angular Pie Chart in Material UI Tabs',
-    },
-    theme: 'light2', // "light1", "dark1", "dark2"
-    data: [
-      {
-        type: 'pie',
-        dataPoints: [
-          { label: 'apple', y: 10 },
-          { label: 'orange', y: 15 },
-          { label: 'banana', y: 25 },
-          { label: 'mango', y: 30 },
-          { label: 'grape', y: 28 },
-        ],
-      },
-    ],
-  };
+    if (chartElement) {
+      const context = chartElement.getContext('2d');
 
-  lineChartOptions = {
-    animationEnabled: true,
-    title: {
-      text: 'Angular Line Chart in Material UI Tabs',
-    },
-    theme: 'light2', // "light1", "dark1", "dark2"
-    data: [
-      {
-        type: 'line',
-        dataPoints: [
-          { label: 'apple', y: 10 },
-          { label: 'orange', y: 15 },
-          { label: 'banana', y: 25 },
-          { label: 'mango', y: 30 },
-          { label: 'grape', y: 28 },
-        ],
-      },
-    ],
-  };
+      if (context) {
+        new Chart(context, {
+          type: 'line',
+          data: {
+            labels: this.generateNDays(7),
+            datasets: [
+              {
+                label: 'Active',
+                data: this.generateRandomData(7),
+                borderWidth: 1,
+                fill: true,
+                pointBackgroundColor: 'rgb(59, 130, 246)',
+                borderColor: 'rgb(59, 130, 246)',
+                backgroundColor: 'rgb(59 130 246 / .05)',
+                tension: 0.2,
+              },
+              {
+                label: 'Completed',
+                data: this.generateRandomData(7),
+                borderWidth: 1,
+                fill: true,
+                pointBackgroundColor: 'rgb(16, 185, 129)',
+                borderColor: 'rgb(16, 185, 129)',
+                backgroundColor: 'rgb(16 185 129 / .05)',
+                tension: 0.2,
+              },
+              {
+                label: 'Canceled',
+                data: this.generateRandomData(7),
+                borderWidth: 1,
+                fill: true,
+                pointBackgroundColor: 'rgb(244, 63, 94)',
+                borderColor: 'rgb(244, 63, 94)',
+                backgroundColor: 'rgb(244 63 94 / .05)',
+                tension: 0.2,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+    }
+  }
+
+  generateNDays(n: number) {
+    const data = [];
+    for (let i = 0; i < n; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      data.push(
+        date.toLocaleString('en-US', {
+          month: 'short',
+          day: 'numeric',
+        })
+      );
+    }
+    return data;
+  }
+
+  generateRandomData(n: number) {
+    const data = [];
+    for (let i = 0; i < n; i++) {
+      data.push(Math.round(Math.random() * 10));
+    }
+    return data;
+  }
 }

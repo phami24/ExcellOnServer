@@ -1,27 +1,97 @@
+<body class="text-gray-800 font-inter">
+    <div class="fixed left-0 top-0 w-64 h-full bg-gray-900 p-4">
+        <a routerLink="/admin/main" class="flex items-center pb-4 border-b border-b-gray-800">
+            <img src="./assets/images/Logo.png" alt="" class="w-8 h-8 rounded object-cover">
+            <span class="text-lg font-bold text-white ml-3">Excell-On-Services</span>
+        </a>
+        <ul class="mt-4">
+            <li class="mb-1 group active">
+                <a routerLink="admin/main"
+                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                    <i class="ri-home-2-line mr-3 text-lg"></i>
+                    <span class="text-sm">Dashboard</span>
+                </a>
+            </li>
+            <li class="mb-1 group">
+                <a href="#" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white  group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 
+                    sidebar-dropdown-toggle">
+                    <i class="ri-building-4-line mr-3 text-lg"></i>
+                    <span class="text-sm">Department Management</span>
+                    <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
+                </a>
+                <ul class="pl-7 mt-2 hidden group-[.selected]:block">
+                    <li class="mb-4">
+                        <a href=""
+                            class=" text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before: w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">
+                            HR Management
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#"
+                            class="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before: w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">
+                            Administration</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#"
+                            class="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before: w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">
+                            Internet Security
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mb-1 group">
+                <a href="#"
+                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                    <i class="ri-customer-service-2-line mr-3 text-lg"></i>
+                    <span class="text-sm">Service Management</span>
+                </a>
+            </li>
 
-<div class="sidebar">
-    <a  routerLink="admin/main" class="logo">
-        <img class="mx-12 my-3" src="../../../../assets/images/Logo3.png" width="124px" alt="">
-    </a>
-    <ul class="side-menu">
-        <li><a  routerLink="admin/main"><i class='bx bxs-dashboard fa-gauge fa-solid'></i>Dashboard</a></li>
-        <li><a  routerLink="admin/customer"><i class='bx bx-store-alt fa-solid fa-bars-progress'></i>Service </a></li>
-        <li class="active"><a  routerLink="admin/customer"><img class="mx-2" src="../../../../assets/images/hierarchy.png" width="25px" alt="">Department </a></li>
-        <li><a  routerLink="admin/customer"><img class="mx-2" src="../../../../assets/images/resources.png" width="27px" alt="">HR </a></li>
-        <li><a routerLink="admin/customer"><img class="mx-2" src="../../../../assets/images/satisfaction.png" width="24px" alt="">Customer </a></li>
-        <li><a  routerLink="admin/customer"><img class="mx-2" src="../../../../assets/images/credit-card.png" width="24px" alt="">Payment </a></li>
-        <li><a  routerLink="admin/customer"><img class="mx-2" src="../../../../assets/images/profit-report.png" width="24px" alt="">Report and Statistics</a></li>
-    </ul>
-    <ul class="side-menu">
-        <li>
-            <a  routerLink="admin/customer" class="logout ml-1">
-                <i class="bx fa-solid fa-right-from-bracket"></i>
-                Logout
+            <li class="mb-1 group">
+                <a href="#"
+                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                    <i class="ri-bank-card-2-line mr-3 text-lg"></i>
+                    <span class="text-sm">Orders </span>
+                </a>
+            </li>
+            <li class="mb-1 group">
+                <a href="#"
+                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                    <i class="ri-team-line mr-3 text-lg"></i>
+                    <span class="text-sm">Employee </span>
+                </a>
+            </li>
+            <li class="mb-1 group">
+                <a href="#"
+                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                    <i class="ri-shopping-bag-3-line mr-3 text-lg"></i>
+                    <span class="text-sm">Cost and Payment Management</span>
+                </a>
+            </li>
+            <li class="mb-1 group">
+                <a href="#"
+                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                    <i class="ri-alarm-warning-line mr-3 text-lg"></i>
+                    <span class="text-sm">Reporting</span>
+                </a>
+            </li>
+            <li class="mb-1 group">
+                <a href="#"
+                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                    <i class="ri-settings-2-line mr-3 text-lg"></i>
+                    <span class="text-sm">Security</span>
+                </a>
+            </li>
+        </ul>
+
+        <li class="group">
+            <a href="#"
+                class=" flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
+                <i class="ri-logout-box-line mr-3 text-lg"></i>
+                <span class="text-sm">Logout</span>
             </a>
         </li>
-    </ul>
-</div>
 
-<!-- <div class="">
-    <app-navbar></app-navbar>
-</div> -->
+    </div>
+
+</body>
