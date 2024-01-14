@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+/* @import '~remixicon/fonts/remixicon.css'; */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

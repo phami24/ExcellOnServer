@@ -18,8 +18,5 @@ export class AppComponent {
     return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'auth';
   }
 
-  // isRegisterPage(): boolean {    
-  //   return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'register';
-  // }
   
 }

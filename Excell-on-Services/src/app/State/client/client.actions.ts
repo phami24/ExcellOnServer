@@ -7,7 +7,7 @@ export enum EClientActions {
   REGISTER = '[USER] Register',
   REGISTER_SUCCESS = '[USER] Register Success',
   REGISTER_FAIL = '[USER] Register Fail',
-  LOGOUT = '[USER] Logout', // Add the new action for logout
+  LOGOUT = '[USER] Logout', 
 }
 
 export class Login implements Action {
@@ -25,7 +25,7 @@ export class LoginFail implements Action {
   constructor() {}
 }
 
-// New registration actions
+
 export class Register implements Action {
   readonly type = EClientActions.REGISTER;
   constructor(public payload: { firstName: string, lastName: string, email: string, password: string }) {}
@@ -40,7 +40,6 @@ export class RegisterFail implements Action {
   readonly type = EClientActions.REGISTER_FAIL;
 }
 
-// New logout action
 export class Logout implements Action {
   readonly type = EClientActions.LOGOUT;
 }

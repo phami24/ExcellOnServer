@@ -37,7 +37,7 @@ import { AppEffects } from './Effects';
 
 
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot(AppEffects),
+    EffectsModule.forRoot(AppEffects,),
 
   ],
   providers: [],

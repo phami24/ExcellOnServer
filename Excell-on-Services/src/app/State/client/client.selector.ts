@@ -62,3 +62,4 @@ export const getIsLoggedOut = createSelector(
   (loginState: IClientLoginState, registrationState: IClientRegistrationState) =>
     !loginState.loading && !registrationState.loading && !loginState.success && !registrationState.success
 );
+

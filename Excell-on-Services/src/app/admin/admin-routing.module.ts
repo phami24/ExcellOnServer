@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './feature/main/main.component';
 import { CustomerManagementComponent } from './feature/customer-management/customer-management.component';
+import { AuthAdminGuard } from '../Guard/admin.guard';
 
 
 
@@ -11,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: 'main',
-        component: MainComponent,
+        component: MainComponent,canActivate: [AuthAdminGuard] ,
         data: { title: 'Main' },
       },
       {

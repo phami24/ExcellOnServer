@@ -22,18 +22,18 @@ export class HomeComponent implements OnInit {
   constructor(private clientServices: ClientService) {}
 
   ngOnInit(): void {
-    this.retrieveBooks();
+    // this.retrieveBooks();
   }
 
-  retrieveBooks(): void {
-    this.clientServices.getBanner().subscribe({
-      next: (data) => {
-        this.banner = data;
-        console.log(data);
-      },
-      error: (e) => console.error(e)
-    });
-  }
+  // retrieveBooks(): void {
+  //   this.clientServices.getBanner().subscribe({
+  //     next: (data) => {
+  //       this.banner = data;
+  //       console.log(data);
+  //     },
+  //     error: (e) => console.error(e)
+  //   });
+  // }
 
 
 

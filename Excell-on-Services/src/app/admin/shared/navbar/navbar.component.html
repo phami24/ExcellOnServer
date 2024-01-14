@@ -1,21 +1,270 @@
-<div class="content">
-    <nav>
-        <i class='bx bx-menu'></i>
-        <form action="#">
-            <div class="form-input">
-                <input type="search" placeholder="Search...">
-                <button class="search-btn" type="submit">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+<!-- navbar.component.html -->
+
+<div class=" ml-64">
+    <div class="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5">
+        <button type="button" class="text-lg text-black-600">
+            <i class="ri-menu-line"></i>
+        </button>
+        <ul class="flex items-center text-sm ml-4">
+            <li>
+                <a href="#" class="text-gray-400 hover:text-black-600 font-medium">Dashboard</a>
+            </li>
+            <li class="text-gray-600 mr-2 font-medium">/</li>
+            <li class="text-gray-600 mr-2 font-medium">Analytics</li>
+        </ul>
+
+        <ul class="ml-auto flex items-center">
+            <li class="mr-1 dropdowm">
+                <button type="button"
+                    class="text-gray-400 dropdowm-toggle w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
+                    (click)="toggleSearch()">
+                    <i class="ri-search-line"></i>
                 </button>
-            </div>
-        </form>
-        <!-- <input type="checkbox" id="theme-toggle" hidden> -->
-        <!-- <label for="theme-toggle" class="theme-toggle"></label> -->
-        <a href="#" class="notif">
-            <i class="fa-solid fa-bell"></i>
-        </a>
-        <a href="#" class="profile">
-            <img src="../../../../assets/images/avatar.png">
-        </a>
-    </nav>
+                <div *ngIf="isSearchVisible"
+                    class="absolute top-0 right-0 mt-16 mr-6 bg-white rounded-md border border-gray-100 p-4">
+                    <form action="" class="p-4 border-b border-b-gray-100 overflow-y-auto">
+                        <div class="relative w-full">
+                            <input type="text"
+                                class="py-2 px-4 pl-10 bg-gray-50 w-full outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
+                                placeholder="Search...">
+                            <i class="ri-search-line absolute top-1/2 left-4 -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </form>
+                    <div class="mt-3 mb-2 max">
+                        <div class="text-sm font-medium text-gray-400 ml-4">Recently</div>
+                        <ul class="max-h-48 overflow-y-auto">
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/OutBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            Out Bound</div>
+                                        <div class="text-[12px] text-gray-400">$4000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li class="mr-1">
+                <button type="button"
+                    class="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
+                    (click)="toggleNotification()">
+                    <i class="ri-notification-3-line"></i>
+                </button>
+
+                <div *ngIf="isNotificationVisible"
+                    class="absolute top-0 right-0 mt-16 mr-6 bg-white rounded-md border border-gray-100 p-4">
+                    <div class="flex items-center px-4 pt-4 border-b border-b-gray-100 notification-tab">
+                        <button type="button" data-tab="notification" data-tab-page="notification"
+                            class="text-gray-400 font-medium text-[13px] hover:text-gray-600 border-b-2 border-b-transparent mr-4 pb-1 active ">Notification</button>
+                        <button type="button" data-tab="notification" data-tab-page="messages"
+                            class="text-gray-400 font-medium text-[13px] hover:text-gray-600 border-b-2 border-b-transparent mr-4 pb-1">Message</button>
+
+                    </div>
+                    <div class="my-2">
+                        <ul class="max-h-64 overflow-y-auto" data-tab-for="notification" data-page="notification">
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/OutBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            Out Bound</div>
+                                        <div class="text-[12px] text-gray-400">$4000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/TeleSale.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            TeleSale</div>
+                                        <div class="text-[12px] text-gray-400">$8000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/TeleSale.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            TeleSale</div>
+                                        <div class="text-[12px] text-gray-400">$8000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/InBound.png" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            In Bound</div>
+                                        <div class="text-[12px] text-gray-400">$6000</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="max-h-64 overflow-y-auto hidden" data-tab-for="notification" data-page="messages">
+                            <li>
+                                <a href="#" class="py-2 px-4 flex items-center">
+                                    <img src="../../../../assets/images/Customer1.jpg" alt=""
+                                        class="w-8 h-8 rounded block object-cover align-middle">
+                                    <div class="mt-2">
+                                        <div
+                                            class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-600">
+                                            Dinh Van Trong </div>
+                                        <div class="text-[12px] text-gray-400">Hi!</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <!-- <li class="dropdowm" style="position: relative;">
+                <button type="button" class="dropdowm-toggle flex items-center">
+                    <img src="../../../../assets/images/avatar.png" alt="" class="w-8 h-8 rounded block object-cover" (click)="toggleProfile()">
+                </button>
+                <ul *ngIf="isProfileVisible" class="absolute right-0 py-1.5 rounded-md bg-white border border-b-gray-100 max-w-[140px] ]"> -->
+
+            <li *ngIf="isLoggedOut; else loggedIn">
+                <a class="profile" routerLink="/auth/adminLogin">
+                    Login
+                </a>
+            </li>
+            <ng-template #loggedIn>
+                <a class="profile">
+                    <img class="w-8 h-8" src="../../../../assets/images/avatar.png">
+                </a>
+            </ng-template>
+            <!-- <li>
+                        <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Setting</a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
+                    </li> -->
+            <!-- </ul>
+            </li> -->
+        </ul>
+    </div>
 </div>

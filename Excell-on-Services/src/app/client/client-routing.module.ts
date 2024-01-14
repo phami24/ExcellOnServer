@@ -7,6 +7,7 @@ import { PaymentsComponent } from './feature/payments/payments.component';
 import { PaymentHistoryComponent } from './feature/payment-history/payment-history.component';
 import { ReportsComponent } from './feature/reports/reports.component';
 import { ProfileComponent } from './feature/profile/profile.component';
+import { AuthClientGuard } from '../Guard/client.guard';
 
 const routes: Routes = [
   {
@@ -29,23 +30,23 @@ const routes: Routes = [
       },
       {
         path: 'payment',
-        component: PaymentsComponent,
+        component: PaymentsComponent,canActivate: [AuthClientGuard] ,
         data: { title: 'Payment page' },
       },
       {
         path: 'paymentHistory',
-        component: PaymentHistoryComponent,
+        component: PaymentHistoryComponent,canActivate: [AuthClientGuard] ,
         data: { title: 'Pay History page' },
       },
       {
         path: 'reports',
         component: ReportsComponent,
-        data: { title: 'Reports page' },
+        data: { title: 'Reports page' },canActivate: [AuthClientGuard] ,
       },
       {
         path: 'profile',
         component: ProfileComponent,
-        data: { title: 'Profile page' },
+        data: { title: 'Profile page' },canActivate: [AuthClientGuard] ,
       },
       
     ],
