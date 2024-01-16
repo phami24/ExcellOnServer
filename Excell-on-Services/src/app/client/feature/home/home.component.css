@@ -16,6 +16,13 @@
   min-height: 80vh;
   max-height: max-content;
 }
+.bg-sm {
+  background-image: url("../../../../assets/images/aboutBg.jpg");
+  background-size: contain;
+  /* background-repeat: repeat; */
+  min-height: 80vh;
+  max-height: max-content;
+}
 .button-event {
   width: 300px;
 }

@@ -1,93 +1,192 @@
-<div class="container mx-auto min-h-[100vh] bg-[url('/assets/images/bgr2.png')] bg-cover bg-no-repeat">
-    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-        <div
-            class="flex justify-center mx-auto min-h-[100vh] bg-[url('/assets/images/bgr3.png')] bg-cover bg-no-repeat">
+<div class="mx-auto min-h-[100vh] bg-[url('/assets/images/bgr2.png')] bg-cover bg-no-repeat">
+    <div class="flex justify-center min-h-[100vh] bg-[url('/assets/images/bgr3.png')] bg-cover bg-no-repeat">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
             <div
-                class="w-2/3 my-20 rounded-[25px] min-h-[400px] bg-[url('/assets/images/servicesBg.png')] bg-cover bg-no-repeat">
+                class="hidden md:flex justify-center mx-auto max-w-fit my-20 rounded-[25px] min-h-[400px] bg-[url('/assets/images/servicesBg.png')] bg-cover bg-no-repeat">
                 <div class="grid grid-cols-12 leading-loose">
-
-                    <div class="col-span-5 h-[73vh] pt-4 md:block bg-[#cfdcfb] rounded-r-[25px]">
-                        <a routerLink="/home" class="flex ml-5 text-2xl text-[#4476bd]"><i
-                                class="fa-solid fa-house"></i></a>
-                        <div class="text-center pt-16 grid grid-cols-12">
-                            <h2 class="col-span-12 text-3xl">Sign in</h2>
-                            <p class="col-span-12">If you already have an account, please log in here.</p>
-                            <button routerLink="/auth/login" type="button"
-                                class="col-span-12 bg-blue-500 text-white mx-2 py-2 rounded-full text-center">Login
-                                Now!</button>
+                    <div class="col-span-5 pt-4 md:block bg-[#cfdcfb] rounded-l-[25px]">
+                        <div class="">
+                            <a routerLink="/home" class="flex ml-5 text-2xl text-[#4476bd]"><i
+                                    class="fa-solid fa-house"></i></a>
+                            <div class="text-center pt-16 grid grid-cols-12">
+                                <h2 class="col-span-12 text-3xl">Sign in</h2>
+                                <p class="col-span-12">If you already have an account, please log in here.</p>
+                                <button routerLink="/auth/login" type="button"
+                                    class="col-span-12 bg-blue-500 text-white  mx-16 py-2 rounded-full text-center">Login
+                                    Now!</button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-span-7 p-4 ">
                         <h1 class="text-3xl text-center">Register</h1>
                         <p class="text-gray-500">Register your account!</p>
-                        <div class="mb-3">
-                            <div class="flex items-center border-b border-blue-200 py-2">
-                                <span class="mr-3"><i class="fas fa-user"></i></span>
-                                <input type="text"
-                                    class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                    placeholder="First Name" id="firstName" formControlName="firstName">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="flex items-center border-b border-blue-200 py-2">
-                                <span class="mr-3"><i class="fas fa-user"></i></span>
-                                <input type="text"
-                                    class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                    placeholder="Last Name" id="lastName" formControlName="lastName">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="flex items-center border-b border-blue-200 py-2">
-                                <span class="mr-3"><i class="fas fa-user"></i></span>
-                                <input type="email"
-                                    class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                    placeholder="Email" id="email" formControlName="email">
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <div class="flex items-center border-b border-blue-200 py-2">
-                                <span class="mr-3"><i class="fas fa-lock"></i></span>
-                                <input type="password"
-                                    class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                    placeholder="Password" formControlName="password" >
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12">
-                            <div class="col-span-12 bg-blue-500 text-white px-4 py-2 rounded-full text-center mr-2">
-                                <button type="submit" [disabled]="!registrationForm.valid" class="">Register</button>
+                        <div class="login-form">
+                            <!-- First Name -->
+                            <div class="mb-3 form-group">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <input type="text"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="First Name" id="firstName" formControlName="firstName">
+                                </div>
+                                <div *ngIf="registrationForm.get('firstName')!.hasError('required') && registrationForm.get('firstName')!.touched"
+                                    class="text-red-500 mt-2">First Name is required</div>
+                                <div *ngIf="registrationForm.get('firstName')!.hasError('invalidName') && registrationForm.get('firstName')!.touched"
+                                    class="text-red-500 mt-2">Invalid First Name</div>
                             </div>
 
+                            <!-- Last Name -->
+                            <div class="mb-3">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <input type="text"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Last Name" id="lastName" formControlName="lastName">
+                                </div>
+                                <div *ngIf="registrationForm.get('lastName')!.hasError('required') && registrationForm.get('lastName')!.touched"
+                                    class="text-red-500 mt-2">Last Name is required</div>
+                                <div *ngIf="registrationForm.get('lastName')!.hasError('invalidName') && registrationForm.get('lastName')!.touched"
+                                    class="text-red-500 mt-2">Invalid Last Name</div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <input type="email"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Email" id="email" formControlName="email">
+                                </div>
+                                <div *ngIf="registrationForm.get('email')!.hasError('required') && registrationForm.get('email')!.touched"
+                                    class="text-red-500 mt-2">Email is required</div>
+                                <div *ngIf="registrationForm.get('email')!.hasError('email') && registrationForm.get('email')!.touched"
+                                    class="text-red-500 mt-2">Invalid Email</div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-4">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-lock"></i></span>
+                                    <input type="password"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Password" formControlName="password">
+                                </div>
+                                <div *ngIf="registrationForm.get('password')!.hasError('required') && registrationForm.get('password')!.touched"
+                                    class="text-red-500 mt-2">Password is required</div>
+                                <div *ngIf="registrationForm.get('password')!.hasError('minlength') && registrationForm.get('password')!.touched"
+                                    class="text-red-500 mt-2">Password must be at least 6 characters</div>
+                                <div *ngIf="registrationForm.get('password')!.hasError('invalidPassword') && registrationForm.get('password')!.touched"
+                                    class="text-red-500 mt-2">Password must contain at least one lowercase letter,<br>
+                                    one
+                                    uppercase letter, one digit, and one special character.
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="flex justify-center ">
+                                    <button type="submit" [disabled]="!registrationForm.valid"
+                                        class="bg-blue-500 text-white rounded-full text-center mr-2 hover:cursor-pointer">
+                                        <p class="px-20 pt-2">Register</p>
+                                    </button>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+            <div
+                class="md:hidden mx-auto my-10 rounded-[25px] min-h-[400px] bg-[url('/assets/images/servicesBg.png')] bg-cover bg-no-repeat">
+                <div class="grid grid-cols-12 leading-loose">
+
+                    <div class="col-span-12 p-4">
+                        <a routerLink="/home" class="flex justify-end mr-5 text-2xl text-[#4476bd]"><i
+                                class="fa-solid fa-house"></i></a>
+                        <h1 class="text-3xl text-center">Register</h1>
+                        <p class="text-gray-500">Register your account!</p>
+                        <div class="login-form">
+                            <!-- First Name -->
+                            <div class="mb-3 form-group">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <input type="text"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="First Name" id="firstName" formControlName="firstName">
+                                </div>
+                                <div *ngIf="registrationForm.get('firstName')!.hasError('required') && registrationForm.get('firstName')!.touched"
+                                    class="text-red-500 mt-2">First Name is required</div>
+                                <div *ngIf="registrationForm.get('firstName')!.hasError('invalidName') && registrationForm.get('firstName')!.touched"
+                                    class="text-red-500 mt-2">Invalid First Name</div>
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="mb-3">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <input type="text"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Last Name" id="lastName" formControlName="lastName">
+                                </div>
+                                <div *ngIf="registrationForm.get('lastName')!.hasError('required') && registrationForm.get('lastName')!.touched"
+                                    class="text-red-500 mt-2">Last Name is required</div>
+                                <div *ngIf="registrationForm.get('lastName')!.hasError('invalidName') && registrationForm.get('lastName')!.touched"
+                                    class="text-red-500 mt-2">Invalid Last Name</div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <input type="email"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Email" id="email" formControlName="email">
+                                </div>
+                                <div *ngIf="registrationForm.get('email')!.hasError('required') && registrationForm.get('email')!.touched"
+                                    class="text-red-500 mt-2">Email is required</div>
+                                <div *ngIf="registrationForm.get('email')!.hasError('email') && registrationForm.get('email')!.touched"
+                                    class="text-red-500 mt-2">Invalid Email</div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-4">
+                                <div class="flex items-center border-b border-blue-200 py-2">
+                                    <span class="mr-3"><i class="fas fa-lock"></i></span>
+                                    <input type="password"
+                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                        placeholder="Password" formControlName="password">
+                                </div>
+                                <div *ngIf="registrationForm.get('password')!.hasError('required') && registrationForm.get('password')!.touched"
+                                    class="text-red-500 mt-2">Password is required</div>
+                                <div *ngIf="registrationForm.get('password')!.hasError('minlength') && registrationForm.get('password')!.touched"
+                                    class="text-red-500 mt-2">Password must be at least 6 characters</div>
+                                <div *ngIf="registrationForm.get('password')!.hasError('invalidPassword') && registrationForm.get('password')!.touched"
+                                    class="text-red-500 mt-2">Password must contain at least one lowercase letter,<br>
+                                    one
+                                    uppercase letter, one digit, and one special character.
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="grid grid-cols-12 justify-items-center ">
+                            <div class="col-span-12">
+                                <button type="submit" [disabled]="!registrationForm.valid"
+                                class="bg-blue-500 text-white rounded-full text-center mr-2 hover:cursor-pointer">
+                                <p class="px-20 pt-2">Register</p>
+                            </button>
+                            </div>
+                            <div class="col-span-12">
+                                <a routerLink="/auth/login"
+                                    class="underline decoration-wavy mr-2 hover:cursor-pointer">
+                                    <p class="px-12 pt-2">Login Now!</p>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
 </div>
-
-
-<!-- <div class="register-container">
-    <h2>Register</h2>
-    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" formControlName="firstName" />
-        </div>
-        <div class="form-group">
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" formControlName="lastName" />
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" formControlName="email" />
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" formControlName="password" />
-        </div>
-        <div class="form-group">
-            <button type="submit" [disabled]="!registrationForm.valid">Register</button>
-        </div>
-    </form>
-</div> -->

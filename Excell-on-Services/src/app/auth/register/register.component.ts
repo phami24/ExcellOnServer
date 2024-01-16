@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ClientService } from 'src/app/auth/services/client.service';
 import * as fromClient from '../../State/client';
@@ -20,11 +20,38 @@ export class RegisterComponent {
     private router: Router,
   ) {
     this.registrationForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      firstName: ['', [Validators.required, this.nameValidator]],
+      lastName: ['', [Validators.required, this.nameValidator]],
+      email: ['', [Validators.required, Validators.email, this.emailValidator]],
+      password: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
     });
+  }
+
+  // Custom validator for first name and last name
+  nameValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const namePattern = /^[a-zA-Z ]*$/;
+    if (!namePattern.test(control.value)) {
+      return { 'invalidName': true };
+    }
+    return null;
+  }
+
+  // Custom validator for email
+  emailValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(control.value)) {
+      return { 'invalidEmail': true };
+    }
+    return null;
+  }
+
+  // Custom validator for password
+  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    if (!passwordPattern.test(control.value)) {
+      return { 'invalidPassword': true };
+    }
+    return null;
   }
 
   onSubmit() {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
 
@@ -33,6 +33,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email, this.emailValidator]],
+      password: ['', [Validators.required, this.passwordValidator]],
+    });   
+
     this.loading$ = this.store.select(fromUser.getLoadingLogin).pipe(takeUntil(this.destroy$));
     this.success$ = this.store.select(fromUser.getSuccessLogin).pipe(takeUntil(this.destroy$));
     this.error$ = this.store.select(fromUser.getFailLogin).pipe(takeUntil(this.destroy$));
@@ -50,7 +55,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     const { email, password } = this.loginForm.value;
     this.store.dispatch(new fromUser.Login({ email, password }));
   }
-
+  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    if (!passwordPattern.test(control.value)) {
+      return { 'invalidPassword': true };
+    }
+    return null;
+  }
+  emailValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(control.value)) {
+      return { 'invalidEmail': true };
+    }
+    return null;
+  }
   onLoginSuccess() {
     this.success$.pipe(
       takeUntil(this.destroy$),
