@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import * as fromRoot from '../../../State/index';
 import * as fromUser from '../../../State/client';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
+    initFlowbite();
     this.userEmail$ = this.store.select(fromUser.getUserEmail);
     this.store.select(fromUser.getIsLoggedOut).subscribe((isLoggedOut) => {
       this.isLoggedOut = isLoggedOut;

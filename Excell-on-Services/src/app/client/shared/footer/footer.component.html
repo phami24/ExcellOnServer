@@ -1,5 +1,5 @@
 <footer class="bg-[#94c6fd]">
-    <div class="container mx-auto py-8">
+    <div class="hidden lg:flex block container mx-auto py-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div class="mb-4">
                 <img class="px-10" width="200" src="../../assets/images/Logo2.png" alt="">
@@ -41,9 +41,12 @@
             <div class="">
                 <h2 class="text-2xl font-bold mb-4 ">Privacy</h2>
                 <ul class="list-none">
-                    <li><a href="#" class="py-2 block hover:text-blue-500"><i class="fa-solid fa-image"></i>zzzzz</a></li>
-                    <li><a href="#" class="py-2 block hover:text-blue-500"><i class="fa-brands fa-linkedin"></i>zzzz</a></li>
-                    <li><a href="#" class="py-2 block hover:text-blue-500"><i class="fa-solid fa-comment"></i>zzzzz</a></li>
+                    <li><a href="#" class="py-2 block hover:text-blue-500"><i class="fa-solid fa-image"></i>zzzzz</a>
+                    </li>
+                    <li><a href="#" class="py-2 block hover:text-blue-500"><i class="fa-brands fa-linkedin"></i>zzzz</a>
+                    </li>
+                    <li><a href="#" class="py-2 block hover:text-blue-500"><i class="fa-solid fa-comment"></i>zzzzz</a>
+                    </li>
                 </ul>
             </div>
             <div class="mr-16">
@@ -66,6 +69,32 @@
                 </div>
             </div>
         </div>
+
+    </div>
+    <div class="lg:hidden grid grid-cols-12">
+        <div class="col-span-6">
+            <div class="pl-12 pt-1">
+                <a class="" routerLink="/home">
+                    <img class="h-12" src="../../../assets/images/Logo2.png" alt="Excell-on" />
+                </a>
+            </div>
+        </div>
+
+        <div class="col-span-6 pt-3">
+            <div class="pr-2">
+                <i class="fa-solid fa-house px-2"></i>
+                <a class="nav-link active uppercase" aria-current="page" routerLink="/home">Home</a>
+            </div>
+            <div class="pr-2">
+                <i class="fa-solid fa-phone-volume px-2"></i>
+                <a class="nav-link uppercase  hover:text-blue-500 " routerLink="/services">Services</a>
+            </div>
+            <div class="pr-2">
+                <i class="fa-solid fa-money-check-dollar px-2"></i>
+                <a class="nav-link uppercase  hover:text-blue-500 " routerLink="/payment">Payment</a>
+            </div>
+        </div>
+
 
     </div>
     <div class="text-center py-1 border-t border-zinc-300">
