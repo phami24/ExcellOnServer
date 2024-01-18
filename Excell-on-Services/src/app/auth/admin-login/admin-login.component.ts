@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
+import { Validators } from '@angular/forms';
 
 import * as fromRoot from '../../State/index';
 import * as fromAdmin from '../../State/admin';
@@ -14,6 +15,7 @@ import * as fromAdmin from '../../State/admin';
 })
 export class AdminLoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
+  loginError: string = '';
 
   loading$: Observable<boolean> = new Observable(); 
   success$: Observable<boolean> = new Observable();
@@ -27,8 +29,8 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: '',
-      password: ''
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -41,14 +43,19 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     this.onLoginSuccess();
   }
 
+  
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   submit() {
-    const { email, password } = this.loginForm.value;
-    this.store.dispatch(new fromAdmin.Login({ email, password }));
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.store.dispatch(new fromAdmin.Login({ email, password }));
+  } else {
+      this.loginError = 'Please check the entered information.';
+  }
   }
 
   onLoginSuccess() {
