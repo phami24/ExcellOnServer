@@ -25,9 +25,12 @@ export class SidebarComponent implements OnInit{
     });
   }
   logout() {
-    this.store.dispatch(new fromAdmin.Logout());
+    const confirmLogout = confirm('Are you sure you want to log out?');
+    
+    if (confirmLogout) {
+      this.store.dispatch(new fromAdmin.Logout());
+    }
   }
-
 
   ngAfterViewInit() {
     this.setupSidebarDropdown();
