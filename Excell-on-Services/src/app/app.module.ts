@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AdminModule } from './admin/admin.module';
 import { ClientModule } from './client/client.module';
 import { AuthModule } from './auth/auth.module';
@@ -20,9 +19,7 @@ import { AppEffects } from './Effects';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [
-    AppComponent, 
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -30,15 +27,12 @@ import { AppEffects } from './Effects';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-
     AdminModule,
     ClientModule,
     AuthModule,
 
-
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot(AppEffects,),
-
+    EffectsModule.forRoot(AppEffects),
   ],
   providers: [],
   bootstrap: [AppComponent],

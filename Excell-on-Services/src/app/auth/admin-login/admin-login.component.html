@@ -1,6 +1,6 @@
 <div class="container mx-auto min-h-[50vh] bg-[url('/assets/images/bgr2.png')] bg-cover bg-no-repeat">
     <div *ngIf="loginError" class="fixed top-0 left-1/2 transform -translate-x-1/2">
-        <div class="bg-red-500 text-white p-1 rounded-[10px]">
+        <div class="bg-red-500 text-white p-4 rounded-[10px]">
             <i class="fas fa-exclamation-circle"></i> {{ loginError }}
         </div>
     </div>
@@ -13,13 +13,13 @@
                 <div class="grid grid-cols-12 leading-loose">
 
                     <div class="col-span-12 p-4 ">
-                        <h1 class="text-3xl text-center pb-3">LOGIN</h1>
-                        <p class="text-gray-500">Sign In to your account</p>
+                        <h1 class="text-3xl text-center pb-3 font-heading">LOGIN</h1>
+                        <p class="text-gray-500 flex ">Sign In to your account</p>
                         <div class="login-form">
 
                             <div class="mb-3 form-group">
                                 <div class="flex items-center border-b border-blue-200 py-2">
-                                    <span class="mr-3"><i class="fas fa-user"></i></span>
+                                    <span class="mr-3"><i class="fas fa-user text-gray-500"></i></span>
                                     <input type="text" id="username"
                                         class="form-control appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                                         placeholder="Email" formControlName="email">
@@ -36,7 +36,7 @@
 
                             <div class="mb-4 form-group">
                                 <div class="flex items-center border-b border-blue-200 py-2">
-                                    <span class="mr-3"><i class="fas fa-lock"></i></span>
+                                    <span class="mr-3"><i class="fas fa-lock text-gray-500"></i></span>
                                     <input type="password" id="password"
                                         class="form-control appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                                         placeholder="Password" formControlName="password">

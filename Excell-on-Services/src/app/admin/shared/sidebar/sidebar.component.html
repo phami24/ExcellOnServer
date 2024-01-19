@@ -1,97 +1,276 @@
-<body class="text-gray-800 font-inter">
-    <div class="fixed left-0 top-0 w-64 h-full bg-gray-900 p-4">
-        <a routerLink="/admin/main" class="flex items-center pb-4 border-b border-b-gray-800">
-            <img src="./assets/images/Logo.png" alt="" class="w-8 h-8 rounded object-cover">
-            <span class="text-lg font-bold text-white ml-3">Excell-On-Services</span>
-        </a>
-        <ul class="mt-4">
-            <li class="mb-1 group active">
-                <a routerLink="admin/main"
-                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                    <i class="ri-home-2-line mr-3 text-lg"></i>
-                    <span class="text-sm">Dashboard</span>
-                </a>
-            </li>
-            <li class="mb-1 group">
-                <a href="#" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white  group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 
-                    sidebar-dropdown-toggle">
-                    <i class="ri-building-4-line mr-3 text-lg"></i>
-                    <span class="text-sm">Department Management</span>
-                    <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
-                </a>
-                <ul class="pl-7 mt-2 hidden group-[.selected]:block">
-                    <li class="mb-4">
-                        <a href=""
-                            class=" text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before: w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">
-                            HR Management
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#"
-                            class="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before: w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">
-                            Administration</a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#"
-                            class="text-gray-300 text-sm flex items-center hover:text-gray-100 before:contents-[''] before: w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">
-                            Internet Security
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="mb-1 group">
-                <a href="#"
-                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                    <i class="ri-customer-service-2-line mr-3 text-lg"></i>
-                    <span class="text-sm">Service Management</span>
-                </a>
-            </li>
+<nav
+  class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+>
+  <div
+    class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
+  >
+    <!-- Toggler -->
+    <button
+      class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+      type="button"
+      (click)="toggleCollapseShow('bg-white m-2 py-3 px-6')"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <!-- Brand -->
+    <a
+      [routerLink]="['/admin/main']"
+      class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+    >
+      <span class="block sm:hidden"> Excell-On-Service </span>
+      <span class="hidden sm:block"> Excell-On-Service </span>
+    </a>
+    <!-- User -->
 
-            <li class="mb-1 group">
-                <a href="#"
-                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                    <i class="ri-bank-card-2-line mr-3 text-lg"></i>
-                    <span class="text-sm">Orders </span>
-                </a>
-            </li>
-            <li class="mb-1 group">
-                <a href="#"
-                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                    <i class="ri-team-line mr-3 text-lg"></i>
-                    <span class="text-sm">Employee </span>
-                </a>
-            </li>
-            <li class="mb-1 group">
-                <a href="#"
-                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                    <i class="ri-shopping-bag-3-line mr-3 text-lg"></i>
-                    <span class="text-sm">Cost and Payment Management</span>
-                </a>
-            </li>
-            <li class="mb-1 group">
-                <a href="#"
-                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                    <i class="ri-alarm-warning-line mr-3 text-lg"></i>
-                    <span class="text-sm">Reporting</span>
-                </a>
-            </li>
-            <li class="mb-1 group">
-                <a href="#"
-                    class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                    <i class="ri-settings-2-line mr-3 text-lg"></i>
-                    <span class="text-sm">Security</span>
-                </a>
-            </li>
-        </ul>
-
-        <li class="group">
-            <a (click)="logout()"
-                class=" flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[active]:text-white group-[selected]:bg-gray-950 group-[.selected]:text-gray-100 ">
-                <i class="ri-logout-box-line mr-3 text-lg"></i>
-                <span class="text-sm">Logout</span>
+    <!-- Collapse -->
+    <div
+      class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
+      [ngClass]="collapseShow"
+    >
+      <!-- Collapse header -->
+      <div
+        class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200"
+      >
+        <div class="flex flex-wrap">
+          <div class="w-6/12">
+            <a
+              [routerLink]="['/admin/main']"
+              class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+            >
+              Excell-On-Service
             </a>
+          </div>
+          <div class="w-6/12 flex justify-end">
+            <button
+              type="button"
+              class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+              (click)="toggleCollapseShow('hidden')"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Form -->
+      <form class="mt-6 mb-4 md:hidden">
+        <div class="mb-3 pt-0">
+          <input
+            type="text"
+            placeholder="Search"
+            class="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+          />
+        </div>
+      </form>
+
+      <!-- Divider -->
+      <hr class="my-4 md:min-w-full" />
+      <!-- Heading -->
+      <h6
+        class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+      >
+        Admin Layout Pages
+      </h6>
+      <!-- Navigation -->
+
+      <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+        <li class="items-center">
+          <a
+            [routerLink]="['/admin/main']"
+            class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive
+            #adminDashboard="routerLinkActive"
+            [ngClass]="
+              adminDashboard.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fas fa-tv mr-2 text-sm"
+              [ngClass]="
+                adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'
+              "
+            ></i>
+            Dashboard
+          </a>
         </li>
 
-    </div>
+        <li class="items-center">
+          <a
+            [routerLink]="['/admin/department']"
+            class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive
+            #adminDepartments="routerLinkActive"
+            [ngClass]="
+              adminDepartments.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fa-solid fa-building-user mr-2 text-sm"
+              [ngClass]="
+                adminDepartments.isActive ? 'opacity-75' : 'text-blueGray-300'
+              "
+            ></i>
+            Department
+          </a>
+        </li>
 
-</body>
+        <li class="items-center">
+          <a
+            [routerLink]="['/admin/employee']"
+            class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive
+            #adminEmployees="routerLinkActive"
+            [ngClass]="
+              adminEmployees.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fa-solid  fa-users mr-2 text-sm"
+              [ngClass]="
+                adminEmployees.isActive ? 'opacity-75' : 'text-blueGray-300'
+              "
+            ></i>
+            Employee
+          </a>
+        </li>
+
+        <li class="items-center">
+          <a
+            [routerLink]="['/admin/services']"
+            class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive
+            #adminServicess="routerLinkActive"
+            [ngClass]="
+              adminServicess.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fa-brands fa-servicestack mr-2 text-sm"
+              [ngClass]="
+                adminServicess.isActive ? 'opacity-75' : 'text-blueGray-300'
+              "
+            ></i>
+            Services
+          </a>
+        </li>
+        <li class="items-center">
+            <a
+              [routerLink]="['/admin/customer']"
+              class="text-xs uppercase py-3 font-bold block"
+              routerLinkActive
+              #adminCustomers="routerLinkActive"
+              [ngClass]="
+                adminCustomers.isActive
+                  ? 'text-red-600 hover:text-red-700'
+                  : 'text-blueGray-700 hover:text-blueGray-500'
+              "
+            >
+              <i
+                class="fa-solid fa-handshake mr-2 text-sm"
+                [ngClass]="
+                  adminCustomers.isActive ? 'opacity-75' : 'text-blueGray-300'
+                "
+              ></i>
+              Customer
+            </a>
+          </li>
+          <li class="items-center">
+            <a
+              [routerLink]="['/admin/comments']"
+              class="text-xs uppercase py-3 font-bold block"
+              routerLinkActive
+              #adminComments="routerLinkActive"
+              [ngClass]="
+                adminComments.isActive
+                  ? 'text-red-600 hover:text-red-700'
+                  : 'text-blueGray-700 hover:text-blueGray-500'
+              "
+            >
+              <i
+                class="fa-solid fa-comments mr-2 text-sm"
+                [ngClass]="
+                  adminComments.isActive ? 'opacity-75' : 'text-blueGray-300'
+                "
+              ></i>
+              Comments
+            </a>
+          </li>
+      </ul>
+
+      <!-- Divider -->
+      <hr class="my-4 md:min-w-full" />
+      <!-- Heading -->
+      <h6
+        class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+      >
+        Auth Layout Pages
+      </h6>
+      <!-- Navigation -->
+
+      <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+        <li class="items-center">
+          <a
+            [routerLink]="['/auth/login']"
+            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+          >
+            <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
+            Login
+          </a>
+        </li>
+
+        <li class="items-center">
+          <a
+            [routerLink]="['/auth/register']"
+            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+          >
+            <i class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>
+            Register
+          </a>
+        </li>
+      </ul>
+
+      <!-- Divider -->
+      <hr class="my-4 md:min-w-full" />
+      <!-- Heading -->
+      <h6
+        class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+      >
+        No Layout Pages
+      </h6>
+      <!-- Navigation -->
+
+      <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+
+        <li class="items-center">
+          <a
+            [routerLink]="['admin/profile-admin']"
+            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+          >
+            <i class="fas fa-user-circle text-blueGray-300 mr-2 text-sm"></i>
+            Profile
+          </a>
+        </li>
+        <li class="items-center">
+            <a
+              (click)="logout()"
+              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+            >
+              <i class="fa-solid fa-right-from-bracket mr-2 text-sm"></i>
+              Logout
+            </a>
+          </li>
+      </ul>
+
+      <!-- Divider -->
+      <hr class="my-4 md:min-w-full" />
+      <!-- Heading -->
+    </div>
+  </div>
+</nav>

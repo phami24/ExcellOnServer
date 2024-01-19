@@ -11,6 +11,8 @@ import * as fromAdmin from '../../../State/admin';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit{
+  collapseShow = "hidden";
+  isSidebarOpen = false;
   isLoggedOut!: boolean;
   constructor(
     private store: Store<fromRoot.IAppState>,
@@ -36,6 +38,15 @@ export class SidebarComponent implements OnInit{
     this.setupSidebarDropdown();
   }
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+  getSidebarState() {
+    return this.isSidebarOpen ? 'sm:flex' : 'hidden';
+  }
+  toggleCollapseShow(classes: string) {
+    this.collapseShow = classes;
+  }
   private setupSidebarDropdown() {
     const dropdownToggleElements = this.el.nativeElement.querySelectorAll('.sidebar-dropdown-toggle');
     // @ts-ignore

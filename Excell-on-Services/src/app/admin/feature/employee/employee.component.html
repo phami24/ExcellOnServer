@@ -1,0 +1,261 @@
+<div class=" md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 mt-13 min-h-screen transition-all">
+    <div class="flex flex-wrap mt-4">
+        <div class="w-full mb-12 px-4">
+            <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
+                [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'">
+                <div class="rounded-t mb-0 px-4 py-3 border-0">
+                    <div class="flex flex-wrap items-center">
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                            <h3 class="font-semibold text-lg"
+                                [ngClass]="color === 'light' ? 'text-blueGray-700' : 'text-white'">
+                                Employees
+                            </h3>
+                        </div>
+                        <button
+                            class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                            type="button">
+                            Create Employee
+                        </button>
+                    </div>
+                </div>
+                <div class="block w-full overflow-x-auto">
+                    <!-- Projects table -->
+                    <table class="items-center w-full bg-transparent border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                                    Name
+                                </th>
+                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                                    Wage
+                                </th>
+                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                                    Status
+                                </th>
+                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                                    Position
+                                </th>
+                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                                    Completion
+                                </th>
+                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            "></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
+                                        alt="..." />
+                                    <span class="ml-3 font-bold"
+                                        [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
+                                        Dinh Van Trong
+                                    </span>
+                                </th>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    $2,500 USD
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-circle text-orange-500 mr-2"></i> pending
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    Manegement
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div class="flex items-center">
+                                        <span class="mr-2">60%</span>
+                                        <div class="relative w-full">
+                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
+                                                <div style="width: 60%"
+                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                    <a class="text-blueGray-500 block py-1 px-3" href="#pablo"
+                                        (click)="toggleDropdown($event)" #btnDropdownRef>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="min-w-48 z-50" #popoverDropdownRef>
+                                        <div class="bg-white text-base float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
+                                            [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'">
+                                            <a href="#pablo"
+                                                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+                                                Update
+                                            </a>
+                                            <div class="h-0 my-2 border border-solid border-blueGray-100"></div>
+                                            <a href="#pablo"
+                                                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
+                                        alt="..." />
+                                    <span class="ml-3 font-bold"
+                                        [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
+                                        Pham Bui Binh Minh
+                                    </span>
+                                </th>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    $1,800 USD
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-circle text-emerald-500 mr-2"></i>
+                                    completed
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    CEO
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div class="flex items-center">
+                                        <span class="mr-2">100%</span>
+                                        <div class="relative w-full">
+                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-emerald-200">
+                                                <div style="width: 100%"
+                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                    <p>...</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
+                                        alt="..." />
+                                    <span class="ml-3 font-bold"
+                                        [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
+                                        Ta Thi Thanh Thuy
+                                    </span>
+                                </th>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    $3,150 USD
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-circle text-red-500 mr-2"></i> delayed
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    Tester
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div class="flex items-center">
+                                        <span class="mr-2">83%</span>
+                                        <div class="relative w-full">
+                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
+                                                <div style="width: 73%"
+                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                    <p>...</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
+                                        alt="..." />
+                                    <span class="ml-3 font-bold"
+                                        [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
+                                        Do Van Toan
+                                    </span>
+                                </th>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    $4,400 USD
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <i class="fas fa-circle text-teal-500 mr-2"></i> on schedule
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    Manegement
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div class="flex items-center">
+                                        <span class="mr-2">90%</span>
+                                        <div class="relative w-full">
+                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-teal-200">
+                                                <div style="width: 90%"
+                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-teal-500">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                    <p>...</p>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
