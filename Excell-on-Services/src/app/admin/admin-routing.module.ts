@@ -8,6 +8,7 @@ import { EmployeeComponent } from './feature/employee/employee.component';
 import { ServicesComponent } from './feature/services/services.component';
 import { CommentsComponent } from './feature/comments/comments.component';
 import { ProfileAdminComponent } from './feature/profile-admin/profile-admin.component';
+import { PaymentsComponent } from './feature/payments/payments.component';
 
 
 
@@ -18,7 +19,7 @@ const routes: Routes = [
       {
         path: 'main',
         component: MainComponent,canActivate: [AuthAdminGuard] ,
-        data: { title: 'Main' },
+        data: { title: 'Dashboard' },
       },
       {
         path: 'customer',
@@ -49,6 +50,11 @@ const routes: Routes = [
         path: 'profile-admin',
         component: ProfileAdminComponent,
         data: { title: 'Profile Admin' },
+      },
+      {
+        path: 'payments',
+        component: PaymentsComponent,
+        data: { title: 'Payment' },
       }
     ],
   },
