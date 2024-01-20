@@ -183,6 +183,27 @@
           </li>
           <li class="items-center">
             <a
+              [routerLink]="['/admin/payments']"
+              class="text-xs uppercase py-3 font-bold block"
+              routerLinkActive
+              #adminPayments="routerLinkActive"
+              [ngClass]="
+                adminPayments.isActive
+                  ? 'text-red-600 hover:text-red-700'
+                  : 'text-blueGray-700 hover:text-blueGray-500'
+              "
+            >
+              <i
+                class="fa-solid fa-money-bill mr-2 text-sm"
+                [ngClass]="
+                  adminPayments.isActive ? 'opacity-75' : 'text-blueGray-300'
+                "
+              ></i>
+              Payments
+            </a>
+          </li>
+          <li class="items-center">
+            <a
               [routerLink]="['/admin/comments']"
               class="text-xs uppercase py-3 font-bold block"
               routerLinkActive
