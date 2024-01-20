@@ -4,9 +4,9 @@ import { Observable, catchError, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { IClientState } from '../../State/client/client.states';
 import * as fromClient from '../../State/client/client.actions';
-import { Banner } from 'src/app/interfaces/banner';
+import { environment } from 'src/app/Environments/environment';
 
-const baseUrl = 'https://localhost:7180/api';
+const baseUrl = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

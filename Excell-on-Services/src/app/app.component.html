@@ -1,5 +1,4 @@
-
-<ng-container *ngIf="!isLoginPage() ">
+<ng-container *ngIf="!isLoginPage() && !is404Page()">
   <ng-container *ngIf="isAdminPage()">
     <app-sidebar></app-sidebar>
     <app-navbar></app-navbar>
@@ -12,6 +11,10 @@
   </ng-container>
 </ng-container>
 
-<ng-container *ngIf="isLoginPage() ">
+<ng-container *ngIf="isLoginPage()">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<ng-container *ngIf="is404Page()">
   <router-outlet></router-outlet>
 </ng-container>

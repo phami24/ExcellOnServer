@@ -16,11 +16,15 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './State';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './Effects';
+import { ErrorPageComponent } from './Shared/error-page/error-page.component';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    ErrorPageComponent,
+  ],
   imports: [
     BrowserModule,
     CommonModule,

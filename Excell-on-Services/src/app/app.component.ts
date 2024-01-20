@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Excell-on';
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute,private router: Router) {}
 
   isAdminPage(): boolean {
     return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'admin';
@@ -17,6 +17,8 @@ export class AppComponent {
   isLoginPage(): boolean {    
     return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'auth';
   }
-
+  is404Page(): boolean {
+    return this.router.url.includes('/error');
+  }
   
 }
