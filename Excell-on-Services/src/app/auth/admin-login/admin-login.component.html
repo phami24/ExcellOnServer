@@ -1,9 +1,5 @@
 <div class="container mx-auto min-h-[50vh] bg-[url('/assets/images/bgr2.png')] bg-cover bg-no-repeat">
-    <div *ngIf="loginError" class="fixed top-0 left-1/2 transform -translate-x-1/2">
-        <div class="bg-red-500 text-white p-4 rounded-[10px]">
-            <i class="fas fa-exclamation-circle"></i> {{ loginError }}
-        </div>
-    </div>
+   
 
     <form (submit)="submit()" [formGroup]="loginForm">
         <div

@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './State';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './Effects';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -31,10 +32,14 @@ import { AppEffects } from './Effects';
     ClientModule,
     AuthModule,
 
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center', // Bạn có thể thay đổi thành vị trí mong muốn của bạn
+      preventDuplicates: true,
+    }),
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(AppEffects),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -12,11 +12,10 @@
 .action {
     padding: 0px 25px 20px;
     justify-content: flex-end;
+    button {
+        width: 80px; 
+        flex: 0 0 auto;
+        margin-left: 10px;
+      }
 
 }
-
-.button {
-    width: 80px; 
-    flex: 0 0 auto;
-    margin-left: 10px;
-  }

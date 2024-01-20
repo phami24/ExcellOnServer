@@ -4,6 +4,8 @@ import { EmployeeService } from './state/employee.service';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -13,7 +15,7 @@ import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 })
 export class EmployeeComponent implements OnInit, AfterViewInit {
   employees: any[] = [];
-  dropdownShowStates: { show: boolean }[] = []; 
+  dropdownShowStates: { show: boolean }[] = [];
   isDropdownVisible: boolean[] = [];
   searchTerm: string = '';
   filteredEmployees: any[] = [];
@@ -21,7 +23,9 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   showForm = false;
   selectedEmployee: any;
   isCreating: boolean = true;
-  
+  sortedField: string = '';
+  sortOrder: 'asc' | 'desc' = 'asc';
+
   @Input()
   get color(): string {
     return this._color;
@@ -31,19 +35,23 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
   private _color = 'light';
 
-  constructor(private employeeService: EmployeeService, public dialog: MatDialog) {}
+  constructor(
+    private employeeService: EmployeeService,
+    public dialog: MatDialog,
+    private toastr: ToastrService,
+  ) { }
   ngOnInit(): void {
-    this.showForm = false; 
+    this.showForm = false;
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data;
       this.dropdownShowStates = this.employees.map((_, index) => ({ index, show: false }));
-      this.filteredEmployees = this.employees; 
+      this.filteredEmployees = this.employees;
     });
   }
   //table-dropdown
 
   dropdownPopoverShow = false;
-  
+
   @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef!: ElementRef;
   @ViewChild('popoverDropdownRef', { static: false })
   popoverDropdownRef!: ElementRef;
@@ -67,9 +75,9 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   onSearchInputChange(event: any): void {
     const value = event?.target?.value || '';
     console.log('Search Term:', value);
-  
+
     this.searchTerm = value;
-  
+
     // Thực hiện logic tìm kiếm nếu cần
     this.filteredEmployees = this.employees.filter(employee => {
       const firstName = (employee.firstName || '').toLowerCase();
@@ -77,7 +85,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       const email = (employee.email || '').toLowerCase();
       const department = (employee.department || '').toLowerCase();
       const searchTermLower = this.searchTerm.toLowerCase();
-  
+
       return (
         firstName.includes(searchTermLower) ||
         lastName.includes(searchTermLower) ||
@@ -85,10 +93,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
         department.includes(searchTermLower)
       );
     });
-  
+
     console.log('Filtered Employees:', this.filteredEmployees);
   }
-  
+
   createEmployee() {
     const dialogRef = this.dialog.open(CreateEmployeeComponent, {
       width: '550px',
@@ -99,7 +107,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       // Thực hiện các hành động sau khi đóng modal (nếu cần)
     });
   }
-  
+
 
   openEditForm(employee: any): void {
     const dialogRef = this.dialog.open(EditEmployeeComponent, {
@@ -119,6 +127,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
         // Sau khi xóa, làm điều gì đó nếu cần
         // Ví dụ: Reload danh sách nhân viên
+        this.toastr.success('Delete successful!', 'Success');
         this.loadEmployees();
       });
     }
@@ -132,17 +141,26 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
 
 
-  toggleDropdown(event: MouseEvent, index: number): void {
-    event.preventDefault();
-
-    // Ẩn tất cả dropdown trước khi hiển thị dropdown cho dòng được chọn
-    this.isDropdownVisible = this.isDropdownVisible.map(() => false);
-    // Hiển thị dropdown cho dòng được chọn
-    this.isDropdownVisible[index] = true;
-
-    // Khởi tạo popper khi dropdown được hiển thị
-    if (this.isDropdownVisible[index]) {
-      this.initPopper();
+  sortData(field: string): void {
+    if (field === this.sortedField) {
+      // Đảo ngược hướng sắp xếp nếu trường đã được chọn
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Sắp xếp theo trường mới và đặt mặc định là sắp xếp tăng dần
+      this.sortedField = field;
+      this.sortOrder = 'asc';
     }
+
+    // Thực hiện sắp xếp dữ liệu
+    this.employees.sort((a, b) => {
+      const aValue = a[field];
+      const bValue = b[field];
+
+      if (this.sortOrder === 'asc') {
+        return aValue.localeCompare(bValue);
+      } else {
+        return bValue.localeCompare(aValue);
+      }
+    });
   }
 }
