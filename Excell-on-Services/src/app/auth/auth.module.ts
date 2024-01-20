@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminService } from './services/admin.service';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     ReactiveFormsModule,
     
   ],
-  providers: [],
+  providers: [AdminService],
   bootstrap: []
 })
 export class AuthModule { }

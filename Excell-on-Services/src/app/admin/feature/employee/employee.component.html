@@ -12,10 +12,19 @@
                             </h3>
                         </div>
                         <button
-                            class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                            type="button">
+                            class="bg-green-500 text-white active:bg-green-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                            type="button" (click)="createEmployee()">
                             Create Employee
                         </button>
+                    </div>
+                    <div class="relative flex w-full flex-wrap items-stretch my-2">
+                        <span
+                            class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" placeholder="Search Employees..."
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                            [value]="searchTerm" (input)="onSearchInputChange($event)" />
                     </div>
                 </div>
                 <div class="block w-full overflow-x-auto">
@@ -23,45 +32,55 @@
                     <table class="items-center w-full bg-transparent border-collapse">
                         <thead>
                             <tr>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th (click)="sortData('firstName')"
+                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Name
+                                    First Name
+                                    <span *ngIf="sortedField === 'firstName'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th (click)="sortData('lastName')"
+                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Wage
+                                    Last Name
+                                    <span *ngIf="sortedField === 'lastName'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th (click)="sortData('age')"
+                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Status
+                                    Age
+                                    <span *ngIf="sortedField === 'age'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th (click)="sortData('department')"
+                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Position
+                                    Department
+                                    <span *ngIf="sortedField === 'department'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th (click)="sortData('email')"
+                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Completion
+                                    Email
+                                    <span *ngIf="sortedField === 'email'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
@@ -72,188 +91,51 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor="let employee of filteredEmployees; let i = index">
                                 <th
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                                     <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
                                         alt="..." />
                                     <span class="ml-3 font-bold"
                                         [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-                                        Dinh Van Trong
+                                        {{ employee.firstName }}
                                     </span>
                                 </th>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    $2,500 USD
+                                    {{ employee.lastName }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <i class="fas fa-circle text-orange-500 mr-2"></i> pending
+                                    {{ employee.age }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    Manegement
+                                    {{ employee.department ? employee.department.departmentName : 'N/A' }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <div class="flex items-center">
-                                        <span class="mr-2">60%</span>
-                                        <div class="relative w-full">
-                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                                                <div style="width: 60%"
-                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {{ employee.email }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                    <a class="text-blueGray-500 block py-1 px-3" href="#pablo"
-                                        (click)="toggleDropdown($event)" #btnDropdownRef>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </a>
-                                    <div class="min-w-48 z-50" #popoverDropdownRef>
-                                        <div class="bg-white text-base float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
-                                            [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'">
-                                            <a href="#pablo"
-                                                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-                                                Update
-                                            </a>
-                                            <div class="h-0 my-2 border border-solid border-blueGray-100"></div>
-                                            <a href="#pablo"
-                                                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-                                                Delete
-                                            </a>
-                                        </div>
-                                    </div>
+                                    <button (click)="openEditForm(employee)"
+                                        class="text-blueGray-500 py-1 px-3 border hover:border-blue-500 transition">
+                                        <i class="fas fa-pencil-alt" style="color: blue;"></i>
+                                    </button>
+                                    <button (click)="deleteEmployee(employee)"
+                                        class="text-blueGray-500 py-1 px-3 border hover:border-red-500 transition">
+                                        <i class="fas fa-trash-alt" style="color: red;"></i>
+                                    </button>
                                 </td>
-                            </tr>
-                            <tr>
-                                <th
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
-                                        alt="..." />
-                                    <span class="ml-3 font-bold"
-                                        [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-                                        Pham Bui Binh Minh
-                                    </span>
-                                </th>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    $1,800 USD
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <i class="fas fa-circle text-emerald-500 mr-2"></i>
-                                    completed
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    CEO
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <div class="flex items-center">
-                                        <span class="mr-2">100%</span>
-                                        <div class="relative w-full">
-                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-emerald-200">
-                                                <div style="width: 100%"
-                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                    <p>...</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
-                                        alt="..." />
-                                    <span class="ml-3 font-bold"
-                                        [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-                                        Ta Thi Thanh Thuy
-                                    </span>
-                                </th>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    $3,150 USD
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <i class="fas fa-circle text-red-500 mr-2"></i> delayed
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    Tester
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <div class="flex items-center">
-                                        <span class="mr-2">83%</span>
-                                        <div class="relative w-full">
-                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                                                <div style="width: 73%"
-                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                    <p>...</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
-                                        alt="..." />
-                                    <span class="ml-3 font-bold"
-                                        [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-                                        Do Van Toan
-                                    </span>
-                                </th>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    $4,400 USD
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <i class="fas fa-circle text-teal-500 mr-2"></i> on schedule
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    Manegement
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <div class="flex items-center">
-                                        <span class="mr-2">90%</span>
-                                        <div class="relative w-full">
-                                            <div class="overflow-hidden h-2 text-xs flex rounded bg-teal-200">
-                                                <div style="width: 90%"
-                                                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-teal-500">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                    <p>...</p>
-                                </td>
-                            </tr>
+
 
                         </tbody>
                     </table>
                 </div>
+                <div *ngIf="filteredEmployees.length === 0">
+                    <p class="text-center pt-3 font-bold text-large">There are no results matching your search.</p>
+                  </div>
             </div>
 
         </div>
