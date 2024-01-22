@@ -33,6 +33,7 @@ import { PaymentsComponent } from './feature/payments/payments.component';
     CreateEmployeeComponent,
     EditEmployeeComponent,
     PaymentsComponent,
+    
   ],
   imports: [
     CommonModule,

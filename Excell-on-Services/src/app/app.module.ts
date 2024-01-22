@@ -37,7 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
     AuthModule,
 
     ToastrModule.forRoot({
-      positionClass: 'toast-top-center', // Bạn có thể thay đổi thành vị trí mong muốn của bạn
+      positionClass: 'toast-top-right', // Bạn có thể thay đổi thành vị trí mong muốn của bạn
       preventDuplicates: true,
     }),
     StoreModule.forRoot(appReducer),
