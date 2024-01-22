@@ -10,3 +10,8 @@ a {
   font-weight: 600;
 }
 
+.active {
+  border-bottom: solid 1px #94c6fd;
+  /* border-radius: 10px;  */
+  border-width: 0 0 2px 0;
+}
