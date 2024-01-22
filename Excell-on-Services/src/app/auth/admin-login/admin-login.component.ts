@@ -4,9 +4,11 @@ import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
 import { Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 import * as fromRoot from '../../State/index';
 import * as fromAdmin from '../../State/admin';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -26,7 +28,9 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store<fromRoot.IAppState>,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
+    private authService: AdminService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -49,13 +53,33 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  // submit() {
+  //   if (this.loginForm.valid) {
+  //     const { email, password } = this.loginForm.value;
+  //     this.store.dispatch(new fromAdmin.Login({ email, password }));
+  // } else {
+  //   this.toastr.warning('Please check the entered information.', 'Warning');
+  // }
+  // }
   submit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.store.dispatch(new fromAdmin.Login({ email, password }));
-  } else {
-      this.loginError = 'Please check the entered information.';
-  }
+  
+      // Assume you have a service that handles the login logic, and it returns an observable
+      this.authService.login(email, password).subscribe(
+        (response) => {
+          // Đăng nhập thành công
+          this.toastr.success('Login successful!', 'Success');
+          this.store.dispatch(new fromAdmin.Login({ email, password }));
+        },
+        (error) => {
+          // Đăng nhập thất bại
+          this.toastr.error('Login failed. Please check your credentials.', 'Error');
+        }
+      );
+    } else {
+      this.toastr.warning('Please check the entered information.', 'Warning');
+    }
   }
 
   onLoginSuccess() {

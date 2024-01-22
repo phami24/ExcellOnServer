@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
+
 
 import * as fromRoot from '../../../State/index';
 import * as fromAdmin from '../../../State/admin';
@@ -17,7 +19,8 @@ export class SidebarComponent implements OnInit{
   constructor(
     private store: Store<fromRoot.IAppState>,
     private router: Router,
-    private el: ElementRef, private renderer: Renderer2
+    private el: ElementRef, private renderer: Renderer2,
+    private toastr: ToastrService,
   ) {
     
   }
@@ -30,6 +33,7 @@ export class SidebarComponent implements OnInit{
     const confirmLogout = confirm('Are you sure you want to log out?');
     
     if (confirmLogout) {
+      this.toastr.success('Logout successful!', 'Success');
       this.store.dispatch(new fromAdmin.Logout());
     }
   }

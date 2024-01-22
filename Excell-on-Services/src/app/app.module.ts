@@ -19,6 +19,7 @@ import { AppEffects } from './Effects';
 import { ErrorPageComponent } from './Shared/error-page/error-page.component';
 import { ChatBoxComponent } from './Shared/chat-box/chat-box.component';
 import { AlertSuccessComponent } from './Shared/alert-success/alert-success.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -39,10 +40,14 @@ import { AlertSuccessComponent } from './Shared/alert-success/alert-success.comp
     ClientModule,
     AuthModule,
 
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center', // Bạn có thể thay đổi thành vị trí mong muốn của bạn
+      preventDuplicates: true,
+    }),
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(AppEffects),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
