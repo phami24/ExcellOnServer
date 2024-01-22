@@ -6,7 +6,7 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import * as fromClient from '../State/client/client.actions';
 import { of } from 'rxjs';
-import { AlertSuccessService } from '../auth/services/alert-success.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ClientEffects {
@@ -14,7 +14,7 @@ export class ClientEffects {
     private actions: Actions,
     private clientService: ClientService,
     private router: Router,
-    private alertService: AlertSuccessService
+    private toastr: ToastrService,
   ) {}
 
   login$ = createEffect(() =>
@@ -29,8 +29,7 @@ export class ClientEffects {
               localStorage.setItem('token', response.token);
 
               // Trigger an alert for successful login
-              // this.alertService.showSuccessAlert('Success alert!', 'Change a few things up and try submitting again.');
-              alert('Login successful');
+              this.toastr.success('Login successful!', 'Success');
               // Navigate to a component that displays the alert
 
               return new fromClient.LoginSuccess({
@@ -39,13 +38,13 @@ export class ClientEffects {
               });
             } else {
               // Trigger an alert for unsuccessful login
-              alert('Login Failed!');
+              this.toastr.error('Login Failed!', 'Error');
               return new fromClient.LoginFail();
             }
           }),
           catchError(() => {
             // Trigger an alert for unsuccessful login due to an error
-            alert('Login Failed due to an error!');
+            this.toastr.error('Login failed. Please check your credentials.', 'Error');
             return of(new fromClient.LoginFail());
           })
         );
@@ -67,7 +66,7 @@ export class ClientEffects {
                 localStorage.setItem('token', response.token);
 
                 // Trigger an alert for successful registration
-                alert('Registration Successful!');
+                this.toastr.success('Registration successful!', 'Success');
 
                 // Navigate to a component that displays the alert
 
@@ -76,13 +75,14 @@ export class ClientEffects {
                 });
               } else {
                 // Trigger an alert for unsuccessful registration
-                alert('Registration Failed!');
+                this.toastr.error('Registration Failed!', 'Error');
                 return new fromClient.RegisterFail();
               }
             }),
             catchError(() => {
               // Trigger an alert for unsuccessful registration due to an error
-              alert('Registration Failed due to an error!');
+              // alert('Registration Failed due to an error!');
+              this.toastr.error('Registration failed. Please check your credentials.', 'Error');
               return of(new fromClient.RegisterFail());
             })
           );
@@ -98,7 +98,7 @@ export class ClientEffects {
         tap(() => {
           // Clear token from local storage
           localStorage.removeItem('token');
-          alert('Logout Successfully!');
+          this.toastr.success('Logout Successfully!', 'Success');
         })
       ),
     { dispatch: false }
