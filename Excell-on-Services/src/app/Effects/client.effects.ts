@@ -6,13 +6,15 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import * as fromClient from '../State/client/client.actions';
 import { of } from 'rxjs';
+import { AlertSuccessService } from '../auth/services/alert-success.service';
 
 @Injectable()
 export class ClientEffects {
   constructor(
     private actions: Actions,
     private clientService: ClientService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertSuccessService
   ) {}
 
   login$ = createEffect(() =>
@@ -27,8 +29,8 @@ export class ClientEffects {
               localStorage.setItem('token', response.token);
 
               // Trigger an alert for successful login
-              alert('Login Successfully!');
-
+              // this.alertService.showSuccessAlert('Success alert!', 'Change a few things up and try submitting again.');
+              alert('Login successful');
               // Navigate to a component that displays the alert
 
               return new fromClient.LoginSuccess({
@@ -89,15 +91,16 @@ export class ClientEffects {
   );
 
   // New effect for handling LOGOUT
-  logout$ = createEffect(() =>
-    this.actions.pipe(
-      ofType(fromClient.EClientActions.LOGOUT),
-      tap(() => {
-        // Clear token from local storage
-        localStorage.removeItem('token');
-        alert('Logout Successfully!');
-      })
-    ),
-    { dispatch: false } 
+  logout$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromClient.EClientActions.LOGOUT),
+        tap(() => {
+          // Clear token from local storage
+          localStorage.removeItem('token');
+          alert('Logout Successfully!');
+        })
+      ),
+    { dispatch: false }
   );
 }

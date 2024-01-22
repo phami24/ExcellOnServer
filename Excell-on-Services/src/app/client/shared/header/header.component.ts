@@ -30,6 +30,11 @@ export class HeaderComponent {
     });
   }
   logout() {
-    this.store.dispatch(new fromUser.Logout());
+    const confirmLogout = confirm('Are you sure you want to log out?');
+    
+    if (confirmLogout) {
+      this.store.dispatch(new fromUser.Logout());
+      this.router.navigate(['/home']);
+    }
   }
 }

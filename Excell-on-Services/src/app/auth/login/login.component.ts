@@ -100,4 +100,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     localStorage.removeItem('token'); 
     this.router.navigate(['/auth/login']); 
   }
+
+  
+  showAlert: boolean = false;
+  alertMessage: string = '';
+
+  // In your login success block
+  handleLoginSuccess() {
+    this.showAlert = true;
+    this.alertMessage = 'Login Success';
+  }
 }

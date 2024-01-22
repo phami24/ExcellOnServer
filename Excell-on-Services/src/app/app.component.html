@@ -6,7 +6,9 @@
   </ng-container>
   <ng-container *ngIf="!isAdminPage()">
     <app-header></app-header>
-    <router-outlet></router-outlet>
+    <router-outlet>
+      <app-chat-box class="z-50 fixed bottom-20 right-9"></app-chat-box>
+    </router-outlet>
     <app-footer></app-footer>
   </ng-container>
 </ng-container>

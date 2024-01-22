@@ -17,6 +17,8 @@ import { appReducer } from './State';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './Effects';
 import { ErrorPageComponent } from './Shared/error-page/error-page.component';
+import { ChatBoxComponent } from './Shared/chat-box/chat-box.component';
+import { AlertSuccessComponent } from './Shared/alert-success/alert-success.component';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -24,6 +26,8 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     AppComponent,
     ErrorPageComponent,
+    ChatBoxComponent,
+    AlertSuccessComponent,
   ],
   imports: [
     BrowserModule,
