@@ -27,7 +27,7 @@ const routes: Routes = [
         data: { title: 'Customer management' },
       },
       {
-        path: 'room-department/:departmentId',
+        path: 'department/room-department/:departmentId',
         // truyền thằng như này. nhưng mà lấy data mà truy vấn lại nhiều lần lag. Nãy gửi cho cái link ấy. đọc xong lên utube xem
         component: RoomDepartmentComponent,
         data: { title: 'Customer management' },

@@ -109,7 +109,7 @@ export class DepartmentComponent implements OnInit {
   }
   
   viewRoomDepartment(departmentId: any) {
-    this.router.navigate(['admin/department/room-department', departmentId]);
+    this.router.navigate(['department/room-department', departmentId]);
   }
   
 }
