@@ -93,21 +93,4 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
     });
   }
-
-  // New method for logging out
-  logout() {
-    this.store.dispatch(new fromUser.Logout());
-    localStorage.removeItem('token'); 
-    this.router.navigate(['/auth/login']); 
-  }
-
-  
-  showAlert: boolean = false;
-  alertMessage: string = '';
-
-  // In your login success block
-  handleLoginSuccess() {
-    this.showAlert = true;
-    this.alertMessage = 'Login Success';
-  }
 }
