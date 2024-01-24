@@ -1,24 +1,32 @@
-<!-- room-department.component.html -->
-
 <div
   class="md:w-[calc(100%-256px)] md:ml-64 bg-white min-h-screen transition-all p-8"
 >
-  <div class="bg-gray-100 p-10 rounded-xl">
-    <h1 class="text-lg md:text-xl lg:text-2xl font-bold mb-2 font-bold">
-      <strong>{{ departmentInfo.departmentName }}</strong>
-    </h1>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-      <div
-        *ngFor="let employee of departmentInfo.employees"
-        class="p-4 rounded-xl shadow-md layer1 relative"
-      >
-        <h2 class="text-lg md:text-xl lg:text-2xl font-bold mb-2 font-bold">
-          <strong>{{ employee.name }}</strong>
-        </h2>
-        <p class="text-gray-700">Position: {{ employee.position }}</p>
-        <!-- Thêm các thông tin khác của nhân viên -->
+  <div class="bg-gray-100 p-6 md:p-10 rounded-xl">
+    <div class="flex flex-wrap items-center">
+      <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+          <h1 class="text-xl md:text-2xl lg:text-3xl font-bold mb-4">
+            {{ departmentInfo.departmentName }}</h1>
       </div>
+      
+  </div>
+
+    <div class="overflow-x-auto mb-8">
+      <table class="min-w-full border rounded-lg overflow-hidden">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Name</th>
+            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Position</th>
+            <!-- Add other headers as needed -->
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr *ngFor="let employee of departmentInfo.employees">
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ employee.name }}</td>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ employee.position }}</td>
+            <!-- Add other cells with employee information as needed -->
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./room-department.component.css']
 })
 export class RoomDepartmentComponent implements OnInit {
+  departmentName : any;
   departmentId: any;
   departmentInfo: any = {};
 
@@ -18,11 +19,15 @@ export class RoomDepartmentComponent implements OnInit {
     // Lấy thông tin từ tham số động
     this.route.params.subscribe(params => {
       this.departmentId = params['departmentId'];
+      this.departmentName = params['departmentName'];
       // Gọi hàm để load thông tin của phòng
       this.loadDepartmentInfo();
     });
   }
 
+  editDepartment(){
+    
+  }
   // Hàm để load thông tin của phòng (thay thế bằng logic thực tế)
   loadDepartmentInfo() {
     
@@ -30,7 +35,11 @@ export class RoomDepartmentComponent implements OnInit {
       departmentName: 'HR Department',
       employees: [
         { id: 1, name: 'John Doe', position: 'HR Manager' },
-        { id: 2, name: 'Jane Smith', position: 'HR Specialist' }
+        { id: 2, name: 'Jane Smith', position: 'HR Specialist' },
+        { id: 3, name: 'Minh', position: 'HR Manager' },
+        { id: 4, name: 'Thuy', position: 'HR Dev' },
+        { id: 5, name: 'Trong', position: 'HR Dev' },
+        { id: 6, name: 'Toan', position: 'HR Dev' }
       ]
     };
   }

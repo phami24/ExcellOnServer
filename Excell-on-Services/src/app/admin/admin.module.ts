@@ -18,6 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditEmployeeComponent } from './feature/employee/edit-employee/edit-employee.component';
 import { PaymentsComponent } from './feature/payments/payments.component';
+import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
+import { CreateDepartmentComponent } from './feature/department/create-department/create-department.component';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { PaymentsComponent } from './feature/payments/payments.component';
     CreateEmployeeComponent,
     EditEmployeeComponent,
     PaymentsComponent,
+    RoomDepartmentComponent,
+    CreateDepartmentComponent
     
   ],
   imports: [

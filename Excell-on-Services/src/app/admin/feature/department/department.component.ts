@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DepartmentService } from './services/department.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { CreateDepartmentComponent } from './create-department/create-department.component';
+
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -15,7 +18,8 @@ export class DepartmentComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private departmentService: DepartmentService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) {}
   ngOnInit(): void {
     this.loadDepartments();
@@ -63,10 +67,26 @@ export class DepartmentComponent implements OnInit {
     }
   }
 
-  deleteDepartment(id: number) {
-    this.departmentService.deleteDepartment(id).subscribe(() => {
-      this.loadDepartments();
-      this.resetForm();
+  deleteDepartment(department: any): void {
+    if (confirm('Are you sure you want to delete this employee?')) {
+      // Gọi service hoặc API để xóa nhân viên
+      this.departmentService.deleteDepartment(department.departmentId).subscribe(() => {
+        // Sau khi xóa, làm điều gì đó nếu cần
+        // Ví dụ: Reload danh sách nhân viên
+        this.toastr.success('Delete successful!', 'Success');
+        this.loadDepartments();
+      });
+    }
+  }
+  
+  createDepartment() {
+    const dialogRef = this.dialog.open(CreateDepartmentComponent, {
+      width: '550px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      // Thực hiện các hành động sau khi đóng modal (nếu cần)
     });
   }
 
