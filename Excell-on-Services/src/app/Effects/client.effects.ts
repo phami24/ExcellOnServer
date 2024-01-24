@@ -27,7 +27,7 @@ export class ClientEffects {
               localStorage.setItem('token', response.token);
 
               // Trigger an alert for successful login
-              alert('Login Successfully!');
+              // alert('Login Successfully!');
 
               // Navigate to a component that displays the alert
 
@@ -37,13 +37,13 @@ export class ClientEffects {
               });
             } else {
               // Trigger an alert for unsuccessful login
-              alert('Login Failed!');
+              // alert('Login Failed!');
               return new fromClient.LoginFail();
             }
           }),
           catchError(() => {
             // Trigger an alert for unsuccessful login due to an error
-            alert('Login Failed due to an error!');
+            // alert('Login Failed due to an error!');
             return of(new fromClient.LoginFail());
           })
         );
@@ -95,7 +95,7 @@ export class ClientEffects {
       tap(() => {
         // Clear token from local storage
         localStorage.removeItem('token');
-        alert('Logout Successfully!');
+        // alert('Logout Successfully!');
       })
     ),
     { dispatch: false } 

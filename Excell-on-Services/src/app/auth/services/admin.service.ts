@@ -6,7 +6,7 @@ import * as fromAdmin from '../../State/admin/admin.actions';
 import { IAdminState } from 'src/app/State/admin';
 import { Observable, catchError, map } from 'rxjs';
 
-const baseUrl = 'https://localhost:7180/api';
+const baseUrl = 'https://localhost:7260/api';
 
 @Injectable({
   providedIn: 'root'
@@ -30,13 +30,14 @@ export class AdminService {
  
 
   login(email: string, password: string): Observable<{ result: boolean; token: string }> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { email, password };
-
-    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/Login`, body, { headers }).pipe(
+  
+    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/Emp-Login`, body).pipe(
       map(response => response),
       catchError(error => {
         console.error('Login failed:', error);
+        // Xử lý lỗi ở đây, ví dụ: hiển thị thông báo lỗi cho người dùng
+        // Hoặc dispatch một action để xử lý lỗi trong store
         throw error;
       })
     );

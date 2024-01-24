@@ -40,7 +40,8 @@
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
                                     First Name
-                                    <span *ngIf="sortedField === 'firstName'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
+                                    <span *ngIf="sortedField === 'firstName'" class="arrow"
+                                        [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('lastName')"
                                     class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -50,7 +51,8 @@
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
                                     Last Name
-                                    <span *ngIf="sortedField === 'lastName'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
+                                    <span *ngIf="sortedField === 'lastName'" class="arrow"
+                                        [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('age')"
                                     class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -59,8 +61,9 @@
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Age
-                                    <span *ngIf="sortedField === 'age'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
+                                    DOB
+                                    <span *ngIf="sortedField === 'age'" class="arrow" [class.asc]="sortOrder === 'asc'"
+                                        [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('department')"
                                     class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -69,8 +72,9 @@
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Department
-                                    <span *ngIf="sortedField === 'department'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
+                                    Email
+                                    <span *ngIf="sortedField === 'department'" class="arrow"
+                                        [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('email')"
                                     class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -79,8 +83,20 @@
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    Email
-                                    <span *ngIf="sortedField === 'email'" class="arrow" [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
+                                    Phone
+                                    <span *ngIf="sortedField === 'email'" class="arrow"
+                                        [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
+                                </th>
+                                <th (click)="sortData('email')"
+                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            ">
+                                    Department
+                                    <span *ngIf="sortedField === 'email'" class="arrow"
+                                        [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
@@ -94,8 +110,9 @@
                             <tr *ngFor="let employee of filteredEmployees; let i = index">
                                 <th
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                                    <img src="assets/images/avatar.png" class="h-12 w-12 bg-white rounded-full border"
+                                    <img src="{{employee.avatar}}" class="h-12 w-12 bg-white rounded-full border"
                                         alt="..." />
+                                    
                                     <span class="ml-3 font-bold"
                                         [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
                                         {{ employee.firstName }}
@@ -107,15 +124,20 @@
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    {{ employee.age }}
+                                    {{ employee.dob }}
                                 </td>
-                                <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    {{ employee.department ? employee.department.departmentName : 'N/A' }}
-                                </td>
+
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     {{ employee.email }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ employee.phone }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ employee.departmentId }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
@@ -134,8 +156,8 @@
                     </table>
                 </div>
                 <div *ngIf="filteredEmployees.length === 0">
-                    <p class="text-center pt-3 font-bold text-large">There are no results matching your search.</p>
-                  </div>
+                    <p class="text-center pt-3 font-bold text-large">0 result.</p>
+                </div>
             </div>
 
         </div>

@@ -1,18 +1,25 @@
 // employee.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  private apiUrl = 'https://localhost:7180/api/Employee';
+  private apiUrl = 'https://localhost:7260/api/Employee';
 
   constructor(private http: HttpClient) {}
 
   getEmployees(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`);
+    const token = localStorage.getItem('token');
+
+    // Tạo header với Bearer token
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<any[]>(`${this.apiUrl}`, { headers });
   }
 
   updateEmployee(employeeId: number, updatedEmployee: any): Observable<any> {
