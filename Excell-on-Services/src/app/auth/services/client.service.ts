@@ -34,7 +34,7 @@ export class ClientService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { email, password };
 
-    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/Login`, body, { headers }).pipe(
+    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/Emp-Login`, body, { headers }).pipe(
       map(response => response),
       catchError(error => {
         console.error('Login failed:', error);

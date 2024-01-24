@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import * as fromRoot from '../../../State/index';
 import * as fromUser from '../../../State/client';
 import { initFlowbite } from 'flowbite';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,8 @@ export class HeaderComponent {
   userEmail$: Observable<string> = new Observable();
   constructor(
     private store: Store<fromRoot.IAppState>,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) {
     
   }
@@ -33,6 +35,7 @@ export class HeaderComponent {
     const confirmLogout = confirm('Are you sure you want to log out?');
     
     if (confirmLogout) {
+      this.toastr.success('Logout Successfully!', 'Success');
       this.store.dispatch(new fromUser.Logout());
       this.router.navigate(['/home']);
     }

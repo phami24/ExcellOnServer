@@ -89,18 +89,4 @@ export class ClientEffects {
       })
     )
   );
-
-  // New effect for handling LOGOUT
-  logout$ = createEffect(
-    () =>
-      this.actions.pipe(
-        ofType(fromClient.EClientActions.LOGOUT),
-        tap(() => {
-          // Clear token from local storage
-          localStorage.removeItem('token');
-          this.toastr.success('Logout Successfully!', 'Success');
-        })
-      ),
-    { dispatch: false }
-  );
 }
