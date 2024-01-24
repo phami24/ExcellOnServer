@@ -12,10 +12,32 @@
 .action {
     padding: 0px 25px 20px;
     justify-content: flex-end;
+
     button {
-        width: 80px; 
+        width: 80px;
         flex: 0 0 auto;
         margin-left: 10px;
-      }
+    }
 
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    padding-right: 30px;
+    /* Đảm bảo có đủ không gian cho biểu tượng */
+}
+
+.password-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+input[type="file"] {
+    display: none;
 }

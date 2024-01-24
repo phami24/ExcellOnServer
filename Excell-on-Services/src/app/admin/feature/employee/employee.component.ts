@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import createPopper from 'popper.js';
 import { EmployeeService } from './state/employee.service';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css'],
 })
-export class EmployeeComponent implements OnInit, AfterViewInit {
+export class EmployeeComponent implements OnInit {
   employees: any[] = [];
   dropdownShowStates: { show: boolean }[] = [];
   isDropdownVisible: boolean[] = [];
@@ -55,22 +54,9 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef!: ElementRef;
   @ViewChild('popoverDropdownRef', { static: false })
   popoverDropdownRef!: ElementRef;
-  ngAfterViewInit(): void {
-    new createPopper(this.btnDropdownRef.nativeElement,
-      this.popoverDropdownRef.nativeElement,
-      {
-        placement: 'bottom-start',
-      });
-  }
+  
 
-  initPopper(): void {
-    // Gọi createPopper ở đây
-    new createPopper(this.btnDropdownRef.nativeElement,
-      this.popoverDropdownRef.nativeElement,
-      {
-        placement: 'bottom-start',
-      });
-  }
+  
 
   onSearchInputChange(event: any): void {
     const value = event?.target?.value || '';
