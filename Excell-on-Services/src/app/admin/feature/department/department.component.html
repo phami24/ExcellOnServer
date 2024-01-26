@@ -1,23 +1,36 @@
-<div class=" md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 mt-13 min-h-screen transition-all">
+<!-- department-list.component.html -->
 
-    <div class="bg-gray-100 p-4 rounded-xl">
-        <div class="grid grid-cols-4 gap-4">
-          <div class="bg-white p-4 rounded-xl shadow-md layer1">
-            <h2 class="text-lg font-bold mb-2">HR</h2>
-            <p class="text-gray-700">Content for layer 1, cell 1</p>
-          </div>
-          <div class="bg-white p-4 rounded-xl shadow-md layer2">
-            <h2 class="text-lg font-bold mb-2">Marketing</h2>
-            <p class="text-gray-700">Content for layer 2, cell 2</p>
-          </div>
-          <div class="bg-white p-4 rounded-xl shadow-md layer3">
-            <h2 class="text-lg font-bold mb-2">IT</h2>
-            <p class="text-gray-700">Content for layer 3, cell 3</p>
-          </div>
-          <div class="bg-white p-4 rounded-xl shadow-md layer4">
-            <h2 class="text-lg font-bold mb-2">Advise</h2>
-            <p class="text-gray-700">Content for layer 4, cell 4</p>
+<div class="md:w-[calc(100%-256px)] md:ml-64 bg-white min-h-screen transition-all p-8">
+
+  <div class="bg-gray-100 p-10 rounded-xl">
+    <h1 class="text-lg md:text-xl lg:text-2xl font-bold mb-2 font-bold"><strong>List Room </strong></h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+      <div *ngFor="let department of departments; let i = index" class="p-4 rounded-xl shadow-md layer1 relative">
+        <h2 class="text-lg md:text-xl lg:text-2xl font-bold mb-2 font-bold">
+          <strong (click)="viewRoomDepartment(department.departmentId)">
+            <a [routerLink]="['room-department', department.departmentId]">{{ department.departmentName }}</a>
+          </strong>
+        </h2>        <p class="text-gray-700">Content for layer 1, cell 1</p>
+        <p class="text-gray-700">Content for layer 1, cell 1</p>
+
+        <div class="absolute top-0 right-0 mt-2">
+          <div class="relative group">
+            <button class="bg-transparent border-none group-hover:bg-gray-200 rounded-md p-2 focus:outline-none">
+              <i class="fa fa-ellipsis-v"></i>
+            </button>
+            <ul class="hidden bg-white border rounded-md shadow-md right-0 mt-2 group-hover:block">
+              <li>
+                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                  (click)="performAction('move')">Move</a>
+              </li>
+              <li class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                (click)="deleteDepartment(department)">Delete
+              </li>
+            </ul>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </div>

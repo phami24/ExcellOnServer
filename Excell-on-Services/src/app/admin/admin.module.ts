@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditEmployeeComponent } from './feature/employee/edit-employee/edit-employee.component';
+import { PaymentsComponent } from './feature/payments/payments.component';
 
 
 @NgModule({
@@ -31,6 +32,8 @@ import { EditEmployeeComponent } from './feature/employee/edit-employee/edit-emp
     ProfileAdminComponent,
     CreateEmployeeComponent,
     EditEmployeeComponent,
+    PaymentsComponent,
+    
   ],
   imports: [
     CommonModule,

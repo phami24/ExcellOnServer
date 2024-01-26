@@ -8,8 +8,8 @@ import { EmployeeComponent } from './feature/employee/employee.component';
 import { ServicesComponent } from './feature/services/services.component';
 import { CommentsComponent } from './feature/comments/comments.component';
 import { ProfileAdminComponent } from './feature/profile-admin/profile-admin.component';
-
-
+import { PaymentsComponent } from './feature/payments/payments.component';
+import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
 
 const routes: Routes = [
   {
@@ -17,8 +17,9 @@ const routes: Routes = [
     children: [
       {
         path: 'main',
-        component: MainComponent,canActivate: [AuthAdminGuard] ,
-        data: { title: 'Main' },
+        component: MainComponent,
+        canActivate: [AuthAdminGuard],
+        data: { title: 'Dashboard' },
       },
       {
         path: 'customer',
@@ -26,9 +27,21 @@ const routes: Routes = [
         data: { title: 'Customer management' },
       },
       {
+        path: 'department/room-department/:departmentId',
+        // truyền thằng như này. nhưng mà lấy data mà truy vấn lại nhiều lần lag. Nãy gửi cho cái link ấy. đọc xong lên utube xem
+        component: RoomDepartmentComponent,
+        data: { title: 'Customer management' },
+      },
+      {
         path: 'department',
         component: DepartmentComponent,
         data: { title: 'Department' },
+        // children: [                     
+        //   {
+        //     path: 'room-department/:departmentId',
+        //     component: RoomDepartmentComponent,
+        //   },
+        // ],
       },
       {
         path: 'employee',
@@ -49,14 +62,18 @@ const routes: Routes = [
         path: 'profile-admin',
         component: ProfileAdminComponent,
         data: { title: 'Profile Admin' },
-      }
+      },
+      {
+        path: 'payments',
+        component: PaymentsComponent,
+        data: { title: 'Payment' },
+      },
     ],
   },
-  
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

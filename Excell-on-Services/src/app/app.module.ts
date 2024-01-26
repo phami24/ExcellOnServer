@@ -16,11 +16,19 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './State';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './Effects';
+import { ErrorPageComponent } from './Shared/error-page/error-page.component';
+import { ChatBoxComponent } from './Shared/chat-box/chat-box.component';
+import { AlertSuccessComponent } from './Shared/alert-success/alert-success.component';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    ErrorPageComponent,
+    ChatBoxComponent,
+    AlertSuccessComponent,
+  ],
   imports: [
     BrowserModule,
     CommonModule,
@@ -33,7 +41,7 @@ import { ToastrModule } from 'ngx-toastr';
     AuthModule,
 
     ToastrModule.forRoot({
-      positionClass: 'toast-top-center', // Bạn có thể thay đổi thành vị trí mong muốn của bạn
+      positionClass: 'toast-top-right', // Bạn có thể thay đổi thành vị trí mong muốn của bạn
       preventDuplicates: true,
     }),
     StoreModule.forRoot(appReducer),

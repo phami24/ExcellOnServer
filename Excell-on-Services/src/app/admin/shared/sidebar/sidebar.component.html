@@ -81,7 +81,7 @@
             #adminDashboard="routerLinkActive"
             [ngClass]="
               adminDashboard.isActive
-                ? 'text-red-600 hover:text-red-700'
+                ? 'text-blue-400 hover:text-blue-600'
                 : 'text-blueGray-700 hover:text-blueGray-500'
             "
           >
@@ -103,7 +103,7 @@
             #adminDepartments="routerLinkActive"
             [ngClass]="
               adminDepartments.isActive
-                ? 'text-red-600 hover:text-red-700'
+                ? 'text-blue-400 hover:text-blue-600'
                 : 'text-blueGray-700 hover:text-blueGray-500'
             "
           >
@@ -125,12 +125,12 @@
             #adminEmployees="routerLinkActive"
             [ngClass]="
               adminEmployees.isActive
-                ? 'text-red-600 hover:text-red-700'
+                ? 'text-blue-400 hover:text-blue-600'
                 : 'text-blueGray-700 hover:text-blueGray-500'
             "
           >
             <i
-              class="fa-solid  fa-users mr-2 text-sm"
+              class="fa-solid fa-users mr-2 text-sm"
               [ngClass]="
                 adminEmployees.isActive ? 'opacity-75' : 'text-blueGray-300'
               "
@@ -147,7 +147,7 @@
             #adminServicess="routerLinkActive"
             [ngClass]="
               adminServicess.isActive
-                ? 'text-red-600 hover:text-red-700'
+                ? 'text-blue-400 hover:text-blue-600'
                 : 'text-blueGray-700 hover:text-blueGray-500'
             "
           >
@@ -161,47 +161,68 @@
           </a>
         </li>
         <li class="items-center">
-            <a
-              [routerLink]="['/admin/customer']"
-              class="text-xs uppercase py-3 font-bold block"
-              routerLinkActive
-              #adminCustomers="routerLinkActive"
+          <a
+            [routerLink]="['/admin/customer']"
+            class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive
+            #adminCustomers="routerLinkActive"
+            [ngClass]="
+              adminCustomers.isActive
+                ? 'text-blue-400 hover:text-blue-600'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fa-solid fa-handshake mr-2 text-sm"
               [ngClass]="
-                adminCustomers.isActive
-                  ? 'text-red-600 hover:text-red-700'
-                  : 'text-blueGray-700 hover:text-blueGray-500'
+                adminCustomers.isActive ? 'opacity-75' : 'text-blueGray-300'
               "
-            >
-              <i
-                class="fa-solid fa-handshake mr-2 text-sm"
-                [ngClass]="
-                  adminCustomers.isActive ? 'opacity-75' : 'text-blueGray-300'
-                "
-              ></i>
-              Customer
-            </a>
-          </li>
-          <li class="items-center">
-            <a
-              [routerLink]="['/admin/comments']"
-              class="text-xs uppercase py-3 font-bold block"
-              routerLinkActive
-              #adminComments="routerLinkActive"
+            ></i>
+            Customer
+          </a>
+        </li>
+        <li class="items-center">
+          <a
+            [routerLink]="['/admin/payments']"
+            class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive
+            #adminPayments="routerLinkActive"
+            [ngClass]="
+              adminPayments.isActive
+                ? 'text-blue-400 hover:text-blue-600'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fa-solid fa-money-bill mr-2 text-sm"
               [ngClass]="
-                adminComments.isActive
-                  ? 'text-red-600 hover:text-red-700'
-                  : 'text-blueGray-700 hover:text-blueGray-500'
+                adminPayments.isActive ? 'opacity-75' : 'text-blueGray-300'
               "
-            >
-              <i
-                class="fa-solid fa-comments mr-2 text-sm"
-                [ngClass]="
-                  adminComments.isActive ? 'opacity-75' : 'text-blueGray-300'
-                "
-              ></i>
-              Comments
-            </a>
-          </li>
+            ></i>
+            Payments
+          </a>
+        </li>
+        <li class="items-center">
+          <a
+            [routerLink]="['/admin/comments']"
+            class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive
+            #adminComments="routerLinkActive"
+            [ngClass]="
+              adminComments.isActive
+                ? 'text-blue-400 hover:text-blue-600'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            "
+          >
+            <i
+              class="fa-solid fa-comments mr-2 text-sm"
+              [ngClass]="
+                adminComments.isActive ? 'opacity-75' : 'text-blueGray-300'
+              "
+            ></i>
+            Comments
+          </a>
+        </li>
       </ul>
 
       <!-- Divider -->
@@ -224,16 +245,6 @@
             Login
           </a>
         </li>
-
-        <li class="items-center">
-          <a
-            [routerLink]="['/auth/register']"
-            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-          >
-            <i class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>
-            Register
-          </a>
-        </li>
       </ul>
 
       <!-- Divider -->
@@ -247,7 +258,6 @@
       <!-- Navigation -->
 
       <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-
         <li class="items-center">
           <a
             [routerLink]="['admin/profile-admin']"
@@ -258,19 +268,15 @@
           </a>
         </li>
         <li class="items-center">
-            <a
-              (click)="logout()"
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-            >
-              <i class="fa-solid fa-right-from-bracket mr-2 text-sm"></i>
-              Logout
-            </a>
-          </li>
+          <a
+            (click)="logout()"
+            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+          >
+            <i class="fa-solid fa-right-from-bracket mr-2 text-sm"></i>
+            Logout
+          </a>
+        </li>
       </ul>
-
-      <!-- Divider -->
-      <hr class="my-4 md:min-w-full" />
-      <!-- Heading -->
     </div>
   </div>
 </nav>
