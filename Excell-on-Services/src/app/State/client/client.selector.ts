@@ -1,7 +1,7 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { IClientState, IClientLoginState, IClientRegistrationState } from './client.states';
 
-const getClientState = createFeatureSelector<IClientState>('client');
+const getClientState = createFeatureSelector<IClientState>('user');
 
 // Selectors for login state
 export const getLoginState = createSelector(

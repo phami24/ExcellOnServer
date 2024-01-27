@@ -3,40 +3,37 @@ import { IAdminLoginState, IAdminState } from './admin.states';
 
 const getAdminState = createFeatureSelector<IAdminState>('admin');
 
-
-export const getLoginState = createSelector(
+export const getAdminLoginState = createSelector(
   getAdminState,
-  (state: IAdminState) => state.login
+  (state: IAdminState) => state.loginAdmin
 );
 
-export const getLoadingLogin = createSelector(
-  getLoginState,
+export const getAdminLoadingLogin = createSelector(
+  getAdminLoginState,
   (loginState: IAdminLoginState) => loginState.loading
 );
 
-export const getSuccessLogin = createSelector(
-  getLoginState,
+export const getAdminSuccessLogin = createSelector(
+  getAdminLoginState,
   (loginState: IAdminLoginState) => loginState.success
 );
 
-export const getFailLogin = createSelector(
-  getLoginState,
+export const getAdminFailLogin = createSelector(
+  getAdminLoginState,
   (loginState: IAdminLoginState) => loginState.fail
 );
 
-export const getToken = createSelector(
-  getLoginState,
-  (loginState: IAdminLoginState) => loginState.token
+export const getAdminToken = createSelector(
+  getAdminLoginState,
+  (loginState: IAdminLoginState) => loginState.tokenAdmin
 );
 
-export const getUserEmail = createSelector(
-  getLoginState,
+export const getAdminEmail = createSelector(
+  getAdminLoginState,
   (loginState: IAdminLoginState) => loginState.userName
 );
 
-
-export const getIsLoggedOut = createSelector(
-  getLoginState,
-  (loginState: IAdminLoginState) =>
-    !loginState.loading  && !loginState.success
+export const getAdminIsLoggedOut = createSelector(
+  getAdminLoginState,
+  (loginState: IAdminLoginState) => !loginState.loading && !loginState.success
 );

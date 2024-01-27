@@ -1,29 +1,29 @@
 import { Action } from "@ngrx/store";
 
 export enum EAdminActions {
-    LOGIN = '[USER] Login',
-    LOGIN_SUCCESS = '[USER] Login Success',
-    LOGIN_FAIL = '[USER] Login Fail',
-    LOGOUT = '[USER] Logout', 
+    LOGIN_ADMIN = '[ADMIN] Login',
+    LOGIN_SUCCESS_ADMIN = '[ADMIN] Login Success',
+    LOGIN_FAIL_ADMIN = '[ADMIN] Login Fail',
+    LOGOUT_ADMIN = '[ADMIN] Logout', 
   }
   
-  export class Login implements Action {
-    public readonly type = EAdminActions.LOGIN;
+  export class LoginAdmin implements Action {
+    public readonly type = EAdminActions.LOGIN_ADMIN;
     constructor(public payload: { email: string; password: string }) {}
   }
   
-  export class LoginSuccess implements Action {
-    public readonly type = EAdminActions.LOGIN_SUCCESS;
-    constructor(public payload: { userName: string, token: string }) {}
+  export class LoginSuccessAdmin implements Action {
+    public readonly type = EAdminActions.LOGIN_SUCCESS_ADMIN;
+    constructor(public payload: { userName: string, tokenAdmin: string }) {}
   }
   
-  export class LoginFail implements Action {
-    public readonly type = EAdminActions.LOGIN_FAIL;
+  export class LoginFailAdmin implements Action {
+    public readonly type = EAdminActions.LOGIN_FAIL_ADMIN;
     constructor() {}
   }
-  export class Logout implements Action {
-    readonly type = EAdminActions.LOGOUT;
+  export class LogoutAdmin implements Action {
+    readonly type = EAdminActions.LOGOUT_ADMIN;
   }
   
-  export type AdminActions = Login | LoginSuccess | LoginFail | Logout;
+  export type AdminActions = LoginAdmin | LoginSuccessAdmin | LoginFailAdmin | LogoutAdmin;
   

@@ -19,20 +19,20 @@ export class AdminService {
   }
 
   private checkAuthenticationStatus() {
-    const token = localStorage.getItem('token');
+    const tokenAdmin = localStorage.getItem('tokenAdmin');
 
-    if (token) {
+    if (tokenAdmin) {
       // Dispatch an action to set the authentication status
-      this.store.dispatch(new fromAdmin.LoginSuccess({ userName: '', token }));
+      this.store.dispatch(new fromAdmin.LoginSuccessAdmin({ userName: '', tokenAdmin }));
     }
   }
 
  
 
-  login(email: string, password: string): Observable<{ result: boolean; token: string }> {
+  login(email: string, password: string): Observable<{ result: boolean; tokenAdmin: string }> {
     const body = { email, password };
   
-    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/Emp-Login`, body).pipe(
+    return this.http.post<{ result: boolean; tokenAdmin: string }>(`${baseUrl}/Auth/Emp-Login`, body).pipe(
       map(response => response),
       catchError(error => {
         console.error('Login failed:', error);
@@ -46,10 +46,10 @@ export class AdminService {
 
   // New method for logging out
   logout(): void {
-    // Clear token from local storage
-    localStorage.removeItem('token');
+    // Clear tokenAdmin from local storage
+    localStorage.removeItem('tokenAdmin');
 
     // Optionally, dispatch a LOGOUT action to notify the state about the logout
-    this.store.dispatch(new fromAdmin.Logout());
+    this.store.dispatch(new fromAdmin.LogoutAdmin());
   }
 }

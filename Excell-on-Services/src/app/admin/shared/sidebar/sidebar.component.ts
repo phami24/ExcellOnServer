@@ -25,16 +25,18 @@ export class SidebarComponent implements OnInit{
     
   }
   ngOnInit(): void {
-    this.store.select(fromAdmin.getIsLoggedOut).subscribe((isLoggedOut) => {
+    this.store.select(fromAdmin.getAdminIsLoggedOut).subscribe((isLoggedOut) => {
       this.isLoggedOut = isLoggedOut;
     });
   }
+  
   logout() {
     const confirmLogout = confirm('Are you sure you want to log out?');
     
     if (confirmLogout) {
-      this.toastr.success('Logout successful!', 'Success');
-      this.store.dispatch(new fromAdmin.Logout());
+      this.toastr.success('Logout Successfully!', 'Success');
+      this.store.dispatch(new fromAdmin.LogoutAdmin());
+      this.router.navigate(['/auth/adminlogin']);
     }
   }
 

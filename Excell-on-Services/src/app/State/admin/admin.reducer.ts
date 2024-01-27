@@ -1,4 +1,3 @@
-
 import { IAdminLoginState, IAdminState } from './admin.states';
 import { AdminActions, EAdminActions } from './admin.actions';
 
@@ -7,11 +6,11 @@ const initialLoginState: IAdminLoginState = {
   success: false,
   fail: false,
   userName: '',
-  token: null,
+  tokenAdmin: null,
 };
 
 const initialState: IAdminState = {
-  login: initialLoginState,
+  loginAdmin: initialLoginState,
 };
 
 export function adminReducer(
@@ -19,32 +18,32 @@ export function adminReducer(
   action: AdminActions
 ): IAdminState {
   switch (action.type) {
-    case EAdminActions.LOGIN:
+    case EAdminActions.LOGIN_ADMIN:
       return {
         ...state,
-        login: { ...initialLoginState, loading: true },
+        loginAdmin: { ...initialLoginState, loading: true },
       };
-    case EAdminActions.LOGIN_SUCCESS:
+    case EAdminActions.LOGIN_SUCCESS_ADMIN:
       return {
         ...state,
-        login: {
-          ...state.login,
+        loginAdmin: {
+          ...state.loginAdmin,
           loading: false,
           success: true,
           userName: action.payload.userName,
-          token: action.payload.token,
+          tokenAdmin: action.payload.tokenAdmin,
         },
       };
-    case EAdminActions.LOGIN_FAIL:
+    case EAdminActions.LOGIN_FAIL_ADMIN:
       return {
         ...state,
-        login: { ...state.login, loading: false, fail: true },
+        loginAdmin: { ...state.loginAdmin, loading: false, fail: true },
       };
 
-    case EAdminActions.LOGOUT:
+    case EAdminActions.LOGOUT_ADMIN:
       return {
         ...state,
-        login: initialLoginState,
+        loginAdmin: initialLoginState,
       };
 
     default:
