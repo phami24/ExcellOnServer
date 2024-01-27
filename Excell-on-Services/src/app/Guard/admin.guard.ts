@@ -17,7 +17,7 @@ export class AuthAdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.store.pipe(
-      select(fromAdmin.getIsLoggedOut),
+      select(fromAdmin.getAdminIsLoggedOut),
       take(1),
       map((isLoggedOut) => {
         if (!isLoggedOut) {

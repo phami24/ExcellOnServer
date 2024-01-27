@@ -36,14 +36,12 @@ export class NavbarComponent {
         this.setPageTitleFromRoute();
       });
 
-    this.userEmail$ = this.store.select(fromAdmin.getUserEmail);
-    this.store.select(fromAdmin.getIsLoggedOut).subscribe((isLoggedOut) => {
+    this.userEmail$ = this.store.select(fromAdmin.getAdminEmail);
+    this.store.select(fromAdmin.getAdminIsLoggedOut).subscribe((isLoggedOut) => {
       this.isLoggedOut = isLoggedOut;
     });
   }
-  logout() {
-    this.store.dispatch(new fromAdmin.Logout());
-  }
+
   // Hàm để chuyển đổi trạng thái mở/đóng thanh điều hướng
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;

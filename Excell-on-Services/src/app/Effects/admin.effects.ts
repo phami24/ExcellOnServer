@@ -7,45 +7,51 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import * as fromAdmin from '../State/admin/admin.actions';
 import { of } from 'rxjs';
 import { AdminService } from '../auth/services/admin.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AdminEffects {
   constructor(
     private actions: Actions,
     private AdminService: AdminService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) {}
 
   login$ = createEffect(() =>
     this.actions.pipe(
-      ofType(fromAdmin.EAdminActions.LOGIN),
-      switchMap((action: fromAdmin.Login) => {
+      ofType(fromAdmin.EAdminActions.LOGIN_ADMIN),
+      switchMap((action: fromAdmin.LoginAdmin) => {
         const { email, password } = action.payload;
         return this.AdminService.login(email, password).pipe(
           map((response) => {
+            console.log('API Response:', response);
             if (response.result) {
-              // Save token to local storage
-              localStorage.setItem('token', response.token);
+              // Save tokenAdmin to local storage
+              
+              localStorage.setItem('tokenAdmin', response.tokenAdmin);
 
               // Trigger an alert for successful login
-              // alert('Login Successfully!');
+              this.toastr.success('Login Admin successful!', 'Success');
 
               // Navigate to a component that displays the alert
 
-              return new fromAdmin.LoginSuccess({
+              return new fromAdmin.LoginSuccessAdmin({
                 userName: email,
-                token: response.token,
+                tokenAdmin: response.tokenAdmin,
+                
               });
+              
             } else {
               // Trigger an alert for unsuccessful login
-              // alert('Login Failed!');
-              return new fromAdmin.LoginFail();
+              this.toastr.error('Login Admin Failed!', 'Error');
+              return new fromAdmin.LoginFailAdmin();
             }
           }),
           catchError(() => {
             // Trigger an alert for unsuccessful login due to an error
-            // alert('Login Failed due to an error!');
-            return of(new fromAdmin.LoginFail());
+            this.toastr.error('Login Admin failed. Please check your credentials.', 'Error');
+            return of(new fromAdmin.LoginFailAdmin());
           })
         );
       })
@@ -57,11 +63,10 @@ export class AdminEffects {
   // New effect for handling LOGOUT
   logout$ = createEffect(() =>
     this.actions.pipe(
-      ofType(fromAdmin.EAdminActions.LOGOUT),
+      ofType(fromAdmin.EAdminActions.LOGOUT_ADMIN),
       tap(() => {
-        // Clear token from local storage
-        localStorage.removeItem('token');
-        // alert('Logout Successfully!');
+        // Clear tokenAdmin from local storage
+        localStorage.removeItem('tokenAdmin');
       })
     ),
     { dispatch: false } 

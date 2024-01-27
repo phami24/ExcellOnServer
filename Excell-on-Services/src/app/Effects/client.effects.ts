@@ -89,4 +89,15 @@ export class ClientEffects {
       })
     )
   );
+
+  logout$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(fromClient.EClientActions.LOGOUT),
+      tap(() => {
+        // Clear tokenAdmin from local storage
+        localStorage.removeItem('token');
+      })
+    ),
+    { dispatch: false } 
+  );
 }

@@ -3,9 +3,9 @@ export interface IAdminLoginState {
   success: boolean;
   fail: boolean;
   userName: string;
-  token: string | null;
+  tokenAdmin: string | null;
 }
 
 export interface IAdminState {
-  login: IAdminLoginState;
+  loginAdmin: IAdminLoginState;
 }
