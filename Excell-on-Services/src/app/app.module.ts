@@ -20,6 +20,7 @@ import { ErrorPageComponent } from './Shared/error-page/error-page.component';
 import { ChatBoxComponent } from './Shared/chat-box/chat-box.component';
 import { AlertSuccessComponent } from './Shared/alert-success/alert-success.component';
 import { ToastrModule } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -47,7 +48,7 @@ import { ToastrModule } from 'ngx-toastr';
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(AppEffects),
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

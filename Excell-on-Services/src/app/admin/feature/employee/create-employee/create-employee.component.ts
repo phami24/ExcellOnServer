@@ -19,7 +19,7 @@ export class CreateEmployeeComponent implements OnInit{
     this.empForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      dobControl: [null, Validators.required],
+      dob: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       department: ['', Validators.required],
@@ -39,34 +39,29 @@ export class CreateEmployeeComponent implements OnInit{
   }
 
   createEmployee(): void {
-    console.log('Giá trị của form:', this.empForm.value);
     if (this.empForm.valid) {
-      // Lấy dữ liệu từ form
-      const formData = this.empForm.value;
+      const newEmployeeData = this.empForm.value;
   
-      // Chuyển đổi ngày sinh thành định dạng chuẩn (nếu cần)
-      formData.dobControl = formData.dobControl.toISOString();
-  
-      // Gọi service để tạo nhân viên
-      this.employeeService.createEmployee(formData).subscribe(
-        (response) => {
-          console.log('Employee created successfully:', response);
-          // Thực hiện các hành động khác nếu cần
-          // Đóng dialog
+      // Gọi phương thức dịch vụ để tạo nhân viên
+      this.employeeService.createEmployee(newEmployeeData).subscribe(
+        createdEmployee => {
+          console.log('Nhân viên đã được tạo:', createdEmployee);
+          // Bạn có thể thực hiện xử lý bổ sung, chẳng hạn như đóng hộp thoại
           this.dialogRef.close(true);
         },
-        (error) => {
-          console.error('Error creating employee:', error);
-          // In ra lỗi chi tiết từ API
-          console.log('Error details:', error.error);
-          // Xử lý lỗi nếu cần
+        error => {
+          console.error('Lỗi tạo nhân viên:', error);
+          // Xử lý lỗi theo cách cần thiết
+          console.log(error.errors);
+          console.error('Server error details:', error.error);
+
         }
       );
-    } else {
-      // Hiển thị thông báo hoặc xử lý khác nếu form không hợp lệ
-      console.warn('Form is not valid');
+      
     }
+    
   }
+
   
 
 

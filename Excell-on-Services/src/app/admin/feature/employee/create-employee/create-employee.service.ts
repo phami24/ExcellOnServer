@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +10,32 @@ import { Observable } from 'rxjs';
 export class EmployeeService {
   private baseUrl = 'https://localhost:7260/api/Auth/EmployeeRegister'; // Thay đổi thành địa chỉ API thực tế của bạn
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
-  createEmployee(employeeData: any): Observable<any> {
-    console.log('Employee Data:', employeeData); // In ra dữ liệu để kiểm tra
+  createEmployee(newEmployeeData: any): Observable<any> {
+    const headers = this.addTokenToHeader();
+    const url = `${this.baseUrl}`;
+    
+    const formData = new FormData();
+    formData.append('FirstName', newEmployeeData.firstName);
+    formData.append('LastName', newEmployeeData.lastName);
+    formData.append('Dob', newEmployeeData.dob);
+    formData.append('Email', newEmployeeData.email);
+    formData.append('Phone', newEmployeeData.phone);
+    formData.append('Department', newEmployeeData.department);
+    formData.append('Avatar', newEmployeeData.avatar);
+    formData.append('Password', newEmployeeData.password);
+    // Thêm các trường khác nếu cần
+
+    return this.http.post(url, formData, { headers });
+  }
+
+  private addTokenToHeader(): HttpHeaders {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+    return new HttpHeaders({
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`,
     });
-    return this.http.post(`${this.baseUrl}`, employeeData, { headers });
   }
   
 }

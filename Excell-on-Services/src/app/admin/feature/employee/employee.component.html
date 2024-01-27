@@ -24,10 +24,11 @@
                         </span>
                         <input type="text" placeholder="Search Employees..."
                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
-                            [value]="searchTerm" (input)="onSearchInputChange($event)" />
+                            [(ngModel)]="searchTerm" (input)="search()" />
                     </div>
                 </div>
-                <div class="block w-full overflow-x-auto">
+                
+                <div class="block w-full overflow-x-auto" *ngIf="showSearchResults || filteredEmployees.length > 0">
                     <!-- Projects table -->
                     <table class="items-center w-full bg-transparent border-collapse">
                         <thead>
@@ -62,10 +63,10 @@
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
                                     DOB
-                                    <span *ngIf="sortedField === 'age'" class="arrow" [class.asc]="sortOrder === 'asc'"
+                                    <span *ngIf="sortedField === 'dob'" class="arrow" [class.asc]="sortOrder === 'asc'"
                                         [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
-                                <th (click)="sortData('department')"
+                                <th (click)="sortData('email')"
                                     class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     [ngClass]="
               color === 'light'
@@ -95,7 +96,7 @@
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
                                     Department
-                                    <span *ngIf="sortedField === 'email'" class="arrow"
+                                    <span *ngIf="sortedField === 'department'" class="arrow"
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -112,7 +113,7 @@
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                                     <img src="{{employee.avatar}}" class="h-12 w-12 bg-white rounded-full border"
                                         alt="..." />
-                                    
+
                                     <span class="ml-3 font-bold"
                                         [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
                                         {{ employee.firstName }}
@@ -155,9 +156,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div *ngIf="filteredEmployees.length === 0">
+
+
+                <div *ngIf="!showSearchResults && filteredEmployees.length === 0">
                     <p class="text-center pt-3 font-bold text-large">0 result.</p>
                 </div>
+
             </div>
 
         </div>
