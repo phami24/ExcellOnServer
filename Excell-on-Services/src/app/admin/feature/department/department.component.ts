@@ -14,7 +14,7 @@ export class DepartmentComponent implements OnInit {
   departments: any[] = [];
   currentDepartment: any = {};
   navbarOpen = false;
-
+  
   constructor(
     public dialog: MatDialog,
     private departmentService: DepartmentService,
@@ -69,10 +69,7 @@ export class DepartmentComponent implements OnInit {
 
   deleteDepartment(department: any): void {
     if (confirm('Are you sure you want to delete this employee?')) {
-      // Gọi service hoặc API để xóa nhân viên
       this.departmentService.deleteDepartment(department.departmentId).subscribe(() => {
-        // Sau khi xóa, làm điều gì đó nếu cần
-        // Ví dụ: Reload danh sách nhân viên
         this.toastr.success('Delete successful!', 'Success');
         this.loadDepartments();
       });

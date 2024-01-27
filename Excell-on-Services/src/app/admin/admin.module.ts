@@ -20,6 +20,7 @@ import { EditEmployeeComponent } from './feature/employee/edit-employee/edit-emp
 import { PaymentsComponent } from './feature/payments/payments.component';
 import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
 import { CreateDepartmentComponent } from './feature/department/create-department/create-department.component';
+import { DepartmentModule } from './feature/department/department.module';
 
 
 @NgModule({
@@ -34,10 +35,7 @@ import { CreateDepartmentComponent } from './feature/department/create-departmen
     ProfileAdminComponent,
     CreateEmployeeComponent,
     EditEmployeeComponent,
-    PaymentsComponent,
-    RoomDepartmentComponent,
-    CreateDepartmentComponent
-    
+    PaymentsComponent,    
   ],
   imports: [
     CommonModule,
@@ -49,6 +47,7 @@ import { CreateDepartmentComponent } from './feature/department/create-departmen
     MatInputModule,
     ReactiveFormsModule,
     MatNativeDateModule,
+    DepartmentModule,
   ],
   exports:[
     SidebarComponent,

@@ -1,0 +1,10 @@
+<!-- department-details.component.html -->
+<div *ngIf="employee" class="p-4">
+    <h2 class="text-xl font-bold mb-2">{{ employee.firstname }} {{ employee.lastname }}</h2>
+    <p class="mb-2">Date of Birth: {{ employee.dob }}</p>
+    <p class="mb-2">Email: {{ employee.email }}</p>
+    <p class="mb-2">Phone: {{ employee.phone }}</p>
+    <p class="mb-2">Address: {{ employee.address }}</p>
+    <p class="mb-2">Position: {{ employee.position }}</p>
+</div>
+  
