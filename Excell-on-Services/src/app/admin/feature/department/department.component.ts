@@ -14,17 +14,16 @@ export class DepartmentComponent implements OnInit {
   departments: any[] = [];
   currentDepartment: any = {};
   navbarOpen = false;
-  
+
   constructor(
     public dialog: MatDialog,
     private departmentService: DepartmentService,
     private router: Router,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.loadDepartments();
   }
-  
 
   setNavbarOpen() {
     this.navbarOpen = !this.navbarOpen;
@@ -69,13 +68,15 @@ export class DepartmentComponent implements OnInit {
 
   deleteDepartment(department: any): void {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.departmentService.deleteDepartment(department.departmentId).subscribe(() => {
-        this.toastr.success('Delete successful!', 'Success');
-        this.loadDepartments();
-      });
+      this.departmentService
+        .deleteDepartment(department.id)
+        .subscribe(() => {
+          this.toastr.success('Delete successful!', 'Success');
+          this.loadDepartments();
+        });
     }
   }
-  
+
   createDepartment() {
     const dialogRef = this.dialog.open(CreateDepartmentComponent, {
       width: '550px',
@@ -90,43 +91,26 @@ export class DepartmentComponent implements OnInit {
   resetForm() {
     this.currentDepartment = {};
   }
-  navigateToRoomDepartment(departmentId: number): void {
-    this.router.navigate(['departments', departmentId, 'room']);
-  }
-  getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-  getRandomBackground(index: number): string {
-    const colors = ['#CCFFFF', '#99FFFF', '#66FFFF', '#33FFFF', '#00FFFF', '#00ffff'];
-    const colorIndex = Math.floor(index / (this.departments.length / 3)) % colors.length;
-    return colors[colorIndex];
-  }
-  
-  performAction(event: any): void {
-    const selectedValue = (event.target as HTMLSelectElement).value;
+  // navigateToRoomDepartment(departmentId: number): void {
+  //   this.router.navigate(['departments', departmentId, 'room']);
+  // }
+  // getRandomColor() {
+  //   const letters = '0123456789ABCDEF';
+  //   let color = '#';
+  //   for (let i = 0; i < 6; i++) {
+  //     color += letters[Math.floor(Math.random() * 16)];
+  //   }
+  //   return color;
+  // }
+  // getRandomBackground(index: number): string {
+  //   const colors = ['#CCFFFF', '#99FFFF', '#66FFFF', '#33FFFF', '#00FFFF', '#00ffff'];
+  //   const colorIndex = Math.floor(index / (this.departments.length / 3)) % colors.length;
+  //   return colors[colorIndex];
+  // }
 
-    switch (selectedValue) {
-      case 'move':
-        // Perform the Move action
-        console.log('Move action');
-        break;
-      case 'unenroll':
-        // Perform the Unenroll action
-        console.log('Unenroll action');
-        break;
-      default:
-        // Do nothing for invalid action
-        break;
-    }
-  }
   
-  viewRoomDepartment(departmentId: any) {
-    this.router.navigate(['department/room-department', departmentId]);
+
+  viewRoomDepartment(id: any) {
+    this.router.navigate(['department/room-department', id]);
   }
-  
 }

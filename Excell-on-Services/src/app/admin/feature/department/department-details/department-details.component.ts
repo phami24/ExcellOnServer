@@ -8,14 +8,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./department-details.component.css']
 })
 export class DepartmentDetailsComponent {
-  employee: Employee | null = null;
+  employee: Employee | null;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    // Extract data passed to the dialog
-    if (data && data.employeeId && data.departmentInfo) {
-      const employeeId = data.employeeId;
-      this.employee = data.departmentInfo.employees.find((emp: Employee) => emp.id === employeeId) || null;
-    }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { employee: Employee }) {
+    // Ensure that the employee object is defined before accessing its properties
+    this.employee = data ? data.employee : null;
   }
-
 }
