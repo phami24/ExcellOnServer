@@ -13,6 +13,8 @@ import { PaymentsComponent } from './feature/payments/payments.component';
 import { PaymentHistoryComponent } from './feature/payment-history/payment-history.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientRoutingModule } from './client-routing.module';
+import { ServiceDetailComponent } from './feature/service-detail/service-detail.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -28,7 +30,8 @@ import { ClientRoutingModule } from './client-routing.module';
     ReportsComponent,
     ServicesPricingComponent,
     PaymentsComponent,
-    PaymentHistoryComponent
+    PaymentHistoryComponent,
+    ServiceDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +39,7 @@ import { ClientRoutingModule } from './client-routing.module';
     ClientRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   exports:[
     HeaderComponent,
