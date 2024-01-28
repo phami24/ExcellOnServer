@@ -34,9 +34,9 @@ export class SidebarComponent implements OnInit{
     const confirmLogout = confirm('Are you sure you want to log out?');
     
     if (confirmLogout) {
-      this.toastr.success('Logout Successfully!', 'Success');
+      this.toastr.success('Logout Admin Successfully!', 'Success');
       this.store.dispatch(new fromAdmin.LogoutAdmin());
-      this.router.navigate(['/auth/adminlogin']);
+      this.router.navigate(['/auth/adminLogin']);
     }
   }
 

@@ -23,17 +23,20 @@ const routes: Routes = [
       },
       {
         path: 'customer',
-        component: CustomerManagementComponent,
+        component: CustomerManagementComponent,canActivate: [AuthAdminGuard],
         data: { title: 'Customer management' },
       },
       {
         path: 'department/room-department/:id',
         component: RoomDepartmentComponent,
+        canActivate: [AuthAdminGuard],
+        data: { title: 'Customer management' },
         data: { title: 'Room Department' },
       },
       {
         path: 'department',
         component: DepartmentComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Department' },
         // children: [                     
         //   {
@@ -45,27 +48,37 @@ const routes: Routes = [
       {
         path: 'employee',
         component: EmployeeComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Employee' },
       },
       {
         path: 'services',
         component: ServicesComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Services' },
       },
       {
         path: 'comments',
         component: CommentsComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Comments' },
       },
       {
         path: 'profile-admin',
         component: ProfileAdminComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Profile Admin' },
       },
       {
         path: 'payments',
         component: PaymentsComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Payment' },
+      },
+      {
+        path: '**',
+        redirectTo: '/error',
+        pathMatch: 'full',
       },
     ],
   },

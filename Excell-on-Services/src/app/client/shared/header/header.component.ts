@@ -27,6 +27,7 @@ export class HeaderComponent {
   ngOnInit(): void {
     initFlowbite();
     this.userEmail$ = this.store.select(fromUser.getUserEmail);
+    
     this.store.select(fromUser.getIsLoggedOut).subscribe((isLoggedOut) => {
       this.isLoggedOut = isLoggedOut;
     });
