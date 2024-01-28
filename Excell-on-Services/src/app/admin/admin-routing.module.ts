@@ -30,7 +30,6 @@ const routes: Routes = [
         path: 'department/room-department/:id',
         component: RoomDepartmentComponent,
         canActivate: [AuthAdminGuard],
-        data: { title: 'Customer management' },
         data: { title: 'Room Department' },
       },
       {
