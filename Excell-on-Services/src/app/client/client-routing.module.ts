@@ -11,42 +11,54 @@ import { AuthClientGuard } from '../Guard/client.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'user',
     children: [
       {
         path: 'home',
         component: HomeComponent,
         data: { title: 'Home page' },
+        pathMatch: 'full',
       },
       {
         path: 'services',
         component: ServicesPricingComponent,
         data: { title: 'Service-Pricing page' },
+        pathMatch: 'full',
       },
       {
         path: 'about',
         component: AboutComponent,
         data: { title: 'About page' },
+        pathMatch: 'full',
       },
       {
         path: 'payment',
         component: PaymentsComponent,canActivate: [AuthClientGuard] ,
         data: { title: 'Payment page' },
+        pathMatch: 'full',
       },
       {
         path: 'paymentHistory',
         component: PaymentHistoryComponent,canActivate: [AuthClientGuard] ,
         data: { title: 'Pay History page' },
+        pathMatch: 'full',
       },
       {
         path: 'reports',
         component: ReportsComponent,
         data: { title: 'Reports page' },canActivate: [AuthClientGuard] ,
+        pathMatch: 'full',
       },
       {
         path: 'profile',
         component: ProfileComponent,
         data: { title: 'Profile page' },canActivate: [AuthClientGuard] ,
+        pathMatch: 'full',
+      },
+      {
+        path: '**',
+        redirectTo: '/error',
+        pathMatch: 'full',
       },
       
     ],

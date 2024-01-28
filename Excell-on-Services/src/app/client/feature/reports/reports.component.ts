@@ -1,7 +1,7 @@
-// reports.component.ts
+
 
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // Import HttpClient
+import { HttpClient } from '@angular/common/http';
 import { initFlowbite } from 'flowbite';
 import * as d3 from 'd3';
 

@@ -1,43 +1,47 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
 
-import { ClientService } from '../../../auth/services/client.service';
-import { HttpClient } from '@angular/common/http';
-import { Banner } from 'src/app/interfaces/banner';
 import Swiper from 'swiper';
-
+import { HomeService } from '../../services/home/home.service';
+import { Service } from 'src/app/interfaces/service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  banner?: Banner[];
-  // currentBook: Banner = {};
-  currentIndex = -1;
-  title = '';
-
-  constructor(private clientServices: ClientService) {}
+  service?: Service[];
+  constructor(private homeService: HomeService) {}
 
   ngOnInit(): void {
-    // this.retrieveBooks();
+    this.getService();
   }
-
-  // retrieveBooks(): void {
-  //   this.clientServices.getBanner().subscribe({
-  //     next: (data) => {
-  //       this.banner = data;
-  //       console.log(data);
-  //     },
-  //     error: (e) => console.error(e)
-  //   });
-  // }
-
-
-
-
+  getService(): void {
+    this.homeService.getService().subscribe({
+      next: (data) => {
+        this.service = data;
+        console.log(data);
+      },
+      error: (e) => console.error(e),
+    });
+  }
+  
+  colors: { [key: string]: string }[] = [
+    { color1: "#ff4848" },
+    { color2: "#71a37c" },
+    { color3: "#66b4ff" },
+  ];
+  
+  getColor(index: number): string {
+    return this.colors[index][`color${index + 1}`];
+  }
+  
+  
+  imageService = [
+    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
+    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Out-Bound' },
+    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Tele Sale' },
+  ];
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
 
   customers = [
@@ -59,7 +63,6 @@ export class HomeComponent implements OnInit {
   ngAfterViewInit(): void {
     this.initSwiper();
   }
-
 
   private initSwiper(): void {
     const swiperEl = this.swiperContainer.nativeElement;
@@ -89,5 +92,4 @@ export class HomeComponent implements OnInit {
 
     new Swiper(swiperEl, swiperParams);
   }
-  
 }

@@ -23,18 +23,20 @@ const routes: Routes = [
       },
       {
         path: 'customer',
-        component: CustomerManagementComponent,
+        component: CustomerManagementComponent,canActivate: [AuthAdminGuard],
         data: { title: 'Customer management' },
       },
       {
         path: 'department/room-department/:departmentId',
         // truyền thằng như này. nhưng mà lấy data mà truy vấn lại nhiều lần lag. Nãy gửi cho cái link ấy. đọc xong lên utube xem
         component: RoomDepartmentComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Customer management' },
       },
       {
         path: 'department',
         component: DepartmentComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Department' },
         // children: [                     
         //   {
@@ -46,27 +48,37 @@ const routes: Routes = [
       {
         path: 'employee',
         component: EmployeeComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Employee' },
       },
       {
         path: 'services',
         component: ServicesComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Services' },
       },
       {
         path: 'comments',
         component: CommentsComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Comments' },
       },
       {
         path: 'profile-admin',
         component: ProfileAdminComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Profile Admin' },
       },
       {
         path: 'payments',
         component: PaymentsComponent,
+        canActivate: [AuthAdminGuard],
         data: { title: 'Payment' },
+      },
+      {
+        path: '**',
+        redirectTo: '/error',
+        pathMatch: 'full',
       },
     ],
   },

@@ -29,10 +29,10 @@ export class AdminService {
 
  
 
-  login(email: string, password: string): Observable<{ result: boolean; tokenAdmin: string }> {
+  login(email: string, password: string): Observable<{ result: boolean; token: string }> {
     const body = { email, password };
   
-    return this.http.post<{ result: boolean; tokenAdmin: string }>(`${baseUrl}/Auth/Emp-Login`, body).pipe(
+    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/Emp-Login`, body).pipe(
       map(response => response),
       catchError(error => {
         console.error('Login failed:', error);

@@ -90,10 +90,10 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
 
       this.store
         .pipe(select(fromAdmin.getAdminToken), take(1))
-        .subscribe((tokenAdmin) => {
-          if (tokenAdmin) {
-            localStorage.setItem('tokenAdmin', tokenAdmin);
-            console.log('TokenAdmin from State:', tokenAdmin);
+        .subscribe((token) => {
+          if (token) {
+            localStorage.setItem('tokenAdmin', token);
+            console.log('TokenAdmin from State:', token);
             this.router.navigate(['/admin/main']);
           }
         });

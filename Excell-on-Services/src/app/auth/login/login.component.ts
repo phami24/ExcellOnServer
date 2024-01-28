@@ -88,9 +88,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       ).subscribe(token => {
         if (token) {
           localStorage.setItem('token', token);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/user/home']);
         }
       });
     });
   }
+ 
 }

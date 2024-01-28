@@ -45,7 +45,7 @@
                     </span>
                 </button>
 
-                <a class="col-span-9 text-xl font-bold" routerLink="/home">
+                <a class="col-span-9 text-xl font-bold" routerLink="/user/home">
                     <img class="h-24 ml-20" src="../../../assets/images/Logo2.png" alt="Excell-on" />
                 </a>
 
@@ -69,11 +69,11 @@
                         <ul class="space-y-2 font-medium">
                             <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
                                 <i class="fa-solid fa-house px-2"></i>
-                                <a class="nav-link active uppercase" aria-current="page" routerLink="/home">Home</a>
+                                <a class="nav-link active uppercase" aria-current="page" routerLink="/user/home">Home</a>
                             </li>
                             <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
                                 <i class="fa-solid fa-phone-volume px-2"></i>
-                                <a class="nav-link uppercase  hover:text-blue-500 " routerLink="/services">Services</a>
+                                <a class="nav-link uppercase  hover:text-blue-500 " routerLink="/user/services">Services</a>
                             </li>
                             <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
                                 <i class="fa-solid fa-cart-shopping px-2"></i>
@@ -81,7 +81,7 @@
                             </li>
                             <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
                                 <i class="fa-regular fa-address-card px-2"></i>
-                                <a class="nav-link uppercase hover:text-blue-500" routerLink="/about">About</a>
+                                <a class="nav-link uppercase hover:text-blue-500" routerLink="/user/about">About</a>
                             </li>
                             <li *ngIf="isLoggedOut; else loggedInPhone">
                                 <div class="nav-item md:mr-3 lg:mr-14 p-2 text-[#446393]">
@@ -112,12 +112,12 @@
                                     </button>
                                     <ul id="dropdown-example" class="hidden py-2 space-y-2">
                                         <li [routerLinkActive]="'active'">
-                                            <a routerLink="/payment"
+                                            <a routerLink="/user/payment"
                                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                                 <i class="fa-solid fa-money-check-dollar px-2"></i>Payment</a>
                                         </li>
                                         <li [routerLinkActive]="'active'">
-                                            <a routerLink="/paymentHistory"
+                                            <a routerLink="/user/paymentHistory"
                                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                                 <i class="fa-solid fa-clock-rotate-left px-2"></i>Payment history</a>
                                         </li>
@@ -126,7 +126,7 @@
                                 </li>
                                 <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
                                     <i class="fa-solid fa-chart-simple px-2"></i>
-                                    <a class="nav-link uppercase hover:text-blue-500" routerLink="/reports">Reports</a>
+                                    <a class="nav-link uppercase hover:text-blue-500" routerLink="/user/reports">Reports</a>
                                 </li>
 
                                 <li class="">
@@ -146,7 +146,7 @@
                                     <ul id="user-dropdown" class="hidden py-2 space-y-2">
                                         <li [routerLinkActive]="'active'">
 
-                                            <a routerLink="/profile"
+                                            <a routerLink="/user/profile"
                                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                                 <i class="fa-solid fa-user px-2"></i>Profile</a>
                                         </li>
@@ -168,21 +168,21 @@
             </div>
 
             <div class="hidden lg:flex lg:items-center lg:w-auto lg:mx-auto">
-                <a class="lg:ml-16 text-center my-1" routerLink="/home">
+                <a class="lg:ml-16 text-center my-1" routerLink="/user/home">
                     <img class="h-16 img-logo" src="../../../assets/images/Logo2.png" alt="Excell-on" />
                 </a>
                 <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
                     <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
-                        <a class="nav-link uppercase" aria-current="page" routerLink="/home">Home</a>
+                        <a class="nav-link uppercase" aria-current="page" routerLink="/user/home">Home</a>
                     </li>
                     <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
-                        <a class="nav-link uppercase  hover:text-blue-500 " routerLink="/services">Services</a>
+                        <a class="nav-link uppercase  hover:text-blue-500 " routerLink="/user/services">Services</a>
                     </li>
-                    <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
+                    <!-- <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
                         <a class="nav-link uppercase hover:text-blue-500 " routerLink="/error">Order</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
-                        <a class="nav-link uppercase hover:text-blue-500" routerLink="/about">About</a>
+                        <a class="nav-link uppercase hover:text-blue-500" routerLink="/user/about">About</a>
                     </li>
 
 
@@ -199,8 +199,10 @@
                     </li>
 
                     <ng-template #loggedIn>
-
-                        <li class="nav-item group mx-3 p-2" [routerLinkActive]="'active'">
+                        <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
+                            <a class="nav-link uppercase hover:text-blue-500" routerLink="/user/reports">Reports</a>
+                        </li>
+                        <!-- <li class="nav-item group mx-3 p-2" [routerLinkActive]="'active'">
                             <a class="nav-link uppercase hover:text-blue-500 " role="button">
                                 Payment
                             </a>
@@ -208,24 +210,28 @@
                                 <li><a class="block px-4 py-2" routerLink="/payment">Payment</a></li>
                                 <li><a class="block px-4 py-2" routerLink="/paymentHistory">Payment history</a></li>
                             </ul>
-                        </li>
-                        <li class="nav-item mx-3 p-2" [routerLinkActive]="'active'">
-                            <a class="nav-link uppercase hover:text-blue-500" routerLink="/reports">Reports</a>
-                        </li>
-                        <li class="nav-item group mx-3 md:mr-3 lg:mr-14">
-                            <!-- <a class="nav-link uppercase hover:text-blue-500 " role="button">
+                        </li> -->
+                        
+                        
+                        <li class="nav-item group mx-3 md:mr-3">
+                            <a class="nav-link uppercase hover:text-blue-500 " role="button">
                                 <img src="../../../../assets/images/avatar.png" width="32px" height="32px" alt="">
-                            </a> -->
-                            <div role="button"
+                            </a>
+                            <!-- <div role="button"
                                 class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                                 <span class="font-medium text-gray-600 dark:text-gray-300">C</span>
-                            </div>
+                            </div> -->
                             <ul class="hidden group-hover:block absolute z-10 bg-white text-gray-700">
                                 <li><a class="block px-4 py-2" [routerLinkActive]="'active'"
-                                        routerLink="/profile">Profile</a></li>
+                                        routerLink="/user/profile">Profile</a></li>
                                 <li><button class="block px-4 py-2" (click)="logout()"
                                         [routerLinkActive]="'active'">Logout</button></li>
                             </ul>
+                        </li>
+                        <li class="nav-item mr-14 ml-5" [routerLinkActive]="'active'">
+                            <a class="nav-link uppercase hover:text-blue-500" routerLink="/user/payment">
+                                <img class="w-8" src="../../../../assets/images/shoppingbag.png" alt="">
+                            </a>
                         </li>
 
                     </ng-template>

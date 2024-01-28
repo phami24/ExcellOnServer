@@ -29,7 +29,7 @@ export class AdminEffects {
             if (response.result) {
               // Save tokenAdmin to local storage
               
-              localStorage.setItem('tokenAdmin', response.tokenAdmin);
+              localStorage.setItem('tokenAdmin', response.token);
 
               // Trigger an alert for successful login
               this.toastr.success('Login Admin successful!', 'Success');
@@ -38,7 +38,7 @@ export class AdminEffects {
 
               return new fromAdmin.LoginSuccessAdmin({
                 userName: email,
-                tokenAdmin: response.tokenAdmin,
+                tokenAdmin: response.token,
                 
               });
               
@@ -67,6 +67,7 @@ export class AdminEffects {
       tap(() => {
         // Clear tokenAdmin from local storage
         localStorage.removeItem('tokenAdmin');
+        
       })
     ),
     { dispatch: false } 
