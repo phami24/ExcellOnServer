@@ -17,6 +17,7 @@ export class EmployeeComponent implements OnInit {
   dropdownShowStates: { show: boolean }[] = [];
   isDropdownVisible: boolean[] = [];
   searchTerm: string = '';
+  searchResults: any[] = [];
   filteredEmployees: any[] = [];
   isModalVisible = false;
   showForm = false;
@@ -24,6 +25,8 @@ export class EmployeeComponent implements OnInit {
   isCreating: boolean = true;
   sortedField: string = '';
   sortOrder: 'asc' | 'desc' = 'asc';
+  showNoResultsMessage: boolean = false;
+  showSearchResults: boolean = false;
 
   @Input()
   get color(): string {
@@ -54,35 +57,49 @@ export class EmployeeComponent implements OnInit {
   @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef!: ElementRef;
   @ViewChild('popoverDropdownRef', { static: false })
   popoverDropdownRef!: ElementRef;
+
+
+
+  search(): void {
+    this.employeeService.searchEmployeesByName(this.searchTerm).subscribe(
+      results => {
+        console.log('Search results:', results);
+        console.log('Search term:', this.searchTerm);
   
-
+        // Kiểm tra nếu searchTerm không null hoặc rỗng
+        if (!this.searchTerm || this.searchTerm.trim() === '') {
+          // Thực hiện tìm kiếm tương tự như phía backend
+          const searchTermLower = this.searchTerm.toLowerCase();
+          this.searchResults = results.filter((employee: any) => {
+            const fullName = `${employee.firstName} ${employee.lastName}`.toLowerCase();
+            return fullName.includes(searchTermLower);
+          });
   
-
-  onSearchInputChange(event: any): void {
-    const value = event?.target?.value || '';
-    console.log('Search Term:', value);
-
-    this.searchTerm = value;
-
-    // Thực hiện logic tìm kiếm nếu cần
-    this.filteredEmployees = this.employees.filter(employee => {
-      const firstName = (employee.firstName || '').toLowerCase();
-      const lastName = (employee.lastName || '').toLowerCase();
-      const email = (employee.email || '').toLowerCase();
-      const department = (employee.department || '').toLowerCase();
-      const searchTermLower = this.searchTerm.toLowerCase();
-
-      return (
-        firstName.includes(searchTermLower) ||
-        lastName.includes(searchTermLower) ||
-        email.includes(searchTermLower) ||
-        department.includes(searchTermLower)
-      );
-    });
-
-    console.log('Filtered Employees:', this.filteredEmployees);
+          console.log('Filtered Employees:', this.searchResults);
+  
+          this.filteredEmployees = [...this.searchResults];
+        } else {
+          // Nếu searchTerm là null hoặc rỗng, hiển thị tất cả nhân viên
+          this.filteredEmployees = [...results];
+        }
+  
+        console.log('After copying:', this.filteredEmployees);
+  
+        // Hiển thị "0 result" nếu không có kết quả
+        this.showNoResultsMessage = this.searchResults.length === 0;
+  
+        // Đặt giá trị cho showSearchResults
+        this.showSearchResults = this.searchResults.length > 0;
+      },
+      error => {
+        console.error('Search error:', error);
+        // Đặt giá trị cho showSearchResults khi có lỗi (nếu cần)
+        this.showSearchResults = false;
+      },
+      () => console.log('Search completed') // Log completion of observable
+    );
   }
-
+  
   createEmployee() {
     const dialogRef = this.dialog.open(CreateEmployeeComponent, {
       width: '550px',
@@ -90,7 +107,7 @@ export class EmployeeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
-      // Thực hiện các hành động sau khi đóng modal (nếu cần)
+      this.loadEmployees();
     });
   }
 
@@ -102,29 +119,43 @@ export class EmployeeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-
+      console.log('The dialog was closed');
       this.loadEmployees();
     });
   }
 
   deleteEmployee(employee: any): void {
     if (confirm('Are you sure you want to delete this employee?')) {
+      console.log('Confirmed to delete');
       // Gọi service hoặc API để xóa nhân viên
-      this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
-        // Sau khi xóa, làm điều gì đó nếu cần
-        // Ví dụ: Reload danh sách nhân viên
-        this.toastr.success('Delete successful!', 'Success');
-        this.loadEmployees();
-      });
+      this.employeeService.deleteEmployee(employee.id).subscribe(
+        () => {
+          console.log('Delete successful!');
+          // Tiếp tục với các bước sau khi xóa
+          this.toastr.success('Delete successful!', 'Success');
+          this.loadEmployees();
+        },
+        (error) => {
+          console.error('Delete failed:', error);
+          // Xử lý lỗi nếu cần thiết
+          this.toastr.error('Delete failed!', 'Error');
+        }
+      );
+    } else {
+       this.toastr.warning('Delete cancel!', 'Warning');
+      // Xử lý khi hủy bỏ xóa (nếu cần)
     }
   }
+  
+  
 
   private loadEmployees(): void {
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data;
-      this.filteredEmployees = this.employees;
+      this.filteredEmployees = this.searchTerm ? this.searchResults : this.employees;
     });
   }
+
 
 
   sortData(field: string): void {
@@ -138,7 +169,7 @@ export class EmployeeComponent implements OnInit {
     }
 
     // Thực hiện sắp xếp dữ liệu
-    this.employees.sort((a, b) => {
+    this.filteredEmployees.sort((a, b) => {
       const aValue = a[field];
       const bValue = b[field];
 
@@ -149,4 +180,5 @@ export class EmployeeComponent implements OnInit {
       }
     });
   }
+
 }

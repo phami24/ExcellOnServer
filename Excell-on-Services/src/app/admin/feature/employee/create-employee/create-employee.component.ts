@@ -2,6 +2,9 @@ import { Component, EventEmitter, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from './create-employee.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 
 @Component({
@@ -12,17 +15,21 @@ import { EmployeeService } from './create-employee.service';
 export class CreateEmployeeComponent implements OnInit{
   // employee: any = {}; // Add this line
   // @Input() data: any;
+  employees: any[] = [];
   empForm!: FormGroup;
-  constructor(public dialogRef: MatDialogRef<CreateEmployeeComponent>, private formBuilder: FormBuilder, private employeeService: EmployeeService) {}
+  constructor(public dialogRef: MatDialogRef<CreateEmployeeComponent>,
+     private formBuilder: FormBuilder,
+     private toastr: ToastrService,
+      private employeeService: EmployeeService) {}
 
   ngOnInit(): void {
     this.empForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      dobControl: [null, Validators.required],
+      dob: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      department: ['', Validators.required],
+      departmentId: ['', Validators.required],
       password: ['', Validators.required],
       avatar: [''], // Thêm trường avatar vào FormGroup
     });
@@ -39,34 +46,39 @@ export class CreateEmployeeComponent implements OnInit{
   }
 
   createEmployee(): void {
-    console.log('Giá trị của form:', this.empForm.value);
+   
     if (this.empForm.valid) {
-      // Lấy dữ liệu từ form
-      const formData = this.empForm.value;
+      const newEmployee = this.empForm.value;
   
-      // Chuyển đổi ngày sinh thành định dạng chuẩn (nếu cần)
-      formData.dobControl = formData.dobControl.toISOString();
-  
-      // Gọi service để tạo nhân viên
-      this.employeeService.createEmployee(formData).subscribe(
+      // Gọi phương thức createEmployee từ service
+      this.employeeService.createEmployee(newEmployee).subscribe(
         (response) => {
-          console.log('Employee created successfully:', response);
-          // Thực hiện các hành động khác nếu cần
-          // Đóng dialog
-          this.dialogRef.close(true);
+          this.toastr.success('Create successful!', 'Success');
+          this.dialogRef.close(); // Đóng dialog khi tạo mới thành công
+          this.loadEmployees();
         },
         (error) => {
-          console.error('Error creating employee:', error);
-          // In ra lỗi chi tiết từ API
-          console.log('Error details:', error.error);
-          // Xử lý lỗi nếu cần
+          console.error('Error creating employee', error);
+          this.toastr.error('Create fail!', 'Error');
+          // Xử lý lỗi, hiển thị thông báo, v.v.
         }
       );
-    } else {
-      // Hiển thị thông báo hoặc xử lý khác nếu form không hợp lệ
-      console.warn('Form is not valid');
     }
+    
   }
+
+  loadEmployees(): void {
+    this.employeeService.getEmployees().subscribe(
+      (data) => {
+        this.employees = data;
+      },
+      (error) => {
+        console.error('Lỗi khi tải danh sách nhân viên', error);
+        // Xử lý lỗi, hiển thị thông báo, v.v.
+      }
+    );
+  }
+
   
 
 
