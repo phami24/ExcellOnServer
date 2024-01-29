@@ -107,7 +107,7 @@ export class EmployeeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
-      // Thực hiện các hành động sau khi đóng modal (nếu cần)
+      this.loadEmployees();
     });
   }
 
@@ -119,7 +119,7 @@ export class EmployeeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-
+      console.log('The dialog was closed');
       this.loadEmployees();
     });
   }

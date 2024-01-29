@@ -1,11 +1,11 @@
 <!-- create-employee-modal.component.html -->
-
 <div mat-dialog-title>
     <h2>Update Employee</h2>
 </div>
 <hr class="pb-3">
 
 <form [formGroup]="empForm">
+    <input formControlName="id" type="hidden" />
     <div mat-dialog-content class="content">
         <div class="row">
             <div class="w-72">

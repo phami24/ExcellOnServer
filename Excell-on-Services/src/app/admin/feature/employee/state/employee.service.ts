@@ -8,9 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class EmployeeService {
   private apiUrl = 'https://localhost:7260/api/Employee';
-  private token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {}
+
+  private addToken(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
 
   private addTokenToHeader(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -25,25 +31,15 @@ export class EmployeeService {
     return this.http.get<any[]>(`${this.apiUrl}`, { headers });
   }
 
-  updateEmployee(updatedEmployee: any): Observable<any> {
-    const url = `${this.apiUrl}/Update`;
-  
-    // Tạo headers với Authorization và Content-Type là multipart/form-data
+  updateEmployee(employee: FormData): Observable<any> {
+    const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${token}`,
     });
-  
-    // Tạo FormData để chứa dữ liệu và append từng trường vào đó
-    const formData = new FormData();
-    for (const key in updatedEmployee) {
-      if (updatedEmployee.hasOwnProperty(key)) {
-        formData.append(key, updatedEmployee[key]);
-      }
-    }
-  
-    // Gửi yêu cầu PUT với FormData và headers
-    return this.http.put(url, formData, { headers });
+
+    return this.http.put(`${this.apiUrl}/Update`, employee, { headers });
   }
+  
   
 
   deleteEmployee(employeeId: number): Observable<any> {

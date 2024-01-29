@@ -1,39 +1,49 @@
 // employee.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
   private baseUrl = 'https://localhost:7260/api/Auth/EmployeeRegister'; // Thay đổi thành địa chỉ API thực tế của bạn
+  private employeeCreatedSubject = new Subject<void>();
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+  constructor(private http: HttpClient) {}
 
-  createEmployee(newEmployeeData: any): Observable<any> {
-    const headers = this.addTokenToHeader();
-    const url = `${this.baseUrl}`;
-    
+  createEmployee(newEmployee: any): Observable<any> {
+    const url = `${this.baseUrl}`; // Điều chỉnh đường dẫn API của bạn
+  
+    // Tạo FormData để chứa dữ liệu và append từng trường vào đó
     const formData = new FormData();
-    formData.append('FirstName', newEmployeeData.firstName);
-    formData.append('LastName', newEmployeeData.lastName);
-    formData.append('Dob', newEmployeeData.dob);
-    formData.append('Email', newEmployeeData.email);
-    formData.append('Phone', newEmployeeData.phone);
-    formData.append('Department', newEmployeeData.department);
-    formData.append('Avatar', newEmployeeData.avatar);
-    formData.append('Password', newEmployeeData.password);
-    // Thêm các trường khác nếu cần
+    for (const key in newEmployee) {
+      if (newEmployee.hasOwnProperty(key)) {
+        formData.append(key, newEmployee[key]);
+      }
+    }
+  
+    // Gửi yêu cầu POST với FormData và headers
+    return this.http.post(url, formData, { headers: this.addTokenToHeader() });
+  }
 
-    return this.http.post(url, formData, { headers });
+  getEmployees(): Observable<any[]> {
+    const headers = this.addTokenToHeader();
+    return this.http.get<any[]>(`https://localhost:7260/api/Employee`, { headers });
+  }
+
+  // Add a method to get the subject for employee creation
+  getEmployeeCreatedSubject(): Subject<void> {
+    return this.employeeCreatedSubject;
+  }
+
+  employeeCreated(): void {
+    this.employeeCreatedSubject.next();
   }
 
   private addTokenToHeader(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
-      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
     });
   }
