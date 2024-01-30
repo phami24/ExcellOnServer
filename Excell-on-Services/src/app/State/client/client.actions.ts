@@ -28,7 +28,7 @@ export class LoginFail implements Action {
 
 export class Register implements Action {
   readonly type = EClientActions.REGISTER;
-  constructor(public payload: { firstName: string, lastName: string, email: string, password: string }) {}
+  constructor(public payload: { firstName: string, lastName: string,phone:string, dob:string, email: string, password: string }) {}
 }
 
 export class RegisterSuccess implements Action {
