@@ -21,6 +21,7 @@ import { PaymentsComponent } from './feature/payments/payments.component';
 import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
 import { CreateDepartmentComponent } from './feature/department/create-department/create-department.component';
 import { DepartmentModule } from './feature/department/department.module';
+import { EditCustomerComponent } from './feature/customer-management/edit-customer/edit-customer.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { DepartmentModule } from './feature/department/department.module';
     ProfileAdminComponent,
     CreateEmployeeComponent,
     EditEmployeeComponent,
-    PaymentsComponent,    
+    PaymentsComponent,
+    EditCustomerComponent,    
   ],
   imports: [
     CommonModule,

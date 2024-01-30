@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ClientService } from 'src/app/auth/services/client.service';
 import * as fromClient from '../../State/client';
@@ -8,7 +13,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   registrationForm: FormGroup;
@@ -17,13 +22,21 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private clientService: ClientService,
     private store: Store,
-    private router: Router,
+    private router: Router
   ) {
     this.registrationForm = this.fb.group({
       firstName: ['', [Validators.required, this.nameValidator]],
       lastName: ['', [Validators.required, this.nameValidator]],
       email: ['', [Validators.required, Validators.email, this.emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(6), this.passwordValidator],
+      ],
+      phone: [
+        '',
+        [Validators.required, Validators.minLength(6), this.phoneValidator],
+      ],
+      dob: ['', [Validators.required, this.dateOfBirthValidator]],
     });
   }
 
@@ -31,7 +44,7 @@ export class RegisterComponent {
   nameValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const namePattern = /^[a-zA-Z ]*$/;
     if (!namePattern.test(control.value)) {
-      return { 'invalidName': true };
+      return { invalidName: true };
     }
     return null;
   }
@@ -40,16 +53,39 @@ export class RegisterComponent {
   emailValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailPattern.test(control.value)) {
-      return { 'invalidEmail': true };
+      return { invalidEmail: true };
     }
     return null;
   }
 
   // Custom validator for password
-  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+  passwordValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     if (!passwordPattern.test(control.value)) {
-      return { 'invalidPassword': true };
+      return { invalidPassword: true };
+    }
+    return null;
+  }
+  phoneValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const phonePattern = /^[0-9]*$/;
+    if (!phonePattern.test(control.value)) {
+      return { invalidPhone: true };
+    }
+    return null;
+  }
+
+  // Custom validator for date of birth (DOB)
+  dateOfBirthValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    // Customize the DOB validation logic as needed
+    // You might want to use a library like 'moment' for more sophisticated date validation
+    const dobPattern = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dobPattern.test(control.value)) {
+      return { invalidDOB: true };
     }
     return null;
   }

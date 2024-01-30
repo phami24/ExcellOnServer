@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         take(1)  
       ).subscribe(userEmail => {
         if (userEmail) {
-          // Display or use userEmail as needed
+          localStorage.setItem('userEmail', userEmail);
           console.log('User Email:', userEmail);
         }
       });
