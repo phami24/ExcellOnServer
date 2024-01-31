@@ -6,7 +6,6 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DepartmentComponent } from './feature/department/department.component';
 import { EmployeeComponent } from './feature/employee/employee.component';
-import { ServicesComponent } from './feature/services/services.component';
 import { CommentsComponent } from './feature/comments/comments.component';
 import { ProfileAdminComponent } from './feature/profile-admin/profile-admin.component';
 import { CreateEmployeeComponent } from './feature/employee/create-employee/create-employee.component';
@@ -22,6 +21,9 @@ import { RoomDepartmentComponent } from './feature/department/room-department/ro
 import { CreateDepartmentComponent } from './feature/department/create-department/create-department.component';
 import { DepartmentModule } from './feature/department/department.module';
 import { EditCustomerComponent } from './feature/customer-management/edit-customer/edit-customer.component';
+import { ServiceManagementComponent } from './feature/service-management/service-management.component';
+import { EditServiceComponent } from './feature/service-management/edit-service/edit-service.component';
+import { AddServiceComponent } from './feature/service-management/add-service/add-service.component';
 
 
 @NgModule({
@@ -31,13 +33,14 @@ import { EditCustomerComponent } from './feature/customer-management/edit-custom
     NavbarComponent,
     DepartmentComponent,
     EmployeeComponent,
-    ServicesComponent,
     CommentsComponent,
     ProfileAdminComponent,
     CreateEmployeeComponent,
     EditEmployeeComponent,
     PaymentsComponent,
-    EditCustomerComponent,    
+    EditCustomerComponent,
+    EditServiceComponent,
+    AddServiceComponent,  
   ],
   imports: [
     CommonModule,

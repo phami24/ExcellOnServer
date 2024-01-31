@@ -1,0 +1,73 @@
+<div class="pl-[260px] bg-[#eeeeee] m-0 min-h-screen h-full py-5 px-3">
+    <div class="grid grid-cols-12 justify-items-end">
+        <div class="col-span-6 w-full">
+            <mat-form-field class="w-full">
+                <mat-label><i class="fas fa-search mx-2"></i>Search...</mat-label>
+                <input class="py-2" matInput (keyup)="applyFilter($event)" placeholder="" #input>
+            </mat-form-field>
+        </div>
+        <div class="col-span-6 mt-3">
+            <button
+                class="ml-2 relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 min-w-[180px] h-10 max-h-[40px] rounded-lg text-xs bg-blue-300 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-200/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                type="button" (click)="createService()"><i class="fa-solid fa-plus mr-2"></i>
+                Create Service
+            </button>
+        </div>
+    </div>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.serviceId}}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="serviceName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.serviceName}} </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
+
+            <!-- Total Day Column -->
+            <ng-container matColumnDef="totalDay">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Day </th>
+                <td mat-cell *matCellDef="let row"> {{row.totalDay}} </td>
+            </ng-container>
+
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let row" class="flex">
+                    <button (click)="openEditForm(row)"
+                        class="text-blueGray-500 py-1 px-3 border hover:border-blue-500 transition">
+                        <i class="fas fa-pencil-alt text-blue-400"></i>
+                    </button>
+                    <button (click)="deleteService(row.serviceId)"
+                        class="text-blueGray-500 py-1 px-3 border hover:border-red-500 transition">
+                        <i class="fas fa-trash-alt text-red-500"></i>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"
+                class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>

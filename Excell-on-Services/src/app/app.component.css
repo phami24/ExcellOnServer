@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +11,27 @@
   margin: 0;
   padding: 0;
 }
-h1, h2, h3, h4, h5, h6, li, p, span, strong, a{
-    font-family: 'Rubik', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+p,
+span,
+strong,
+a {
+  font-family: "Rubik", sans-serif;
 }
+
+::ng-deep ::ng-scrollbar-thumb {
+  background-color: #4CAF50; /* Màu nền của thanh cuộn */
+  border-radius: 5px; /* Bo tròn góc của thanh cuộn */
+}
+
+::ng-deep ::ng-scrollbar-track {
+  background-color: #f1f1f1; /* Màu nền của khu vực thanh cuộn */
+  border-radius: 5px; /* Bo tròn góc của khu vực thanh cuộn */
+}
+

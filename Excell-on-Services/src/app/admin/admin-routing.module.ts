@@ -5,11 +5,11 @@ import { CustomerManagementComponent } from './feature/customer-management/custo
 import { AuthAdminGuard } from '../Guard/admin.guard';
 import { DepartmentComponent } from './feature/department/department.component';
 import { EmployeeComponent } from './feature/employee/employee.component';
-import { ServicesComponent } from './feature/services/services.component';
 import { CommentsComponent } from './feature/comments/comments.component';
 import { ProfileAdminComponent } from './feature/profile-admin/profile-admin.component';
 import { PaymentsComponent } from './feature/payments/payments.component';
 import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
+import { ServiceManagementComponent } from './feature/service-management/service-management.component';
 
 const routes: Routes = [
   {
@@ -52,7 +52,7 @@ const routes: Routes = [
       },
       {
         path: 'services',
-        component: ServicesComponent,
+        component: ServiceManagementComponent,
         canActivate: [AuthAdminGuard],
         data: { title: 'Services' },
       },
