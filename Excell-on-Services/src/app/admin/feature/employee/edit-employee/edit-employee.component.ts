@@ -1,6 +1,6 @@
 // edit-employee.component.ts
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Inject } from '@angular/core';
@@ -14,7 +14,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./edit-employee.component.css']
 })
 export class EditEmployeeComponent implements OnInit {
+  @ViewChild('loadingSpinner') loadingSpinner: ElementRef | undefined;
   empForm!: FormGroup;
+  formErrors: any = {};
+  updating: boolean = false;
+
+
 
   constructor(
     public dialogRef: MatDialogRef<EditEmployeeComponent>,
@@ -31,12 +36,16 @@ export class EditEmployeeComponent implements OnInit {
       id: [this.data.id],
       firstName: [this.data?.firstName || '', Validators.required],
       lastName: [this.data?.lastName || '', Validators.required],
-      dob: [this.data?.dob || '', Validators.required],
+      dob: [this.data?.dob || '', [Validators.required, this.ageValidator]],
       email: [this.data?.email || '', [Validators.required, Validators.email]],
-      phone: [this.data?.phone || '', Validators.required],
+      phone: [this.data?.phone || '', [Validators.required, this.phoneValidator]],
       departmentId: [parseInt(this.data?.departmentId) || null, Validators.required],
       avatar: [this.data?.avatar?.url || '', Validators.required],
       // Thêm các trường khác của form vào đây
+    });
+    this.empForm.valueChanges.subscribe(() => {
+      // Kiểm tra lỗi và cập nhật formErrors ngay khi có sự thay đổi
+      this.formErrors = this.getFormValidationErrors();
     });
   }
   onFileChange(event: Event) {
@@ -51,6 +60,7 @@ export class EditEmployeeComponent implements OnInit {
 
   onSave(): void {
     if (this.empForm.valid) {
+      this.updating = true;
       const updatedEmployee = this.empForm.value;
 
       // Tạo đối tượng FormData và thêm các trường cần thiết
@@ -75,8 +85,69 @@ export class EditEmployeeComponent implements OnInit {
           console.error('Lỗi khi cập nhật nhân viên:', error);
           this.toastr.error('Update failed!', 'Error'); // Thêm thông báo lỗi
         }
-      );
+      ).add(() => {
+        // Kết thúc quá trình cập nhật (thành công hoặc thất bại)
+        this.updating = false; // Dừng hiển thị loading
+      });
+    } else {
+      this.toastr.error('Update failed!', 'Error');
     }
+  }
+
+  onClose(): void {
+    this.toastr.warning('Update cancel!', 'Warning');
+  }
+
+  getFormValidationErrors(): any[] {
+    const errors: any[] = [];
+
+    Object.keys(this.empForm.controls).forEach((key: string) => {
+      const controlErrors = this.empForm.get(key)?.errors;
+      if (controlErrors != null) {
+        errors.push({
+          field: key,
+          messages: Object.keys(controlErrors).map((keyError: string) => {
+            if (keyError === 'underage') {
+              return `Age must be at least 18 years old!`;
+            } else if (keyError === 'email') {
+              return `Email must be a valid email address.`; // Thêm thông báo lỗi cho email không đúng định dạng
+            } else if (keyError === 'invalidPhone') {
+              return `Phone must have exactly 10 numbers.`; 
+            }
+            // Thêm các trường hợp lỗi khác nếu cần
+            return ''; // Trường hợp mặc định, có thể là chuỗi trống hoặc một thông báo khác
+        }),
+        
+        });
+      }
+    });
+
+    console.log(errors); // Kiểm tra lỗi ở đây
+    return errors;
+  }
+
+  phoneValidator(control: any): { [key: string]: boolean } | null {
+    const phoneNumber = control.value;
+  
+    // Kiểm tra số điện thoại có đúng 10 kí tự không
+    if (phoneNumber && phoneNumber.length === 10) {
+      return null; // Số điện thoại hợp lệ
+    } else {
+      return { 'invalidPhone': true }; // Số điện thoại không hợp lệ
+    }
+  }
+
+  ageValidator(control: any): { [key: string]: boolean } | null {
+    const birthDate = new Date(control.value);
+    const currentDate = new Date();
+    const ageInMilliseconds = currentDate.getTime() - birthDate.getTime();
+    const ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
+
+    if (ageInYears < 18) {
+      return { 'underage': true };
+    }
+
+    return null; // Thêm dòng này để đảm bảo rằng luôn có giá trị được trả về
   }
 
 }
