@@ -56,9 +56,9 @@ export class ClientEffects {
     this.actions.pipe(
       ofType(fromClient.EClientActions.REGISTER),
       switchMap((action: fromClient.Register) => {
-        const { firstName, lastName, email, password } = action.payload;
+        const { firstName, lastName,phone, dob, email, password } = action.payload;
         return this.clientService
-          .register({ firstName, lastName, email, password })
+          .register({ firstName, lastName,phone, dob, email, password })
           .pipe(
             map((response) => {
               if (response.result) {
