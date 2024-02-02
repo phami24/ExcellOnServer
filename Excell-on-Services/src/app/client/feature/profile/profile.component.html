@@ -5,18 +5,27 @@
             <div class="w-[800px] md:w-1/4">
                 <div class="p-4 mt-8">
                     <div class="rounded-[100px] overflow-hidden">
-                        <div>
-                            <img src="../../../assets/images/user.jpg" alt="">
-                            <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
-                                type="button" class="ml-20 bg-[#efefef] hover:bg-[#dfdfdf]">
+                        <div class="grid grid-cols-12 text-center">
+                            <div class="col-span-6">
+                                <div class="w-full bg-blue-200 p-5">
+                                    <span class="font-medium text-2xl text-white dark:text-gray-300">{{ (userEmail$ | async) ?? '' |
+                                    slice:0:1 | uppercase }}</span>
+                                </div>
+                                
+                            </div>
+                            <div class="col-span-6 grid justify-items-start w-full bg-blue-200 p-5">
+                                <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+                                type="button">
                                 <i class="fa-solid fa-pen"></i>
                                 Edit profile
                             </button>
+                            </div>
+                            
                         </div>
                     </div>
-                    <div class="text-center my-8">
-                        <h1 class="text-xl font-bold mt-2">Camila Smith</h1>
-                        <p class="text-gray-600">+0090909009</p>
+                    <div *ngIf="userProfile" class="text-center my-8">
+                        <h1 class="text-xl font-bold mt-2">{{ userProfile.firstName }} {{ userProfile.lastName }}</h1>
+                        <p class="text-gray-600">{{ userProfile.role }}</p>
 
                     </div>
 
@@ -76,26 +85,7 @@
                                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update
                                             profile</button>
                                     </form>
-                                    <script>
-                                        function displayImage(input) {
-                                            var selectedImage = document.getElementById('selected-image');
-                                            var imageUrlContainer = document.getElementById('image-url-container');
-
-                                            if (input.files && input.files[0]) {
-                                                var reader = new FileReader();
-
-                                                reader.onload = function (e) {
-                                                    // Set the src attribute of the img element to the data URL of the selected image
-                                                    selectedImage.src = e.target.result;
-
-                                                    // Display the image URL
-                                                    imageUrlContainer.textContent = "Image URL: " + e.target.result;
-                                                };
-
-                                                reader.readAsDataURL(input.files[0]);
-                                            }
-                                        }
-                                    </script>
+                                    
                                 </div>
 
                             </div>
@@ -128,27 +118,28 @@
                         </footer>
                     </div>
 
+
                     <!-- Bio Graph -->
-                    <div class="panel">
+                    <div *ngIf="userProfile" class="panel">
                         <div class="bio-graph-heading text-center">
                         </div>
                         <div class="panel-body bio-graph-info">
                             <h1 class="text-2xl font-bold mb-4 text-center">Profile</h1>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 <div class="bio-row mb-2">
-                                    <p><span class="font-bold">First Name</span>: Camila Smith</p>
+                                    <p><span class="font-bold">First Name</span>: {{ userProfile.firstName }}</p>
                                 </div>
                                 <div class="bio-row mb-2">
-                                    <p><span class="font-bold">Last Name</span>: jsmith@flatlab.com</p>
+                                    <p><span class="font-bold">Last Name</span>: {{ userProfile.lastName }}</p>
                                 </div>
                                 <div class="bio-row mb-2">
-                                    <p><span class="font-bold">Phone</span>: 88 (02) 123456</p>
+                                    <p><span class="font-bold">Phone</span>: {{ userProfile.phone }}</p>
                                 </div>
                                 <div class="bio-row mb-2">
-                                    <p><span class="font-bold">Email</span>: 13 July 1983</p>
+                                    <p><span class="font-bold">Email</span>: {{ userProfile.email }}</p>
                                 </div>
                                 <div class="bio-row mb-2">
-                                    <p><span class="font-bold">Date of birth</span>: Australia</p>
+                                    <p><span class="font-bold">Date of birth</span>: {{ userProfile.dob }}</p>
                                 </div>
                                 
 

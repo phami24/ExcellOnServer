@@ -59,7 +59,4 @@ export class CustomerService {
         )
       );
   }
-  // deleteCustomer(id: number): Observable<any> {
-  //   return this.httpClient.delete(`https://localhost:7260/api/Client/${id}`);
-  // }
 }
