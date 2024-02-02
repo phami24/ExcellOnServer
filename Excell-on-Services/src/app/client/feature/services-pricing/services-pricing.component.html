@@ -16,13 +16,13 @@
     <div class="py-5 px-lg-5">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             <div *ngFor="let item of services; let i = index"
-            class="flex flex-col grid grid-cols content-between items-center text-center rounded p-4 md:col-span-1 lg:col-span-1 md:gap-4 lg:gap-4 rounded-[25px] bg-[#fcfcfc] outline outline-offset-2 outline-blue-100 rounded-lg shadow-sky-900 mx-10 wow fadeInUp"
+            class="mb-8 flex flex-col grid grid-cols content-between items-center text-center rounded p-4 md:col-span-1 lg:col-span-1 md:gap-4 lg:gap-4 rounded-[25px] bg-[#fcfcfc] outline outline-offset-2 outline-blue-100 rounded-lg shadow-sky-900 mx-10 wow fadeInUp"
                 data-wow-delay="0.1s">
                 <div>
-                    <!-- <div class="flex justify-center">
+                    <div class="flex justify-center">
                         <img class="w-24 h-24" [src]="imageService[i].imageSrc"
                         [alt]="imageService[i].altText">
-                    </div> -->
+                    </div>
                     <h5 class="mb-3 text-2xl font-semibold text-emerald-800 mt-8">{{ item.serviceName }}</h5>
                     <h1 class="card-title text-[#444] pricing-card-title mt-3 font-bold text-xl">4500$<small
                             class="text-body-secondary font-light">/day</small></h1>
