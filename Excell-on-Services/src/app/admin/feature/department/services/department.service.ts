@@ -1,88 +1,105 @@
 // department.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, map } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Employee } from '../model/employee.model';
+import { Department } from '../model/department.model';
+import { UpdateDepartmentDto } from '../edit-department/update-department.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DepartmentService {
-  saveDepartment(formData: any) {
-    throw new Error('Method not implemented.');
-  }
-
   private apiUrl = 'https://localhost:7260/api'; // Thay đổi URL ở đây
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  private addTokenToHeader(): HttpHeaders {
+    const token = localStorage.getItem('tokenAdmin');
+    if (!token) {
+      // Handle the case where the token is not present
+      console.warn('Token not found in localStorage');
+      return new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+  }
 
   // Lấy danh sách tất cả các phòng ban
-  getDepartments(): Observable<any[]> {
-    const token = localStorage.getItem('token');
+  getDepartments(): Observable<Department[]> {
+    const headers = this.addTokenToHeader();
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ' ${token}`,
-    });
-    return this.http.get<any[]>(`${this.apiUrl}/Department`, { headers }); // Thêm '/Department' ở đây nếu cần
+    return this.http
+      .get<Department[]>(`${this.apiUrl}/Department`, { headers: headers })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error fetching departments:', error);
+          return throwError('Error fetching departments');
+        })
+      );
   }
 
   // Lấy thông tin một phòng ban theo ID
   getDepartmentById(id: number): Observable<any> {
+    const headers = this.addTokenToHeader();
     const url = `${this.apiUrl}/Department/${id}`;
 
-    return this.http.get(url).pipe(
-      catchError((error) => {
-        console.error('Error in getDepartmentById:', error);
-        // Nếu muốn truyền lỗi về thành phần gọi hàm, bạn có thể sử dụng throwError
-        // return throwError('Có lỗi xảy ra khi tải thông tin phòng ban.');
-
-        // Hoặc chỉ cần throw error để hiển thị trong console.log
-        throw error;
-      })
-    );
+    return this.http.get(url, { headers: headers });
   }
 
   getEmployeeById(employeeId: number): Observable<Employee> {
-    return this.http.get<Employee>(
-      `https://localhost:7260/api/Employee/${employeeId}`
-    );
+    const headers = this.addTokenToHeader();
+
+    return this.http.get<Employee>(`https://localhost:7260/${employeeId}`, {
+      headers: headers,
+    });
   }
 
   // Thêm một phòng ban mới
-  addDepartment(DepartmentData: any): Observable<any> {
-    console.log('Employee Data:', DepartmentData); // In ra dữ liệu để kiểm tra
+  addDepartment(departmentData: any): Observable<any> {
+    const headers = this.addTokenToHeader();
 
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ' ${token}`,
+    return this.http.post<any>(`${this.apiUrl}/Department`, departmentData, {
+      headers: headers,
     });
-
-    const formData = new FormData();
-
-    formData.append('departmentName', DepartmentData.departmentName);
-    formData.append('departmentDescription', DepartmentData.departmentDescription);
-
-    return this.http.post<any>(`${this.apiUrl}/Department`,formData, {headers});
   }
 
   //Gọi API để lấy danh sách nhân viên trong phòng ban
   getEmployeesByDepartmentId(departmentId: number): Observable<any> {
+    const headers = this.addTokenToHeader();
+
     return this.http.get(
-      `${this.apiUrl}/Employee/getByDepartmentId/${departmentId}`
+      `${this.apiUrl}/Employee/getByDepartmentId/${departmentId}`,
+      { headers: headers }
     );
   }
 
   // Cập nhật thông tin một phòng ban
-  updateDepartment(id: number, department: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/Department/${id}`, department);
+  updateDepartment(updateData: UpdateDepartmentDto): Observable<any> {
+    const headers = this.addTokenToHeader();
+    const url = `${this.apiUrl}/Department/Update`;
+
+    return this.http.put(url, updateData, { headers: headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error updating department:', error);
+        return throwError(error);
+      })
+    );
   }
 
   // Xóa một phòng ban
   deleteDepartment(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/Department/Delete?id=${id}`);
-  }
+    const headers = this.addTokenToHeader();
 
-  // Bổ sung các phương thức khác liên quan đến Department nếu cần
+    return this.http.delete<any>(`${this.apiUrl}/Department/Delete?id=${id}`, {
+      headers: headers,
+    });
+  }
 }

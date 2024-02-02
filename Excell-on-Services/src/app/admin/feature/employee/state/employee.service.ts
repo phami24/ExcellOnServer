@@ -12,14 +12,14 @@ export class EmployeeService {
   constructor(private http: HttpClient) {}
 
   private addToken(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('tokenAdmin');
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
   }
 
   private addTokenToHeader(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('tokenAdmin');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export class EmployeeService {
   }
 
   updateEmployee(employee: FormData): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('tokenAdmin');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
     });
