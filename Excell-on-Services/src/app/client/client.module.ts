@@ -9,19 +9,17 @@ import { AboutComponent } from './feature/about/about.component';
 import { ProfileComponent } from './feature/profile/profile.component';
 import { ReportsComponent } from './feature/reports/reports.component';
 import { ServicesPricingComponent } from './feature/services-pricing/services-pricing.component';
-import { PaymentsComponent } from './feature/payments/payments.component';
 import { PaymentHistoryComponent } from './feature/payment-history/payment-history.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientRoutingModule } from './client-routing.module';
 import { ServiceDetailComponent } from './feature/service-detail/service-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
-
+import { PaymentsComponent } from './feature/payments/payments.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
-    
     HeaderComponent,
     FooterComponent,
     HomeComponent,
@@ -29,9 +27,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfileComponent,
     ReportsComponent,
     ServicesPricingComponent,
-    PaymentsComponent,
     PaymentHistoryComponent,
     ServiceDetailComponent,
+    PaymentsComponent,
   ],
   imports: [
     CommonModule,
@@ -40,10 +38,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatAutocompleteModule,
   ],
-  exports:[
-    HeaderComponent,
-    FooterComponent,
-  ]
+  exports: [HeaderComponent, FooterComponent],
 })
-export class ClientModule { }
+export class ClientModule {}

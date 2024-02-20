@@ -7,7 +7,7 @@ import { Service } from 'src/app/interfaces/service';
 @Component({
   selector: 'app-add-service',
   templateUrl: './add-service.component.html',
-  styleUrls: ['./add-service.component.css']
+  styleUrls: ['./add-service.component.css'],
 })
 export class AddServiceComponent {
   newService: Service = {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payments',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payments.component.css'],
 })
 export class PaymentsComponent implements OnInit {
-  constructor() {}
+  chargeData: any;
+  constructor(private route: ActivatedRoute) {}
   handler: any = null;
   ngOnInit() {
     this.loadStripe();
+    this.route.queryParams.subscribe((params) => {
+      this.chargeData = JSON.parse(params['chargeData']);
+    });
   }
 
   pay(amount: any) {
