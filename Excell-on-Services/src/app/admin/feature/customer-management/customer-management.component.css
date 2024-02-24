@@ -13,3 +13,12 @@ table{
 .mat-mdc-form-field{
     border: none !important;
 }
+.radius{
+    border-radius: 20px;
+}
+th{
+    color: #06283D;
+    font-weight: bold;
+    font-size: medium;
+    background-color: #e5e7eb !important;
+}

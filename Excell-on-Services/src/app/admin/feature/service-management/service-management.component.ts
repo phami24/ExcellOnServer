@@ -31,7 +31,7 @@ export class ServiceManagementComponent implements OnInit{
     'id',
     'serviceName',
     'description',
-    'totalDay',
+    // 'totalDay',
     'actions',
   ];
   dataSource: MatTableDataSource<Service>;
