@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Inject } from '@angular/core';
 import { EmployeeService } from '../state/employee.service';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationService  } from '../../../shared/notification/notification.service';
+
 
 
 @Component({
@@ -27,6 +29,7 @@ export class EditEmployeeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private employeeService: EmployeeService,
     private toastr: ToastrService,
+    private notificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -79,6 +82,7 @@ export class EditEmployeeComponent implements OnInit {
           // Xử lý thành công, ví dụ: đóng hộp thoại
           this.toastr.success('Update successful!', 'Success');
           this.dialogRef.close(); // Đóng dialog khi cập nhật thành công
+          this.notificationService.notifyUpdateEmployee(updatedEmployee.firstName);
         },
         (error) => {
           // Xử lý lỗi, ví dụ: hiển thị thông báo lỗi
