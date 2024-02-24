@@ -30,6 +30,9 @@ export class ServiceDetailComponent implements OnInit {
     { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
     { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
     { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },   
+    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
+    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
+    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },   
   ];
   
 }

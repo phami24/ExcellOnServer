@@ -7,24 +7,51 @@ import { ServicesPageService } from '../../services/services-page/services-page.
 import { Service } from 'src/app/interfaces/service';
 import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { Router } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
+import { CartService } from '../../services/cart/cart.service';
+import { ProfileService } from '../../services/profile/profile.service';
 @Component({
   selector: 'app-services-pricing',
   templateUrl: './services-pricing.component.html',
   styleUrls: ['./services-pricing.component.css'],
+  providers: [CurrencyPipe],
 })
 export class ServicesPricingComponent implements OnInit {
   services?: Service[];
   serviceCharges: { [serviceId: number]: ServiceCharge[] } = {};
   openTab: number = 1;
+  token: string | null = localStorage.getItem('token');
+  userProfile: any;
+  userId: number | undefined;
   constructor(
     private servicesService: ServicesPageService,
+    private cartService: CartService,
+    private profileService: ProfileService,
     public dialog: MatDialog,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    
   ) {}
   ngOnInit(): void {
     initFlowbite();
     this.getService();
+
+    if (this.token !== null) {
+      this.profileService.GetProfileByJwt(this.token).subscribe(
+        (response) => {
+          this.userProfile = response.userProfile;
+          console.log(this.userProfile);
+          // Lấy id từ userProfile
+          this.userId = this.userProfile.id;
+          console.log("User ID:", this.userId);
+        },
+        (error) => {
+          console.error('Error:', error);
+        }
+      );
+    } else {
+      console.error('Token is null. Handle this case appropriately.');
+    }
   }
   openServiceDetailForm(service: any): void {
     const dialogRef = this.dialog.open(ServiceDetailComponent, {
@@ -36,11 +63,20 @@ export class ServicesPricingComponent implements OnInit {
       this.getService();
     });
   }
-  addToCart(charge: any) {
-    this.router.navigate(['/user/payment'], {
-      queryParams: { chargeData: JSON.stringify(charge) },
-    });
+  addToCart(clientId: number, serviceChargeId: number): void {
+   
+      this.cartService.addCart(clientId, serviceChargeId).subscribe(
+        () => {
+          this.toastr.success('Add to cart successfully!', 'Success');
+        },
+        (error) => {
+          console.error(error);
+          this.toastr.error('Error adding to cart', 'Error');
+        }
+      );
+    
   }
+  
 
   getService(): void {
     this.servicesService.getService().subscribe({
@@ -73,5 +109,106 @@ export class ServicesPricingComponent implements OnInit {
     { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
     { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
     { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
+    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
+    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
+    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
+  ];
+  reviewService: string[] = [
+    'Solving IT Problems',
+    'IT Security Services',
+    'Cloud Services',
+    'Practice IT Management',
+    'Managed IT Service',
+    'Remote IT Assistance'
+  ];
+
+
+  tabs = [
+    {
+      id: 1,
+      title: 'In-bound Services',
+      strengths: [
+        { icon: '/assets/images/checkmark.png', description: 'No one wants to be bothered by marketers, or bothered by salespeople. They just want to get help.' },
+        { icon: '/assets/images/checkmark.png', description: 'Share relevant information, create useful content, and satisfy needs clients.' },
+        { icon: '/assets/images/checkmark.png', description: 'By publishing the right content, in the right place, Inbound Marketing creates real value for customers.' },
+        { icon: '/assets/images/checkmark.png', description: 'They will trust and love the business more because they receive valuable information.' }
+      ],
+      advantages: 'What are the advantages of the Inbound Marketing method? No need for expensive advertising, Inbound Marketing will guide potential customers to proactively search for businesses through Google, blogs or social networks. By publishing the right content, in the right place and at the right time, Inbound Marketing creates real value for customers.',
+      stages: 'Learn the 5 stages of Inbound Marketing:',
+      marketingStages: [
+        'Attract visitors to the website',
+        'Transformation',
+        'Marketing automation',
+        'Brand loyalty',
+        'Check progress and measure results'
+      ],
+      types: 'Types of Inbound Marketing:',
+      marketingTypes: [
+        'Content Marketing',
+        'SEO',
+        'Social Media Marketing',
+        'Email Marketing',
+        'Search Engine Marketing (SEM)'
+      ],
+      importance: 'It can be said that Inbound Marketing is a long-term investment, requiring attracting, establishing and nurturing potential customers instead of chasing immediate profits. That\'s why many Vietnamese businesses are still hesitant to leave their comfort zone to join the Inbound Marketing trend.',
+      importancePoints: [
+        'Helps businesses collect customer information and process information quickly.',
+        'Is the department that helps businesses answer questions and respond to requests and suggestions from customers.',
+        'It is an effective communication channel for businesses to spread their brand in the market.',
+        'Helps businesses build positive relationships with customers, increase customer interaction while minimizing business risks.'
+      ]
+    },
+    {
+      id: 2,
+      title: 'Out-bound Services',
+      strengths: [
+        { icon: '/assets/images/checkmark.png', description: 'Actively promote your brand\'s message to your target audience.' },
+        { icon: '/assets/images/checkmark.png', description: 'Outbound Marketing includes different Marketing strategies and techniques that target a wide range of users.' },
+        { icon: '/assets/images/checkmark.png', description: 'Outbound Marketing offers the ability to set targeting limits based on many factors.' },
+        { icon: '/assets/images/checkmark.png', description: 'The budget for this type of campaign is planned from the beginning, which simplifies tracking.' }
+      ],
+      advantages: 'Advantages of using Outbound Marketing:',
+      stages: 'Popular types of Outbound Marketing:',
+      marketingStages: [
+        'Traditional advertising',
+        'Digital Ads',
+        'Cold Calling'
+      ],
+      types: 'Popular types of Outbound Marketing:',
+      marketingTypes: [
+        'Traditional advertising',
+        'Digital Ads',
+        'Cold Calling'
+      ],
+      importance: 'Outbound Marketing may have played a very important role in the past. However, along with the development of the Internet, the shift from traditional forms of Marketing to Inbound Marketing is considered inevitable.',
+      importancePoints: [
+        'One of the most valuable aspects of Outbound Marketing is its ability to reach a target.',
+        'Outbound Marketing offers the ability to set targeting limits based on many factors.',
+        'Outbound Marketing is also relatively easy to measure effectiveness.',
+        'Online outbound marketing is a popular method for generating leads.'
+      ]
+    },
+    {
+      id: 3,
+      title: 'Tele Marketing Services',
+      strengths: [
+        { icon: '/assets/images/checkmark.png', description: 'Telemarketing simply means marketing via telephone.' },
+        { icon: '/assets/images/checkmark.png', description: 'Telemarketing includes introducing and providing information about products to customers.' },
+        { icon: '/assets/images/checkmark.png', description: 'Service with the purpose of creating demand for potential customers and collecting information.' },
+        { icon: '/assets/images/checkmark.png', description: 'Is a solution that helps businesses collect and process customer information quickly.' }
+      ],
+      types: 'Types of Telemarketing:',
+      marketingTypes: [
+        'Inbound Telemarketing',
+        'Outbound Telemarketing'
+      ],
+      importance: 'The importance of Telemarketing in businesses:',
+      importancePoints: [
+        'Helps businesses collect customer information and process information quickly.',
+        'Is the department that helps businesses answer questions and respond to requests and suggestions from customers.',
+        'It is an effective communication channel for businesses to spread their brand in the market.',
+        'Helps businesses build positive relationships with customers, increase customer interaction while minimizing business risks.'
+      ]
+    }
   ];
 }

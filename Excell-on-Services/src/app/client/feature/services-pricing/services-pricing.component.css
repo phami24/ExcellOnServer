@@ -19,3 +19,11 @@
   border-bottom: #2884da solid 4px;
   border-radius: 50px;
 }
+.description {
+  max-height: 4.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
