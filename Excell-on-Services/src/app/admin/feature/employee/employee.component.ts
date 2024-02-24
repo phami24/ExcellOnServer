@@ -4,10 +4,11 @@ import { CreateEmployeeComponent } from './create-employee/create-employee.compo
 import { MatDialog } from '@angular/material/dialog';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationService  } from '../../shared/notification/notification.service';
 
 
 
-@Component({
+@Component({  
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css'],
@@ -41,6 +42,8 @@ export class EmployeeComponent implements OnInit {
     private employeeService: EmployeeService,
     public dialog: MatDialog,
     private toastr: ToastrService,
+    private notificationService: NotificationService,
+
   ) { }
   ngOnInit(): void {
     this.showForm = false;
@@ -134,6 +137,7 @@ export class EmployeeComponent implements OnInit {
           // Tiếp tục với các bước sau khi xóa
           this.toastr.success('Delete successful!', 'Success');
           this.loadEmployees();
+          this.notificationService.notifyDeleteEmployee(employee.firstName);
         },
         (error) => {
           console.error('Delete failed:', error);
