@@ -31,4 +31,7 @@ export class MainService {
   getTotalClientOfService(serviceId: number): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/api/dashboard/total-client-of-service?serviceId=${serviceId}`);
   }
+  getService(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/Service`)
+  }
 }

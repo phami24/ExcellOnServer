@@ -8,7 +8,7 @@ import { MainService } from './services/main.service';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements AfterViewInit, OnInit {
-
+  services : any[] = [];
   totalEmployees: number = 0;
   totalClients: number = 0;
   totalDepartments: number = 0;
@@ -18,6 +18,8 @@ export class MainComponent implements AfterViewInit, OnInit {
   constructor(private mainService: MainService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+  this.loadService();
+
     this.mainService.getTotalEmployee().subscribe(data => this.totalEmployees = data);
     this.mainService.getClientCount().subscribe(data => this.totalClients = data);
     this.mainService.getDepartmentCount().subscribe(data => this.totalDepartments = data);
@@ -31,7 +33,16 @@ export class MainComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.setupChart();
   }
-
+  loadService(): void {
+    this.mainService.getService().subscribe(
+      (data) => {
+        this.services = data;
+      },
+      (error) => {
+        console.error('Error fetching departments:', error);
+      }
+    );
+  }
   private setupChart() {
     const chartElement = document.getElementById('order-chart') as HTMLCanvasElement;
 
