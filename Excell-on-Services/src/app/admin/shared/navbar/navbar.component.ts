@@ -39,6 +39,7 @@ export class NavbarComponent implements OnInit {
     private toastr: ToastrService,
     private store: Store<fromRoot.IAppState>,
     private router: Router,
+    private route: ActivatedRoute,
     private ngZone: NgZone,
     private notificationService: NotificationService,
     // private snackBar: MatSnackBar
@@ -163,7 +164,6 @@ export class NavbarComponent implements OnInit {
   private setPageTitleFromRoute(): void {
     // Get the current route
     const currentRoute = this['route'].root;
-
 
     // Traverse the route tree to find the last activated route
     let lastActivatedRoute = currentRoute;
