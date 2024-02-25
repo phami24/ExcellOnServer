@@ -10,70 +10,85 @@
 </div>
 
 
-<!-- Service Start -->
-<div class="container-xxl py-5">
+<!-- Service new -->
+
+<div class="mx-10 py-4">
     <ng-container *ngIf="services">
-    <div class="py-5 px-lg-5">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <div *ngFor="let item of services; let i = index"
-            class="mb-8 flex flex-col grid grid-cols content-between items-center text-center rounded p-4 md:col-span-1 lg:col-span-1 md:gap-4 lg:gap-4 rounded-[25px] bg-[#fcfcfc] outline outline-offset-2 outline-blue-100 rounded-lg shadow-sky-900 mx-10 wow fadeInUp"
-                data-wow-delay="0.1s">
-                <div>
-                    <div class="flex justify-center">
-                        <img class="w-24 h-24" [src]="imageService[i].imageSrc"
-                        [alt]="imageService[i].altText">
-                    </div>
-                    <h5 class="mb-3 text-2xl font-semibold text-emerald-800 mt-8">{{ item.serviceName }}</h5>
-                    <h1 class="card-title text-[#444] pricing-card-title mt-3 font-bold text-xl">4500$<small
-                            class="text-body-secondary font-light">/day</small></h1>
-                    <p class="m-0">{{ item.description }}</p>
-                   
+        <div class="grid grid-cols-12 mb-5 justify-items-center" *ngFor="let item of services; let i = index">
+            <div class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-center">
+                    <img class="w-24 h-24" [src]="imageService[i].imageSrc" [alt]="imageService[i].altText">
                 </div>
-                <div class="grid grid-cols-12 divide-x-2 divide-blue-200 text-center">
-                    <div class="col-span-6">
-                        <a (click)="openServiceDetailForm(item)" class="hover:cursor-pointer hover:text-[#4476bd] font-medium text-base">
-                            See more<i class="fa-solid fa-arrow-right mx-5"></i>
-                        </a>
-                    </div>
-                    <div class="col-span-6">
-                        <a class="font-medium text-base flex justify-end bg-transparent  ... pr-10">
-                            <i class="fa-regular fa-heart"></i>
-                        </a>
+                <div>
+                    <h5 class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ item.serviceName }}</h5>
+                </div>
+                <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 description">{{ item.description }}</p>
+                <a (click)="openServiceDetailForm(item)" class="cursor-pointer inline-flex items-center text-blue-600 hover:underline">See more
+                    <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778" />
+                    </svg>
+                </a>
+            </div>            
+            <div class="col-span-12 lg:col-span-8 lg:ml-5 lg:mr-2 flex items-center">
+                <div class="grid lg:grid-cols-12">
+                    <div class="lg:col-span-6 col-span-12 mr-2 my-1" *ngFor="let charge of serviceCharges[item.serviceId]">
+                        <div class="grid grid-cols-12 bg-sky-50 border border-blue-100 py-3 px-5 rounded-[8px]">
+                            <div class="col-span-3">
+                                <svg class="w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10"
+                                            stroke="#93c5fd" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                        </path>
+                                    </g>
+                                </svg>
+                                <p class="font-medium">{{ charge.serviceChargesName }}</p>
+                            </div>
+                            <div class="col-span-9 break-all">
+                                <div class="grid grid-cols-12">
+                                    <p class="col-span-8 text-xl font-medium">{{ charge.price | currency }}</p>
+                                    <button
+                                    (click)="addToCart(userProfile?.id, charge.serviceChargesId)"
+                                        class="hover:cursor-pointer col-span-4 text-end"><i
+                                            class="fa-solid fa-cart-plus text-lg text-[#06346d]"></i></button>
+                                </div>
+                                <p class="break-all truncate">
+                                    {{ charge.serviceChargesDescription }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
         </div>
-    </div>
-</ng-container>
+    </ng-container>
+
 </div>
-<!-- Service End -->
+
+<!-- Service new end -->
 
 
 <section class="py-0">
     <div class="bg-[url('/assets/images/servicesBg.png')] bg-no-repeat bg-cover">
-        <div class="flex md:flex-row items-center">
+        <div class="hide md:flex md:flex-row items-center">
             <div class="md:w-1/2 px-14 text-center md:text-start md:offset-1">
                 <h2 class="text-xl font-bold leading-loose uppercase">
                     why choose us?
                 </h2>
-                <p class="my-4 md:pe-xl-5 text-3xl">Safeguard Your Brand with Cyber Security and IT Solutions</p>
-                <p class="text-md my-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                <p class="my-4 md:pe-xl-5 text-3xl">Safeguard Your Brand with Cyber Security
+                    and IT Solutions</p>
+                <p class="text-md my-4">Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit, sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua</p>
 
                 <div class="grid grid-cols-2 grid-row-4 gap-4">
-                    <div class="border-l-2 px-3 py-2 border-[#97cffd] bg-[#fcfcfc] font-medium rounded-r-lg">Solving IT
-                        Problems</div>
-                    <div class="border-l-2 px-3 py-2 border-[#97cffd] bg-[#fcfcfc] font-medium rounded-r-lg">IT Security
-                        Services</div>
-                    <div class="border-l-2 px-3 py-2 border-[#97cffd] bg-[#fcfcfc] font-medium rounded-r-lg">Cloud
-                        Services</div>
-                    <div class="border-l-2 px-3 py-2 border-[#97cffd] bg-[#fcfcfc] font-medium rounded-r-lg">Practice IT
-                        Management</div>
-                    <div class="border-l-2 px-3 py-2 border-[#97cffd] bg-[#fcfcfc] font-medium rounded-r-lg">Managed IT
-                        Service</div>
-                    <div class="border-l-2 px-3 py-2 border-[#97cffd] bg-[#fcfcfc] font-medium rounded-r-lg">Remote IT
-                        Assistance</div>
+                    <ng-container *ngFor="let item of reviewService">
+                        <div class="border-l-2 px-3 py-2 border-[#97cffd] bg-[#fcfcfc] font-medium rounded-r-lg">
+                            {{item}}
+                        </div>
+                    </ng-container>
                 </div>
             </div>
             <div class="md:w-1/2 order-first md:order-none text-center md:text-start"><img class="w-full md:mb-4"
@@ -84,269 +99,49 @@
 </section>
 
 
+
 <section class="grid grid-cols-1 min-h-max max-h-max">
     <div x-data="{ openTab: 1 }">
-        <div class="flex">
-            <div class="flex-initial w-1/3">
-                <ul class=" px-8 my-6 mx-4 border-r-2">
-                    <li class="mb-px mr-1">
-                        <a (click)="openTab = 1" [class]="{ 'border-b-2 border-blue-500': openTab === 1 }"
-                            class="hover:cursor-pointer bg-[#94c6fd] rounded-full inline-block py-3 px-7 my-3 hover:text-white font-medium text-xl hover:bg-[#4476bd]">In-bound
-                            Services</a>
-                    </li>
-                    <li class="mb-px mr-1">
-                        <a (click)="openTab = 2" [class]="{ 'border-b-2 border-blue-500': openTab === 2 }"
-                            class="hover:cursor-pointer bg-[#94c6fd] rounded-full inline-block py-3 px-7 my-3 hover:text-white font-medium text-xl hover:bg-[#4476bd]">Out-bound
-                            Services</a>
-                    </li>
-                    <li class="mb-px mr-1">
-                        <a (click)="openTab = 3" [class]="{ 'border-b-2 border-blue-500': openTab === 3 }"
-                            class="hover:cursor-pointer bg-[#94c6fd] rounded-full inline-block py-3 px-7 my-3 hover:text-white font-medium text-xl hover:bg-[#4476bd]">Tele
-                            Marketing Services</a>
+        <div class="md:flex">
+            <div class="inline-flex rounded-md shadow-sm m-5 md:flex-initial md:w-1/3">
+                <ul class="md:px-6 md:my-6 md:mx-4 md:border-r-2">
+                    <li class="md:mb-px md:mr-1 px-4 py-2 text-sm font-medium text-[#06346d] bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white" *ngFor="let tab of tabs">
+                        <a (click)="openTab = tab.id" [class]="{ 'border-b-2 border-blue-500': openTab === tab.id }"
+                            class="hover:cursor-pointer inline-block py-3 px-7 my-3 font-medium text-xl hover:text-blue-400">{{ tab.title }}</a>
                     </li>
                 </ul>
             </div>
             <div class="flex-initial w-2/3 my-6 mx-10">
-                <div [hidden]="openTab !== 1" class="tab-content">
-
-                    <h1 class="text-3xl">Strengths of In-bound?</h1>
-
+                <div [hidden]="openTab !== tab.id" class="tab-content" *ngFor="let tab of tabs">
+                    <h1 class="text-3xl">{{ tab.title }}</h1>
                     <ul class="list-none">
-                        <li class="flex items-center">
+                        <li class="flex items-center" *ngFor="let strength of tab.strengths">
                             <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">“No one wants to be bothered by marketers, or bothered by salespeople.
-                                They just want to get help.”</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Share relevant information, create useful content, and satisfy needs
-                                clients.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">By publishing the right content, in the right place and at the right
-                                time, Inbound Marketing creates real value for customers.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">They will trust and love the business more because they receive valuable
-                                information.</span>
-                        </li>
-
-                    </ul>
-                    <br>
-                    <p class="font-medium">What are the advantages of the Inbound Marketing method? No need for
-                        expensive advertising, Inbound Marketing will guide potential customers to proactively search
-                        for businesses through Google,
-                        blogs or social networks. By publishing the right content, in the right place and at the right
-                        time, Inbound Marketing creates real value for customers.
-                    </p>
-                    <p class="font-medium">Learn the 5 stages of Inbound Marketing:</p>
-                    <ol class="list-decimal">
-                        <li>Attract visitors to the website
-                            <ul class="list-disc">
-                                <li>Most users will search for products and services themselves through the following
-                                    three channels: Google, blogs and social networks. To attract them to your website,
-                                    you have to rely on many different techniques.</li>
-                                <li>Ways to improve website rankings on Google:Choose the perfect keyword, Optimize
-                                    title tags (title tag),
-                                    Website content, Blogs, Social networks (Facebook, Instagram, LinkedIn, YouTube…)
-                                </li>
-                                <li>Most users will search for products and services themselves through the following
-                                    three channels: Google, blogs and social networks. To attract them to your website,
-                                    you have to rely on many different techniques.</li>
-                            </ul>
-                        </li>
-                        <li>Transformation
-                            <ul>
-                                <li>Motivate people to take action with CTAs (call-to-action) such as: signing up for a
-                                    newsletter, filling out a registration form or offering to use a trial version... to
-                                    get them to interact with your business more.</li>
-                            </ul>
-                        </li>
-                        <li>Marketing automation
-                            <ul class="list-disc">
-                                <li>Leadscoring: is the process of assigning value to each potential customer so that
-                                    the sales team can quickly reach the customers who need to be interacted with first.
-                                </li>
-                                <li>Leadnurturing: Based on the score achieved and the characteristics of the lead, you
-                                    will design a series of automated flows to send information relevant to their needs.
-                                </li>
-                            </ul>
-                        </li>
-                        <li>Brand loyalty
-                            <ul class="list-disc">
-                                <li>The process isn't over when you convert leads into customers. The next step is to
-                                    get this customer to stay with you as long as possible through customer loyalty
-                                    building strategies.</li>
-                            </ul>
-                        </li>
-                        <li>Check progress and measure results
-                            <ul class="list-disc">
-                                <li>For each stage, track your progress. Measure expected customers, potential
-                                    customers, actual customers on each channel over time, as well as conversion
-                                    rates...</li>
-                            </ul>
-                        </li>
-                    </ol>
-                    <p class="font-medium">It can be said that Inbound Marketing is a long-term investment, requiring
-                        attracting, establishing and nurturing potential customers instead of chasing immediate profits.
-                    </p>
-                    <p class="font-medium">That's why many Vietnamese businesses are still hesitant to leave their
-                        comfort zone to join the Inbound Marketing trend.</p>
-                </div>
-
-                <div [hidden]="openTab !== 2" class="tab-content">
-
-                    <h1 class="text-3xl">Strengths of Out-bound?</h1>
-                    <ul class="list-none">
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Actively promote your brand's message to your target audience.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Outbound Marketing includes different Marketing strategies and techniques
-                                that target a wide range of users.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Outbound Marketing offers the ability to set targeting limits based on
-                                many factors.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">The budget for this type of campaign is planned from the beginning, which
-                                simplifies tracking.</span>
+                                style="background-image: url('{{ strength.icon }}');">
+                            </div>
+                            <span class="ml-2">{{ strength.description }}</span>
                         </li>
                     </ul>
                     <br>
-                    <p class="font-medium">Advantages of using Outbound Marketing:</p>
+                    <p class="font-medium">{{ tab.advantages }}</p>
+                    <p class="font-medium">{{ tab.stages }}</p>
                     <ol class="list-decimal">
-                        <li>One of the most valuable aspects of Outbound Marketing is its ability to reach a target.
-                            <ul class="list-disc">
-                                <li>Especially when it comes to online Outbound Marketing.</li>
-
-                            </ul>
-                        </li>
-                        <li>Outbound Marketing offers the ability to set targeting limits based on many factors.
-                            <ul>
-                                <li>These include demographics, geography, interests and behavior. This allows
-                                    advertisers to target only the audience of their choice.</li>
-                            </ul>
-                        </li>
-                        <li>Outbound Marketing is also relatively easy to measure effectiveness.
-
-                        </li>
-                        <li>Online outbound marketing is a popular method for generating leads.
-
-                        </li>
-
-                    </ol>
-                    <br>
-                    <p class="font-medium">Popular types of Outbound Marketing:</p>
-                    <ol class="list-decimal">
-                        <li>Traditional advertising
-                            <ul class="list-disc">
-                                <li>Traditional advertising includes media such as television, radio, print (newspapers,
-                                    magazines, etc.) and billboards.</li>
-                                <li>This method helps you convey your message to the masses.</li>
-                            </ul>
-                        </li>
-                        <li>Digital Ads
-                            <ul>
-                                <li>This is considered a modernized version of media advertising.</li>
-                                <li>Digital advertising allows you to reach your target audience on the Internet front.
-                                </li>
-                            </ul>
-                        </li>
-                        <li>Cold Calling
-                            <ul>
-                                <li>Staff will make calls based on a database of people who could be potential
-                                    customers.</li>
-                                <li>Salespeople often do not have prior communication with customers, hence the term
-                                    Cold Calling.</li>
-                            </ul>
+                        <li *ngFor="let stage of tab.marketingStages">
+                            {{ stage }}
                         </li>
                     </ol>
                     <br>
-                    <p class="font-medium">Outbound Marketing may have played a very important role in the past.
-                        However, along with the development of the Internet, the shift from traditional forms of
-                        Marketing to Inbound Marketing is considered inevitable.</p>
-                </div>
-
-                <div [hidden]="openTab !== 3" class="tab-content">
-
-                    <h1 class="text-3xl">Strengths of TeleMarketing?</h1>
-                    <ul class="list-none">
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Telemarketing simply means marketing via telephone.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Telemarketing includes introducing and providing information about
-                                products to customers.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Service with the purpose of creating demand for potential customers and
-                                collecting information.</span>
-                        </li>
-                        <li class="flex items-center">
-                            <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
-                                style="background-image: url('/assets/images/checkmark.png');"></div>
-                            <span class="ml-2">Is a solution that helps businesses collect and process customer
-                                information quickly.</span>
-                        </li>
-                    </ul>
-                    <br>
-                    <p class="font-medium">Types of Telemarketing:</p>
+                    <p class="font-medium">{{ tab.types }}</p>
                     <ol class="list-decimal">
-                        <li>Inbound Telemarketing
-                            <ul class="list-disc">
-                                <li>This is a form for actual consumer products, used to record feedback from customers
-                                    who use the product.</li>
-                                <li>Customers will contact Inbound Telemarketing when they have questions that need
-                                    answering about the product.</li>
-                            </ul>
-                        </li>
-                        <li>Outbound Telemarketing
-                            <ul>
-                                <li>Telesales: Call target customers and sell products.</li>
-                                <li>Telephone Survey: Investigation and research activities on the consumer market or
-                                    target market via telephone.
-                                </li>
-                                <li>Event Broadcasting: Activities carried out for the purpose of communicating upcoming
-                                    events and campaigns.
-                                </li>
-                            </ul>
+                        <li *ngFor="let type of tab.marketingTypes">
+                            {{ type }}
                         </li>
                     </ol>
-                    <p class="font-medium">The importance of Telemarketing in businesses:</p>
+                    <p class="font-medium">{{ tab.importance }}</p>
                     <ol class="list-decimal">
-                        <li>Helps businesses collect customer information and process information quickly.
+                        <li *ngFor="let importance of tab.importancePoints">
+                            {{ importance }}
                         </li>
-                        <li>Is the department that helps businesses answer questions and respond to requests and
-                            suggestions from customers.
-                        </li>
-                        <li>It is an effective communication channel for businesses to spread their brand in the market.
-                        </li>
-                        <li>Helps businesses build positive relationships with customers, increase customer interaction
-                            while minimizing business risks.
-                        </li>
-
                     </ol>
                 </div>
             </div>
@@ -354,16 +149,19 @@
     </div>
 </section>
 
-
 <!-- Contact Start -->
 <div class="container-xxl bg-[#94c6fd] newsletter py-5" data-wow-delay="0.1s">
     <div class="py-5 px-5 lg:px-5">
         <div class="flex justify-center">
             <div class="lg:w-7/12 text-center">
-                <p class="section-title text-white justify-center text-4xl my-3"><span></span>Customer
-                    support<span></span></p>
-                <p class="text-white mb-4">If you have any questions or difficulties about the service,
-                    we need to answer them or leave your phone number and we will help you...</p>
+                <p class="section-title text-white justify-center text-4xl my-3">
+                    <span></span>Customer
+                    support<span></span>
+                </p>
+                <p class="text-white mb-4">If you have any questions or difficulties
+                    about the service,
+                    we need to answer them or leave your phone number and we will help
+                    you...</p>
                 <div class="relative w-full mt-3">
                     <input class="form-control border-0 rounded-full w-full pl-4 pr-5 h-12" type="text"
                         placeholder="Enter Your Phone">
@@ -374,4 +172,3 @@
         </div>
     </div>
 </div>
-<!-- Contact End -->

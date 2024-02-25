@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { Token } from '@angular/compiler';
+import { NotificationService  } from '../../shared/notification/notification.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class ProfileAdminComponent implements OnInit {
   constructor(private profileAdmin: ProfileAdminService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
+    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -99,6 +101,7 @@ export class ProfileAdminComponent implements OnInit {
             // Xử lý thành công, ví dụ: đóng hộp thoại
             this.toastr.success('Update successful!', 'Success');
             this.loadEmployee();
+          this.notificationService.notifyUpdateProfile();
           },
           (error) => {
             // Xử lý lỗi, ví dụ: hiển thị thông báo lỗi

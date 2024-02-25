@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from './create-employee.service';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationService  } from '../../../shared/notification/notification.service';
+
 
 
 @Component({
@@ -21,7 +23,9 @@ export class CreateEmployeeComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CreateEmployeeComponent>,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private notificationService: NotificationService,
+    ) { }
 
   ngOnInit(): void {
     this.empForm = this.formBuilder.group({
@@ -129,6 +133,7 @@ export class CreateEmployeeComponent implements OnInit {
           this.toastr.success('Create successful!', 'Success');
           this.dialogRef.close(); // Đóng dialog khi tạo mới thành công
           this.loadEmployees();
+          this.notificationService.notifyCreateEmployee(newEmployee.firstName);
         },
         (error) => {
           console.error('Error creating employee', error);
@@ -138,7 +143,7 @@ export class CreateEmployeeComponent implements OnInit {
       ).add(() => {
         // Kết thúc quá trình cập nhật (thành công hoặc thất bại)
         this.updating = false; // Dừng hiển thị loading
-      });;
+      });
     } else {
       this.toastr.error('Create fail!', 'Error');
     }
