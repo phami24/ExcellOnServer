@@ -19,6 +19,18 @@
 h1, h2, h3, h4, h5, h6, li, p, span, strong, a{
     font-family: 'Rubik', sans-serif;
 }
-/* body {
-    height: 100%;
-} */
+.toast-success{
+  background-color: rgb(240 253 244);
+  border: 1px solid #22c55e;
+}
+.toast-success .toast-title, .toast-message{
+  color: #14532d;
+}
+.toast-error{
+  background-color: rgb(254 226 226);
+  border: 1px solid #991b1b;
+}
+.toast-error .toast-title, .toast-message{
+  color: #dc2626;
+}
+

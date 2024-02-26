@@ -10,7 +10,7 @@
                                 class="d-none lg:d-block" />focused on defining, and optimizing clients.</p>
                         <p
                             class="font-medium text-center my-5 text-[#303c60] bg-[#93c5fd] rounded-full mx-20 p-3 hover:bg-[#4476bd] hover:text-white">
-                            <a class="btn btn-lg  " routerLink="/about" role="button">Read more</a>
+                            <a class="btn btn-lg  " routerLink="/user/about" role="button">Read more</a>
                         </p>
                     </div>
 
@@ -27,11 +27,11 @@
                         <div class="flex mx-10 mt-5 space-x-8">
                             <p
                                 class="font-medium px-10 text-lg text-[#303c60] bg-[#93c5fd] rounded-full ... p-2 hover:bg-[#4476bd] hover:text-white">
-                                <a class="btn btn-lg  " routerLink="/about" role="button">Read more</a>
+                                <a class="btn btn-lg  " routerLink="/user/about" role="button">Read more</a>
                             </p>
                             <p
                                 class="font-medium px-10 text-lg text-[#303c60] bg-[#93c5fd] rounded-full ... p-2 hover:bg-[#4476bd] hover:text-white">
-                                <a class="btn btn-link" routerLink="/services" role="button">Services</a>
+                                <a class="btn btn-link" routerLink="/user/services" role="button">Services</a>
                             </p>
                         </div>
                     </div>
@@ -139,10 +139,10 @@
                         </div>
                         <div>
                             <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-                                1000+
+                                90%
                             </dd>
                             <dt class="text-base leading-7 text-gray-600">
-                                Businesses participate
+                                Customer profits
                             </dt>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                     <p class="my-4 md:pe-xl-5">Contact us to find out more and book our services</p>
                     <div>
                         <a class="font-medium text-[#303c60] bg-[#93c5fd] rounded-full p-3 hover:bg-[#4476bd] hover:text-white"
-                            routerLink="/services" role="button">Learn more</a>
+                            routerLink="/user/services" role="button">Learn more</a>
                     </div>
 
                 </div>
@@ -176,35 +176,37 @@
 
     <section class="mx-14">
         <div class=" grid grid-cols-12 gap-3 mb-3">
-            <ng-container *ngIf="service">
-                <div *ngFor="let item of service; let i = index"
-                    class="col-span-12 lg:col-span-4 grid grid-cols content-between pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg h-80">
-                    <div>
-                        <div class=" bg-[#c0ddfe] py-3 rounded-lg">
-                            <h4 class="my-1 text-2xl text-center">{{ item.serviceName }}</h4>
-                        </div>
-
-                        <h1 class=" text-[#444] pricing-card-title mt-3 font-bold text-xl text-center">4500$<small
-                                class="text-body-secondary font-light">/day</small></h1>
-                        <ul class="list-disc px-5 mt-3 mb-4">
-                            <li>{{ item.description }}</li>
-                            <!-- <li>These call centers provide 24 hours service to all customers.</li> -->
-                        </ul>
+            <!-- <ng-container *ngIf="service"> -->
+            <div *ngFor="let item of service; let i = index"
+                class="col-span-12 lg:col-span-4 grid grid-cols content-between pb-8 bg-[#f8f9fa] mb-4 outline outline-offset-2 outline-blue-100 rounded-lg h-80">
+                <div>
+                    <div class=" bg-[#c0ddfe] py-3 rounded-lg">
+                        <h4 class="my-1 text-2xl text-center">{{ item.serviceName }}</h4>
                     </div>
-                    <div class="grid grid-cols-12 divide-x-2 divide-blue-200 text-center">
-                        <div class="col-span-6">
-                            <a routerLink="/payment" class="font-medium text-base">
-                                Add to cart <i class="fa-solid fa-cart-plus text-sky-400 mx-2"></i>
-                            </a>
-                        </div>
-                        <div class="col-span-6">
-                            <a routerLink="" class="font-medium text-base flex justify-end bg-transparent  ... pr-10">
-                                <i class="fa-regular fa-heart"></i>
-                            </a>
-                        </div>
+                    <ul class="list-disc px-5 mt-3 mb-4">
+                        <li>{{ item.description }}</li>
+                        <!-- <li>These call centers provide 24 hours service to all customers.</li> -->
+                    </ul>
+                </div>
+                <div class="grid grid-cols-12 divide-x-2 divide-blue-200 text-center">
+                    <div class="col-span-6">
+                        <a routerLink="/user/services" class="ml-5 flex font-medium text-base">
+                            See more <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg] mt-1.5" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="col-span-6">
+                        <a routerLink="" class="font-medium text-base flex justify-end bg-transparent  ... pr-10">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
                     </div>
                 </div>
-            </ng-container>
+            </div>
+            <!-- </ng-container> -->
         </div>
 
     </section>

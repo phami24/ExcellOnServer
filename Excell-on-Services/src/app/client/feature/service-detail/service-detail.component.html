@@ -1,0 +1,39 @@
+<div class="content">
+
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div mat-dialog-actions class="action">
+            <button
+                class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                type="button" [mat-dialog-close]="false"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="p-4 md:p-5">
+            <div class="grid grid-cols-12 text-center">
+                <!-- <div *ngFor="let image of imageService">
+                    <div *ngIf="image.altText === serviceDetailForm.get('serviceName')?.value">
+                        <img [src]="image.imageSrc" width="92" alt="images-services">
+                    </div>
+                </div> -->
+                <div class="col-span-12 mb-5">
+                    <p class="text-2xl font-extrabold text-blue-900">{{ serviceDetailForm.get('serviceName')?.value }}
+                    </p>
+                </div>
+
+            </div>
+
+            
+            <li class="text-gray-500 dark:text-gray-400 mb-6">
+                {{ serviceDetailForm.get('description')?.value }}
+            </li>
+           
+            <div class="flex items-center mt-6 space-x-2 rtl:space-x-reverse">
+                <!-- <button data-modal-hide="progress-modal" type="button"
+                    class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Add to cart <i class="fa-solid fa-cart-plus"></i>
+                </button> -->
+                <!-- <div mat-dialog-actions class="action">
+                    <button type="button" [mat-dialog-close]="false">Cancel</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

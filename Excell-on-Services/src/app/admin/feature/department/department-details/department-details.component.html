@@ -1,14 +1,24 @@
 <!-- department-details.component.html -->
 <div *ngIf="employee" class="p-4 bg-gray-200 rounded shadow-md">
-    <h2 class="text-2xl font-bold mb-2 flex items-center">
-      <img
-        src="{{ employee.avatar }}"
-        class="h-12 w-12 bg-white rounded-full border mr-2"
-        alt="Employee Avatar"
-      />{{ employee.firstName }} {{ employee.lastName }}
-    </h2>
-    <p class="mb-2 text-gray-600">Date of Birth: {{ employee.dob }}</p>
-    <p class="mb-2 text-gray-600">Email: {{ employee.email }}</p>
-    <p class="mb-2 text-gray-600">Phone: {{ employee.phone }}</p>
+  <h2 class="text-2xl font-bold mb-2 flex items-center">
+    <img
+      src="{{ employee.avatar }}"
+      class="h-12 w-12 bg-white rounded-full border mr-2"
+      alt="Employee Avatar"
+    />{{ employee.firstName }} {{ employee.lastName }}
+    
+  </h2>
+
+  <div class="mb-2">
+    <label class="block text-gray-600 text-sm font-semibold mb-1" for="dob">Date of Birth:</label>
+    <p class="text-gray-600" id="dob">{{ employee.dob }}</p>
   </div>
-  
+  <div class="mb-2">
+    <label class="block text-gray-600 text-sm font-semibold mb-1" for="email">Email:</label>
+    <p class="text-gray-600" id="email">{{ employee.email }}</p>
+  </div>
+  <div class="mb-2">
+    <label class="block text-gray-600 text-sm font-semibold mb-1" for="phone">Phone:</label>
+    <p class="text-gray-600" id="phone">{{ employee.phone }}</p>
+  </div>
+</div>

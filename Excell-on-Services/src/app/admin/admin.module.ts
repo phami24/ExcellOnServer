@@ -6,7 +6,6 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DepartmentComponent } from './feature/department/department.component';
 import { EmployeeComponent } from './feature/employee/employee.component';
-import { ServicesComponent } from './feature/services/services.component';
 import { CommentsComponent } from './feature/comments/comments.component';
 import { ProfileAdminComponent } from './feature/profile-admin/profile-admin.component';
 import { CreateEmployeeComponent } from './feature/employee/create-employee/create-employee.component';
@@ -18,24 +17,31 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditEmployeeComponent } from './feature/employee/edit-employee/edit-employee.component';
 import { PaymentsComponent } from './feature/payments/payments.component';
-import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
-import { CreateDepartmentComponent } from './feature/department/create-department/create-department.component';
 import { DepartmentModule } from './feature/department/department.module';
+import { EditCustomerComponent } from './feature/customer-management/edit-customer/edit-customer.component';
+import { EditServiceComponent } from './feature/service-management/edit-service/edit-service.component';
+import { AddServiceComponent } from './feature/service-management/add-service/add-service.component';
+import { MainComponent } from './feature/main/main.component';
+import { MainModule } from './feature/main/main.module';
 
 
 @NgModule({
+  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     SidebarComponent,
     NavbarComponent,
     DepartmentComponent,
     EmployeeComponent,
-    ServicesComponent,
     CommentsComponent,
     ProfileAdminComponent,
     CreateEmployeeComponent,
     EditEmployeeComponent,
-    PaymentsComponent,    
+    PaymentsComponent,
+    EditCustomerComponent,
+    EditServiceComponent,
+    AddServiceComponent,  
+    MainComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +54,7 @@ import { DepartmentModule } from './feature/department/department.module';
     ReactiveFormsModule,
     MatNativeDateModule,
     DepartmentModule,
+    MainModule
   ],
   exports:[
     SidebarComponent,

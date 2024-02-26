@@ -4,6 +4,8 @@ import { DepartmentService } from './services/department.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CreateDepartmentComponent } from './create-department/create-department.component';
+import { EditDepartmentComponent } from './edit-department/edit-department.component';
+import { UpdateDepartmentDto } from './edit-department/update-department.dto';
 
 @Component({
   selector: 'app-department',
@@ -14,6 +16,7 @@ export class DepartmentComponent implements OnInit {
   departments: any[] = [];
   currentDepartment: any = {};
   navbarOpen = false;
+  
 
   constructor(
     public dialog: MatDialog,
@@ -39,32 +42,32 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  editDepartment(id: number) {
-    this.departmentService.getDepartmentById(id).subscribe((department) => {
-      this.currentDepartment = department;
+  editDepartment(department: any) {
+    const dialogRef = this.dialog.open(EditDepartmentComponent, {
+      width: '325px',
+      data: { department },
+    });
+
+    dialogRef.afterClosed().subscribe((result: UpdateDepartmentDto) => {
+      if (result) {
+        const updateDto: UpdateDepartmentDto = result;
+
+        this.departmentService.updateDepartment(updateDto).subscribe(
+          () => {
+            this.toastr.success('Update successful!', 'Success');
+            this.loadDepartments();
+          },
+          (error) => {
+            console.error('Error updating department:', error);
+            this.toastr.error('Update failed!', 'Error');
+          }
+        );
+      }
     });
   }
 
-  saveDepartment() {
-    if (this.currentDepartment.DepartmentId) {
-      this.departmentService
-        .updateDepartment(
-          this.currentDepartment.DepartmentId,
-          this.currentDepartment
-        )
-        .subscribe(() => {
-          this.loadDepartments();
-          this.resetForm();
-        });
-    } else {
-      this.departmentService
-        .addDepartment(this.currentDepartment)
-        .subscribe(() => {
-          this.loadDepartments();
-          this.resetForm();
-        });
-    }
-  }
+
+ 
 
   deleteDepartment(department: any): void {
     if (confirm('Are you sure you want to delete this employee?')) {
@@ -79,12 +82,21 @@ export class DepartmentComponent implements OnInit {
 
   createDepartment() {
     const dialogRef = this.dialog.open(CreateDepartmentComponent, {
-      width: '550px',
+      width: '325px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      // Thực hiện các hành động sau khi đóng modal (nếu cần)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const departmentData = result;
+        this.departmentService.addDepartment(departmentData).subscribe(
+          response => {
+            this.loadDepartments();
+          },
+          error => {
+            console.error('Error adding department:', error);
+          }
+        );
+      }
     });
   }
 

@@ -26,9 +26,6 @@ export class ClientService {
     }
   }
 
-  // getBanner(): Observable<Banner[]> {
-  //   return this.http.get<Banner[]>(`${baseUrl}/banner`);
-  // }
 
   login(email: string, password: string): Observable<{ result: boolean; token: string }> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -47,11 +44,13 @@ export class ClientService {
     firstName: string;
     lastName: string;
     email: string;
+    phone: string;
+    dob: string;
     password: string;
   }): Observable<{ result: boolean; token: string }> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/Register`, data, { headers }).pipe(
+    return this.http.post<{ result: boolean; token: string }>(`${baseUrl}/Auth/client-register`, data, { headers }).pipe(
       map(response => response),
       catchError(error => {
         console.error('Registration failed:', error);
@@ -67,5 +66,15 @@ export class ClientService {
 
     // Optionally, dispatch a LOGOUT action to notify the state about the logout
     this.store.dispatch(new fromClient.Logout());
+  }
+
+  public authToken = localStorage.getItem('token');
+
+  setAuthToken(token: string): void {
+    this.authToken = token;
+  }
+
+  getAuthToken(): string | null {
+    return this.authToken;
   }
 }

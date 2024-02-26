@@ -11,26 +11,49 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) {}
 
-  getEmployees(): Observable<any[]> {
-    const token = localStorage.getItem('token');
+  private addToken(): HttpHeaders {
+    const token = localStorage.getItem('tokenAdmin');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
 
-    // Tạo header với Bearer token
-    const headers = new HttpHeaders({
+  private addTokenToHeader(): HttpHeaders {
+    const token = localStorage.getItem('tokenAdmin');
+    return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
+  }
+
+  getEmployees(): Observable<any[]> {
+    const headers = this.addTokenToHeader();
     return this.http.get<any[]>(`${this.apiUrl}`, { headers });
   }
 
-  updateEmployee(employeeId: number, updatedEmployee: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/Update/${employeeId}`, updatedEmployee);
+  updateEmployee(employee: FormData): Observable<any> {
+    const token = localStorage.getItem('tokenAdmin');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+
+    return this.http.put(`${this.apiUrl}/Update`, employee, { headers });
   }
+  
+  
 
   deleteEmployee(employeeId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/Delete?id=${employeeId}`);
+    const headers = this.addTokenToHeader();
+    return this.http.delete<any>(`${this.apiUrl}/Delete?id=${employeeId}`, { headers });
   }
   getEmployeesByDepartmentId(departmentId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${departmentId}`);
+  }
+
+  searchEmployeesByName(name: string): Observable<any> {
+    const headers = this.addTokenToHeader();
+    const url = `${this.apiUrl}/search?name=${name}`;
+    return this.http.get(url, { headers });
   }
 
 }

@@ -1,15 +1,50 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { MainService } from './services/main.service';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
 })
-export class MainComponent implements AfterViewInit {
+export class MainComponent implements AfterViewInit, OnInit {
+  services : any[] = [];
+  totalEmployees: number = 0;
+  totalClients: number = 0;
+  totalDepartments: number = 0;
+  revenue: any[] = [];
+  totalClientsForService: number = 0;
+
+  constructor(private mainService: MainService, private cdr: ChangeDetectorRef) { }
+
+  ngOnInit(): void {
+  this.loadService();
+
+    this.mainService.getTotalEmployee().subscribe(data => this.totalEmployees = data);
+    this.mainService.getClientCount().subscribe(data => this.totalClients = data);
+    this.mainService.getDepartmentCount().subscribe(data => this.totalDepartments = data);
+    this.mainService.getRevenue(2024).subscribe(data => {
+      this.revenue = data;
+      this.cdr.detectChanges(); // Manually trigger change detection
+    });
+    this.mainService.getTotalClientOfService(1).subscribe(data => this.totalClientsForService = data);
+  }
+
   ngAfterViewInit() {
-    const chartElement = document.getElementById(
-      'order-chart'
-    ) as HTMLCanvasElement;
+    this.setupChart();
+  }
+  loadService(): void {
+    this.mainService.getService().subscribe(
+      (data) => {
+        this.services = data;
+      },
+      (error) => {
+        console.error('Error fetching departments:', error);
+      }
+    );
+  }
+  private setupChart() {
+    const chartElement = document.getElementById('order-chart') as HTMLCanvasElement;
 
     if (chartElement) {
       const context = chartElement.getContext('2d');
@@ -63,6 +98,7 @@ export class MainComponent implements AfterViewInit {
       }
     }
   }
+
   generateNDays(n: number) {
     const data = [];
     for (let i = 0; i < n; i++) {
@@ -77,6 +113,7 @@ export class MainComponent implements AfterViewInit {
     }
     return data;
   }
+
   generateRandomData(n: number) {
     const data = [];
     for (let i = 0; i < n; i++) {
@@ -84,4 +121,5 @@ export class MainComponent implements AfterViewInit {
     }
     return data;
   }
+
 }

@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .text-event {
   position: relative;
   color: #0d3051;
@@ -20,4 +18,13 @@
   width: 100px;
   border-bottom: #2884da solid 4px;
   border-radius: 50px;
+}
+.day-payment {
+  border: red solid 2px !important;
+}
+.day-payment:focus {
+  border: red solid 2px !important;
+}
+.input-day {
+  background: transparent !important;
 }

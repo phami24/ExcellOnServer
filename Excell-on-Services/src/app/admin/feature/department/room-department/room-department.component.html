@@ -2,12 +2,16 @@
   <div class="bg-gray-100 p-6 md:p-10 rounded-xl">
     <div class="flex flex-wrap items-center">
       <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-        <h2>Thông tin phòng ban</h2>
-
+        <a (click)="goBackToDepartment()">
+          <i class="fa fa-arrow-left font-bold " aria-hidden="true"><strong> Department</strong></i>
+        </a>
+        
+        <h2 class=""><br></h2>
         <div *ngIf="departmentName" class="text-xl md:text-2xl lg:text-3xl font-bold mb-4">
           {{ departmentName }}
         </div>
       </div>
+      
     </div>
 
     <div class="overflow-x-auto mb-8">

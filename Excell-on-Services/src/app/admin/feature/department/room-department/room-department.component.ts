@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentDetailsComponent } from '../department-details/department-details.component';
 import { Employee } from '../model/employee.model';
 import { DepartmentService } from '../services/department.service';
@@ -19,7 +19,7 @@ export class RoomDepartmentComponent implements OnInit {
   departmentName: string | null = null; // Change type to string | null
 
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog,private departmentService: DepartmentService) {}
+  constructor(private route: ActivatedRoute, public dialog: MatDialog,private departmentService: DepartmentService, private router: Router) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -88,5 +88,7 @@ export class RoomDepartmentComponent implements OnInit {
     );
   }
   
- 
+  goBackToDepartment() {
+    this.router.navigate(['/admin/department']);
+  }
 }

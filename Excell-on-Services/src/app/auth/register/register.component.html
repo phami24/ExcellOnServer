@@ -50,6 +50,40 @@
                                     class="text-red-500 mt-2">Invalid Last Name</div>
                             </div>
 
+
+                            <!-- Phone -->
+                            <div class="grid grid-cols-12">
+                                <div class="mb-3 col-span-6">
+                                    <div class="flex items-center border-b border-blue-200 py-2">
+                                        <span class="mr-3"><i class="fas fa-phone"></i></span>
+                                        <input type="text"
+                                            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                            placeholder="Phone" id="phone" formControlName="phone">
+                                    </div>
+                                    <div *ngIf="registrationForm.get('phone')!.hasError('required') && registrationForm.get('phone')!.touched"
+                                        class="text-red-500 mt-2">Phone is required</div>
+                                    <div *ngIf="registrationForm.get('phone')!.hasError('minlength') && registrationForm.get('phone')!.touched"
+                                        class="text-red-500 mt-2">Phone must be at least 6 characters</div>
+                                    <div *ngIf="registrationForm.get('phone')!.hasError('invalidPhone') && registrationForm.get('phone')!.touched"
+                                        class="text-red-500 mt-2">Invalid Phone</div>
+                                </div>
+
+                                <!-- Date of Birth (DOB) -->
+                                <div class="mb-3 col-span-6">
+                                    <div class="flex items-center border-b border-blue-200 py-2">
+                                        <span class="mr-3"><i class="fas fa-calendar"></i></span>
+                                        <input type="date"
+                                            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                                            placeholder="Date of Birth" id="dob" formControlName="dob">
+                                    </div>
+                                    <div *ngIf="registrationForm.get('dob')!.hasError('required') && registrationForm.get('dob')!.touched"
+                                        class="text-red-500 mt-2">Date of Birth is required</div>
+                                    <div *ngIf="registrationForm.get('dob')!.hasError('invalidDOB') && registrationForm.get('dob')!.touched"
+                                        class="text-red-500 mt-2">Invalid Date of Birth</div>
+                                </div>
+                            </div>
+
+
                             <!-- Email -->
                             <div class="mb-3">
                                 <div class="flex items-center border-b border-blue-200 py-2">
@@ -165,18 +199,17 @@
                                     uppercase letter, one digit, and one special character.
                                 </div>
                             </div>
-                           
+
                         </div>
                         <div class="grid grid-cols-12 justify-items-center ">
                             <div class="col-span-12">
                                 <button type="submit" [disabled]="!registrationForm.valid"
-                                class="bg-blue-500 text-white rounded-full text-center mr-2 hover:cursor-pointer">
-                                <p class="px-20 pt-2">Register</p>
-                            </button>
+                                    class="bg-blue-500 text-white rounded-full text-center mr-2 hover:cursor-pointer">
+                                    <p class="px-20 pt-2">Register</p>
+                                </button>
                             </div>
                             <div class="col-span-12">
-                                <a routerLink="/auth/login"
-                                    class="underline decoration-wavy mr-2 hover:cursor-pointer">
+                                <a routerLink="/auth/login" class="underline decoration-wavy mr-2 hover:cursor-pointer">
                                     <p class="px-12 pt-2">Login Now!</p>
                                 </a>
                             </div>
