@@ -21,7 +21,7 @@ export class CartService {
     return this.httpClient.post<any>(`${baseUrl}/Cart/add-to-cart`, data);
   } 
   getCartByClientId(clientId: number): Observable<any> {
-    const url = `${baseUrl}/Cart/getByCustomerId/${clientId}`;
+    const url = `${baseUrl}/Cart/getByClientId/${clientId}`;
     return this.httpClient.get(url);
   }
 }
