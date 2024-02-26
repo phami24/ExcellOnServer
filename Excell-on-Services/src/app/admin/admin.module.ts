@@ -22,7 +22,7 @@ import { EditCustomerComponent } from './feature/customer-management/edit-custom
 import { EditServiceComponent } from './feature/service-management/edit-service/edit-service.component';
 import { AddServiceComponent } from './feature/service-management/add-service/add-service.component';
 import { MainComponent } from './feature/main/main.component';
-import { MainModule } from './feature/main/main.module';
+// import { MainModule } from './feature/main/main.module';
 
 
 @NgModule({
@@ -54,7 +54,7 @@ import { MainModule } from './feature/main/main.module';
     ReactiveFormsModule,
     MatNativeDateModule,
     DepartmentModule,
-    MainModule
+    // MainModule
   ],
   exports:[
     SidebarComponent,
