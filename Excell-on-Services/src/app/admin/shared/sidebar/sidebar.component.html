@@ -1,5 +1,5 @@
 <nav
-  class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+  class="  md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
 >
   <div
     class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
@@ -17,8 +17,11 @@
       [routerLink]="['/admin/main']"
       class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
     >
-      <span class="block sm:hidden"> Excell-On-Service </span>
-      <span class="hidden sm:block"> Excell-On-Service </span>
+      <span class="block sm:hidden "> Excell-On-Service </span>
+      
+      <span class="hidden sm:block "> 
+ 
+        <i class="fa-brands fa-servicestack mr-3"></i><span class="text-blue-500">Excell</span> <span>-On-</span> <span class="text-blue-500">Service </span> </span>
     </a>
     <!-- User -->
 
@@ -72,7 +75,7 @@
       </h6>
       <!-- Navigation -->
 
-      <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+      <ul class="md:flex-col md:min-w-full flex flex-col list-none side-menu">
         <li class="items-center">
           <a
             [routerLink]="['/admin/main']"
@@ -127,6 +130,7 @@
               adminEmployees.isActive
                 ? 'text-blue-400 hover:text-blue-600'
                 : 'text-blueGray-700 hover:text-blueGray-500'
+                
             "
           >
             <i
@@ -152,7 +156,7 @@
             "
           >
             <i
-              class="fa-brands fa-servicestack mr-2 text-sm"
+              class="fa-brands fa-aws mr-2 text-sm"
               [ngClass]="
                 adminServicess.isActive ? 'opacity-75' : 'text-blueGray-300'
               "

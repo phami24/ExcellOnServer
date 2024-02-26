@@ -65,9 +65,7 @@ export class DepartmentComponent implements OnInit {
       }
     });
   }
-
-
- 
+  
 
   deleteDepartment(department: any): void {
     if (confirm('Are you sure you want to delete this employee?')) {
