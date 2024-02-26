@@ -17,16 +17,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditEmployeeComponent } from './feature/employee/edit-employee/edit-employee.component';
 import { PaymentsComponent } from './feature/payments/payments.component';
-import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
-import { CreateDepartmentComponent } from './feature/department/create-department/create-department.component';
 import { DepartmentModule } from './feature/department/department.module';
 import { EditCustomerComponent } from './feature/customer-management/edit-customer/edit-customer.component';
-import { ServiceManagementComponent } from './feature/service-management/service-management.component';
 import { EditServiceComponent } from './feature/service-management/edit-service/edit-service.component';
 import { AddServiceComponent } from './feature/service-management/add-service/add-service.component';
+import { MainComponent } from './feature/main/main.component';
+import { MainModule } from './feature/main/main.module';
 
 
 @NgModule({
+  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     SidebarComponent,
@@ -41,6 +41,7 @@ import { AddServiceComponent } from './feature/service-management/add-service/ad
     EditCustomerComponent,
     EditServiceComponent,
     AddServiceComponent,  
+    MainComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +54,7 @@ import { AddServiceComponent } from './feature/service-management/add-service/ad
     ReactiveFormsModule,
     MatNativeDateModule,
     DepartmentModule,
+    MainModule
   ],
   exports:[
     SidebarComponent,
