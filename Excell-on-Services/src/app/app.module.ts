@@ -21,6 +21,7 @@ import { ChatBoxComponent } from './Shared/chat-box/chat-box.component';
 import { AlertSuccessComponent } from './Shared/alert-success/alert-success.component';
 import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -40,6 +41,7 @@ import { DatePipe } from '@angular/common';
     AdminModule,
     ClientModule,
     AuthModule,
+    MatPaginatorModule,
 
     ToastrModule.forRoot({
       positionClass: 'toast-top-right', // Bạn có thể thay đổi thành vị trí mong muốn của bạn

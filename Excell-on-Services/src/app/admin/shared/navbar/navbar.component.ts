@@ -29,10 +29,12 @@ export class NavbarComponent implements OnInit {
   unreadNotificationsCount: number = this.notifications.filter(notification => !notification.read).length;
   notificationsLoaded: boolean = false;
   isSidebarOpen = false;
+  visibleNotificationsCount: number = 10;
   isLoggedOut!: boolean;
+  reachedEndOfNotifications: boolean = false;
 
   userEmail$: Observable<string> = new Observable();
-  
+
 
 
   constructor(private NavbarService: NavbarService,
@@ -92,6 +94,41 @@ export class NavbarComponent implements OnInit {
 
 
   }
+
+  onScroll() {
+    // Kiểm tra xem có còn thông báo chưa hiển thị hay không
+    const dropdownElement = document.querySelector('.notification-dropdown');
+    if (dropdownElement) {
+      dropdownElement.addEventListener('scroll', () => {
+        // Chiều cao hiển thị của dropdown
+        const visibleHeight = dropdownElement.clientHeight;
+    
+        // Vị trí cuộn hiện tại trong dropdown
+        const scrollPosition = dropdownElement.scrollTop;
+    
+        // Chiều cao thực tế của dropdown
+        const totalHeight = dropdownElement.scrollHeight;
+    
+        // Khoảng cách từ vị trí cuộn tới dưới cùng của dropdown
+        const distanceToBottom = totalHeight - (scrollPosition + visibleHeight);
+    
+        // Kiểm tra xem đã cuộn gần dưới cùng của dropdown hay không (sử dụng giá trị ngưỡng là h/2)
+        const scrolledNearBottom = distanceToBottom < (400 / 400); // 200px
+    
+        if (scrolledNearBottom) {
+          // Thực hiện hành động khi cuộn gần dưới cùng của dropdown
+          // Ví dụ: Hiển thị thêm thông báo
+          const remainingNotifications = this.notifications.length - this['visibleNotificationsCount'];
+    
+          if (remainingNotifications > 0) {
+            const newVisibleCount = Math.min(5, remainingNotifications);
+            this['visibleNotificationsCount'] += newVisibleCount;
+          }
+        }
+      });
+    }
+  }
+
 
   private restoreNotifications() {
     const storedNotifications = JSON.parse(localStorage.getItem('notifications') || '[]') as {

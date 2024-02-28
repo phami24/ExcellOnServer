@@ -59,3 +59,15 @@ input[type="file"] {
   .spinner-border {
     position: absolute;
   }
+
+  .relative {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust the right offset as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+}

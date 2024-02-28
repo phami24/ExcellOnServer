@@ -60,7 +60,7 @@
     z-index: 999;
     width: 400px; /* Đặt chiều rộng mong muốn */
     overflow-y: auto; /* Thêm thuộc tính overflow-y để tạo thanh cuộn khi nội dung vượt quá kích thước */
-    max-height: 600px;
+    max-height: 400px;
 }
 
 /* CSS để làm đẹp cho thông báo chưa đọc */
