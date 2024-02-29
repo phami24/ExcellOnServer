@@ -42,7 +42,7 @@
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let row"> {{row.serviceId}}</td>
+                    <td mat-cell *matCellDef="let row; let index = index"> {{index + 1}}</td>
                 </ng-container>
 
                 <!-- Name Column -->

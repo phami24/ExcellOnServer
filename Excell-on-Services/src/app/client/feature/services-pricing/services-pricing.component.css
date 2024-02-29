@@ -27,3 +27,21 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  bor: red !important;
+}
+.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after {
+  color: red !important;
+}
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+  color: blue !important;
+}
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+ color: blue !important;
+}

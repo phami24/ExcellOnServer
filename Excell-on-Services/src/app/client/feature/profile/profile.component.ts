@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.GetProfileByJwt(this.token).subscribe(
         (response) => {
           this.userProfile = response.userProfile;
-          console.log(this.userProfile);
+          // console.log(this.userProfile);
         },
         (error) => {
           console.error('Error:', error);

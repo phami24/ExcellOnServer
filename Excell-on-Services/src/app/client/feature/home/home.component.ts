@@ -20,27 +20,32 @@ export class HomeComponent implements OnInit {
     this.homeService.getService().subscribe({
       next: (data) => {
         this.service = data;
-        console.log(data);
+        // console.log(data);
       },
       error: (e) => console.error(e),
     });
   }
-  
+
   colors: { [key: string]: string }[] = [
-    { color1: "#ff4848" },
-    { color2: "#71a37c" },
-    { color3: "#66b4ff" },
+    { color1: '#ff4848' },
+    { color2: '#71a37c' },
+    { color3: '#66b4ff' },
+    { color4: '#FAA300' },
+    { color5: '#416D19' },
+    { color6: '#2D9596' },
   ];
-  
+
   getColor(index: number): string {
     return this.colors[index][`color${index + 1}`];
   }
-  
-  
+
   imageService = [
     { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
     { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
-    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },   
+    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
+    { imageSrc: '../../../assets/images/InBound.png', altText: 'In-Bound' },
+    { imageSrc: '../../../assets/images/TeleSale.png', altText: 'Out-Bound' },
+    { imageSrc: '../../../assets/images/OutBound.png', altText: 'Tele Sale' },
   ];
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
 
@@ -84,9 +89,7 @@ export class HomeComponent implements OnInit {
         },
       },
       on: {
-        init() {
-          // Additional initialization logic if needed
-        },
+        init() {},
       },
     };
 
