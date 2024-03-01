@@ -4,4 +4,5 @@ export interface ServiceCharge {
   serviceChargesDescription: string;
   price: number;
   serviceId: number;
+  cartId: number;
 }

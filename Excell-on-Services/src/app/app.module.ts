@@ -44,8 +44,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatPaginatorModule,
 
     ToastrModule.forRoot({
-      positionClass: 'toast-top-right', // Bạn có thể thay đổi thành vị trí mong muốn của bạn
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
+      timeOut: 3000,
+      closeButton: true,
+      progressBar: true,
     }),
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(AppEffects),

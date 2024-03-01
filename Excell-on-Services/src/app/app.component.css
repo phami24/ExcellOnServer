@@ -11,27 +11,15 @@
   margin: 0;
   padding: 0;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li,
-p,
-span,
-strong,
-a {
+h1,h2,h3,h4,h5,h6,li,p,span,strong,a {
   font-family: "Rubik", sans-serif;
 }
-
 ::ng-deep ::ng-scrollbar-thumb {
-  background-color: #4CAF50; /* Màu nền của thanh cuộn */
-  border-radius: 5px; /* Bo tròn góc của thanh cuộn */
+  background-color: #4caf50;
+  border-radius: 5px;
 }
 
 ::ng-deep ::ng-scrollbar-track {
-  background-color: #f1f1f1; /* Màu nền của khu vực thanh cuộn */
-  border-radius: 5px; /* Bo tròn góc của khu vực thanh cuộn */
+  background-color: #f1f1f1;
+  border-radius: 5px;
 }
-

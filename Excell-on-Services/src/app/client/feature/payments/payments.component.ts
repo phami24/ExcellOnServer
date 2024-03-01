@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { ProfileService } from '../../services/profile/profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-payments',
@@ -18,15 +19,19 @@ export class PaymentsComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private profileService: ProfileService,
+    private toastr: ToastrService
   ) {}
   handler: any = null;
   ngOnInit() {
     this.loadStripe();
+    this.getCartByUserId();
+  }
+  async getCartByUserId(): Promise<void> {
     if (this.token !== null) {
       this.profileService.GetProfileByJwt(this.token).subscribe(
         (response) => {
           this.userProfile = response.userProfile;
-          console.log(this.userProfile);
+          // console.log(this.userProfile);
           // Check if userProfile is not null and has id property
           if (this.userProfile && this.userProfile.id) {
             this.userId = this.userProfile.id;
@@ -34,10 +39,14 @@ export class PaymentsComponent implements OnInit {
             if (this.userId !== undefined) {
               this.getCart(this.userId);
             } else {
-              console.error('User ID is undefined. Handle this case appropriately.');
+              console.error(
+                'User ID is undefined. Handle this case appropriately.'
+              );
             }
           } else {
-            console.error('User profile or user ID is missing. Handle this case appropriately.');
+            console.error(
+              'User profile or user ID is missing. Handle this case appropriately.'
+            );
           }
         },
         (error) => {
@@ -48,19 +57,39 @@ export class PaymentsComponent implements OnInit {
       console.error('Token is null. Handle this case appropriately.');
     }
   }
-  getCart(clientId: number): void {
+  async getCart(clientId: number): Promise<void> {
     // Check if service charges for this clientId already exist
     if (!this.serviceCharges[clientId]) {
       this.cartService.getCartByClientId(clientId).subscribe({
         next: (data) => {
           // Store service charges in an object using clientId as key
           this.serviceCharges[clientId] = data;
-          console.log(clientId);
+          // console.log(clientId)
         },
         error: (e) => console.error(e),
       });
     }
   }
+
+  deleteCartItem(cartItemId: number, clientId: number): void {
+    if (confirm('Are you sure you want to delete this?')) {
+      this.cartService.deleteCartItemById(cartItemId, clientId).subscribe({
+        next: () => {
+          // Remove the deleted item from the serviceCharges object
+          if (this.serviceCharges[clientId]) {
+            this.serviceCharges[clientId] = this.serviceCharges[clientId].filter(item => item.cartId !== cartItemId);
+          }
+          this.toastr.success('Delete successful!', 'Success');
+        },
+        error: (error) => {
+          console.error('Error deleting cart item:', error);
+          this.toastr.error('Error deleting cart item', 'Error');
+        },
+      });
+    }
+  }
+  
+
   pay(amount: any) {
     var handler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51OUUZ3LKYUk9aF2AEApyxIYiwUGMvSE0WUC6a81grdSwXomwY6riRnQpwDvTGwmpCcDkwbfVCWDTtogJ8xSbUtzA00MvGRvJDq',
