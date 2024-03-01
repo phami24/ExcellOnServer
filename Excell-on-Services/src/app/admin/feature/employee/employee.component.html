@@ -11,30 +11,39 @@
                                 Employees
                             </h3>
                         </div>
-                        <button
-                            class="bg-blue-400 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                            type="button" (click)="createEmployee()">
-                            Create Employee
-                        </button>
+
                     </div>
-                    <div class="relative flex w-full flex-wrap items-stretch my-2">
-                        <span
-                            class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                            <i class="fas fa-search"></i>
-                        </span>
-                        <input type="text" placeholder="Search Employees..."
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
-                            [(ngModel)]="searchTerm" (input)="search()" />
+                    <div class="grid grid-cols-12 justify-items-end">
+                        <div class="col-span-6">
+                            <div class="relative ml-3 mt-3 grid grid-cols-3">
+                                <div class="relative flex w-full flex-wrap items-stretch my-2">
+                                    <span
+                                        class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input type="text" placeholder="Search Employees..."
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                                        [(ngModel)]="searchTerm" (input)="search()" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-6 mt-3">
+                            <button
+                                class="bg-blue-400 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                type="button" (click)="createEmployee()"><i class="fa-solid fa-plus mr-2"></i>
+                                Create Employee
+                            </button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="block w-full overflow-x-auto" *ngIf="showSearchResults || filteredEmployees.length > 0">
+
+                <div class="block w-full overflow-x-auto p-6 bg-gray-100" *ngIf="showSearchResults || filteredEmployees.length > 0">
                     <!-- Projects table -->
                     <table class="items-center w-full bg-transparent border-collapse">
                         <thead>
-                            <tr>
+                            <tr class="bg-gray-200">
                                 <th (click)="sortData('firstName')"
-                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -45,7 +54,7 @@
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('lastName')"
-                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -56,7 +65,7 @@
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('age')"
-                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -67,7 +76,7 @@
                                         [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('email')"
-                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -78,7 +87,7 @@
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('email')"
-                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -89,7 +98,7 @@
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
                                 <th (click)="sortData('email')"
-                                    class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -99,7 +108,7 @@
                                     <span *ngIf="sortedField === 'department'" class="arrow"
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -108,7 +117,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let employee of filteredEmployees; let i = index">
+                            <tr class="bg-white" *ngFor="let employee of filteredEmployees; let i = index">
                                 <th
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                                     <img src="{{employee.avatar}}" class="h-12 w-12 bg-white rounded-full border"
@@ -155,6 +164,8 @@
 
                         </tbody>
                     </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" [pageSize]="pageSize"
+                        [length]="filteredEmployees.length" (page)="onPageChange($event)"></mat-paginator>
                 </div>
 
 

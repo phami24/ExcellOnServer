@@ -24,14 +24,15 @@
                         <span *ngIf="unreadNotificationsCount > 0" class="notification-count">{{
                             unreadNotificationsCount }}</span>
                     </a>
-                    <div *ngIf="showNotificationDropdown" class="notification-dropdown">
+                    <div *ngIf="showNotificationDropdown" class="notification-dropdown"  (scroll)="onScroll()">
                         <ul>
-                            <li *ngFor="let notification of notifications; let i = index">
-                                <span (click)="handleNotificationClick(i)">
+                            <li *ngFor="let notification of notifications.slice(0, visibleNotificationsCount); let i = index">
+                                <span (click)="handleNotificationClick(i)" class="p-3">
                                     {{ notification.message }}
                                 </span>
+                                
                                 <button *ngIf="notification.clicked" class="text-red-500 pl-2" (click)="deleteNotification(i)">Xóa</button>
-                                <hr class="p-1">
+                                <hr class="m-3">
                             </li>
                         </ul>
                     </div>

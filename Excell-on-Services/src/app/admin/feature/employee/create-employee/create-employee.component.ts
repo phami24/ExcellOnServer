@@ -20,6 +20,7 @@ export class CreateEmployeeComponent implements OnInit {
   empForm!: FormGroup;
   formErrors: any = {};
   updating: boolean = false;
+  showPassword = false;
   constructor(public dialogRef: MatDialogRef<CreateEmployeeComponent>,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -44,6 +45,9 @@ export class CreateEmployeeComponent implements OnInit {
     });
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
   getFormValidationErrors(): any[] {
     const errors: any[] = [];
 
