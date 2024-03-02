@@ -15,6 +15,7 @@ export class PaymentsComponent implements OnInit {
   token: string | null = localStorage.getItem('token');
   userProfile: any;
   userId: number | undefined;
+  totalPrice: number = 0;
   constructor(
     private route: ActivatedRoute,
     private cartService: CartService,
@@ -65,10 +66,23 @@ export class PaymentsComponent implements OnInit {
           // Store service charges in an object using clientId as key
           this.serviceCharges[clientId] = data;
           // console.log(clientId)
+          this.totalPrice = this.calculateTotalPrice();
         },
         error: (e) => console.error(e),
       });
     }
+  }
+  calculateTotalPrice(): number {
+    let total = 0;
+    for (const clientId in this.serviceCharges) {
+      if (this.serviceCharges.hasOwnProperty(clientId)) {
+        const charges = this.serviceCharges[clientId];
+        for (const charge of charges) {
+          total += charge.price;
+        }
+      }
+    }
+    return total;
   }
 
   deleteCartItem(cartItemId: number, clientId: number): void {
@@ -77,7 +91,10 @@ export class PaymentsComponent implements OnInit {
         next: () => {
           // Remove the deleted item from the serviceCharges object
           if (this.serviceCharges[clientId]) {
-            this.serviceCharges[clientId] = this.serviceCharges[clientId].filter(item => item.cartId !== cartItemId);
+            this.serviceCharges[clientId] = this.serviceCharges[
+              clientId
+            ].filter((item) => item.cartId !== cartItemId);
+            this.totalPrice = this.calculateTotalPrice();
           }
           this.toastr.success('Delete successful!', 'Success');
         },
@@ -88,7 +105,40 @@ export class PaymentsComponent implements OnInit {
       });
     }
   }
-  
+  deleteCart(): void {
+    if (this.token !== null) {
+      this.profileService.GetProfileByJwt(this.token).subscribe(
+        (response) => {
+          this.userProfile = response.userProfile;
+          // console.log(this.userProfile);
+          // Check if userProfile is not null and has id property
+          if (this.userProfile && this.userProfile.id) {
+            this.userId = this.userProfile.id;
+            // Check if userId is defined before calling getCart
+            if (this.userId !== undefined) {
+              this.cartService.deleteCartByClientId(this.userId).subscribe(() => {
+                // this.cartService.updateCartTotal(this.userId);
+                console.log('Cart deleted successfully'+this.userId);
+              });
+            } else {
+              console.error(
+                'User ID is undefined. Handle this case appropriately.'
+              );
+            }
+          } else {
+            console.error(
+              'User profile or user ID is missing. Handle this case appropriately.'
+            );
+          }
+        },
+        (error) => {
+          console.error('Error:', error);
+        }
+      );
+    } else {
+      console.error('Token is null. Handle this case appropriately.');
+    }
+  }
 
   pay(amount: any) {
     var handler = (<any>window).StripeCheckout.configure({
@@ -99,6 +149,8 @@ export class PaymentsComponent implements OnInit {
         // Get the token ID to your server-side code for use.
         console.log(token);
         alert('Token Created!!');
+        console.log("DELETE ID"+this.userProfile.id)
+        this.deleteCart();
       },
     });
 

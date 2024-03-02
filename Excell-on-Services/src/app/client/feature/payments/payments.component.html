@@ -60,27 +60,27 @@
                         <tbody>
                             <tr>
                                 <td>Total :</td>
-                                <td class="text-end">$6000</td>
+                                <td class="text-end">{{ totalPrice | currency }}</td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>Number of days of use :</td>
                                 <td class="text-end">1</td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td>Discount :</td>
                                 <td class="text-end">0%</td>
                             </tr>
                             <tr class="bg-gray-100">
                                 <th>Total :</th>
-                                <td class="text-end font-semibold">$6000</td>
+                                <td class="text-end font-semibold">{{ totalPrice | currency }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="grid grid-cols-6 my-2">
-                    <div
+                    <div (click)="pay(totalPrice)"
                         class="p-2 col-span-6 lg:col-span-12 font-medium bg-[#94c6fd] text-center rounded-[20px] hover:bg-[#2884da] hover:text-white">
-                        <a class="btn btn-link text-muted" href="https://buy.stripe.com/test_eVa2bq9mj9Q26nSbIJ">
+                        <a class="btn btn-link text-muted" (click)="deleteCart()">
                             <i class="mdi mdi-arrow-left me-1"></i>Pay</a>
                     </div>
                 </div>

@@ -9,9 +9,10 @@ const baseUrl = environment.apiUrl;
 })
 export class CartService {
   private cartDetailTotalSubject: Subject<number> = new Subject<number>();
-  cartDetailTotal$: Observable<number> = this.cartDetailTotalSubject.asObservable();
+  cartDetailTotal$: Observable<number> =
+    this.cartDetailTotalSubject.asObservable();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   updateCartDetailTotal(total: number): void {
     this.cartDetailTotalSubject.next(total);
@@ -43,6 +44,10 @@ export class CartService {
         this.updateCartTotal(clientId);
       })
     );
+  }
+  deleteCartByClientId(clientId: number): Observable<any> {
+    const url = `${baseUrl}/Cart/client/${clientId}`;
+    return this.httpClient.delete(url).pipe();
   }
 
   updateCartTotal(clientId: number): void {
