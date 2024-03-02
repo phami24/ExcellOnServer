@@ -36,7 +36,7 @@ export class RoomDepartmentComponent implements OnInit {
         this.selectedEmployee = data;
 
         const dialogRef = this.dialog.open(DepartmentDetailsComponent, {
-          width: '700px',
+          width: '650px',
           data: { employee: data },
         });
 

@@ -44,7 +44,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200">
+        <tbody class="divide-y divide-gray-200 bg-white">
           <tr *ngFor="let employee of employees" (click)="showDepartmentDetail(employee.id)">
             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
               <img src="{{employee.avatar}}" class="h-12 w-12 bg-white rounded-full border"

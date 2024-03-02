@@ -6,6 +6,8 @@ import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationService  } from '../../shared/notification/notification.service';
 
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({  
@@ -28,6 +30,12 @@ export class EmployeeComponent implements OnInit {
   sortOrder: 'asc' | 'desc' = 'asc';
   showNoResultsMessage: boolean = false;
   showSearchResults: boolean = false;
+  dataSource = new MatTableDataSource<any>(this.filteredEmployees);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pageSize: number = 5; // Đặt kích thước trang mong muốn của bạn
+  currentPage: number = 1;
+  pagedEmployees: any[] = [];
 
   @Input()
   get color(): string {
@@ -51,7 +59,14 @@ export class EmployeeComponent implements OnInit {
       this.employees = data;
       this.dropdownShowStates = this.employees.map((_, index) => ({ index, show: false }));
       this.filteredEmployees = this.employees;
+    
+      this.dataSource = new MatTableDataSource<any>(this.filteredEmployees);
+    
+      // Thiết lập paginator cho dataSource
+      this.dataSource.paginator = this.paginator;
     });
+
+    
   }
   //table-dropdown
 
@@ -61,7 +76,14 @@ export class EmployeeComponent implements OnInit {
   @ViewChild('popoverDropdownRef', { static: false })
   popoverDropdownRef!: ElementRef;
 
-
+  onPageChange(event: any): void {
+    this.pageSize = this.paginator.pageSize;
+  
+    const startIndex = this.paginator.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.pagedEmployees = this.filteredEmployees.slice(startIndex, endIndex);
+  }
+  
 
   search(): void {
     this.employeeService.searchEmployeesByName(this.searchTerm).subscribe(
