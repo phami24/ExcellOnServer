@@ -5,7 +5,7 @@ import { CustomerManagementComponent } from './feature/customer-management/custo
 import { AuthAdminGuard } from '../Guard/admin.guard';
 import { DepartmentComponent } from './feature/department/department.component';
 import { EmployeeComponent } from './feature/employee/employee.component';
-import { CommentsComponent } from './feature/comments/comments.component';
+import { MessengerComponent } from './feature/messenger/messenger.component';
 import { ProfileAdminComponent } from './feature/profile-admin/profile-admin.component';
 import { PaymentsComponent } from './feature/payments/payments.component';
 import { RoomDepartmentComponent } from './feature/department/room-department/room-department.component';
@@ -57,10 +57,10 @@ const routes: Routes = [
         data: { title: 'Services' },
       },
       {
-        path: 'comments',
-        component: CommentsComponent,
+        path: 'messenger',
+        component: MessengerComponent,
         canActivate: [AuthAdminGuard],
-        data: { title: 'Comments' },
+        data: { title: 'Messenger' },
       },
       {
         path: 'profile-admin',

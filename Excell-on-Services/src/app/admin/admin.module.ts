@@ -6,7 +6,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DepartmentComponent } from './feature/department/department.component';
 import { EmployeeComponent } from './feature/employee/employee.component';
-import { CommentsComponent } from './feature/comments/comments.component';
+import {  MessengerComponent } from './feature/messenger/messenger.component';
 import { ProfileAdminComponent } from './feature/profile-admin/profile-admin.component';
 import { CreateEmployeeComponent } from './feature/employee/create-employee/create-employee.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -33,7 +33,7 @@ import { MainComponent } from './feature/main/main.component';
     NavbarComponent,
     DepartmentComponent,
     EmployeeComponent,
-    CommentsComponent,
+    MessengerComponent,
     ProfileAdminComponent,
     CreateEmployeeComponent,
     EditEmployeeComponent,
