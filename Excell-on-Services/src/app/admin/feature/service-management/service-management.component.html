@@ -1,14 +1,10 @@
 <div class="md:w-[calc(100%-256px)] md:ml-64 bg-white min-h-screen transition-all p-8">
     <div class="bg-gray-100 p-6 md:p-10 rounded-xl">
 
-        <div class="grid grid-cols-12 justify-items-end">
+        <div class="grid grid-cols-12">
             <div class="col-span-6">
-                <!-- <mat-form-field class="w-full">
-                <mat-label><i class="fas fa-search mx-2"></i>Search...</mat-label>
-                <input class="py-2" matInput (keyup)="applyFilter($event)" placeholder="" #input>
-            </mat-form-field> -->
-                <div class="relative ml-3 mt-3 mb-6 grid grid-cols-3">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <div class="relative ml-3 mt-3 mb-6">
+                    <div class=" absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                         <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -21,14 +17,15 @@
                             </g>
                         </svg>
                     </div>
-                    <input type="text" id="input-group-1" matInput (keyup)="applyFilter($event)" placeholder="ser"
+                         <input type="text" id="input-group-1" matInput (keyup)="applyFilter($event)" placeholder="ser"
                         #input
                         class="bg-gray-50 radius border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-300 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-300 dark:focus:border-blue-300"
                         placeholder="Search...">
 
+                   
                 </div>
             </div>
-            <div class="col-span-6 mt-3 mb-6">
+            <div class="col-span-6 mt-3 mb-6 grid justify-items-end">
                 <button
                     class="ml-2 relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 min-w-[180px] h-10 max-h-[40px] rounded-lg text-xs bg-blue-300 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-200/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                     type="button" (click)="createService()"><i class="fa-solid fa-plus mr-2"></i>

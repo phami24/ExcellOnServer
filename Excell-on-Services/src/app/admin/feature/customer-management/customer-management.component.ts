@@ -10,6 +10,7 @@ import { CustomerService } from '../../services/customer/customer.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
+import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-customer-management',
@@ -82,11 +83,25 @@ export class CustomerManagementComponent implements OnInit {
   }
 
   deleteCustomer(id: number): void {
-    if (confirm('Are you sure you want to delete this customer?')) {
-      this.customerService.deleteCustomer(id).subscribe(() => {
-        this.getCustomerList();
-      });
-      this.toastr.success('Delete successful!', 'Success');
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirmation',
+        message: 'Are you sure you want to delete this customer?',
+        yesText: 'Delete',
+        noText: 'Cancel',
+        isCritical : true,
+        icon: '<i class="fa-solid fa-circle-exclamation text-[48px]"></i>',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.customerService.deleteCustomer(id).subscribe(() => {
+          this.getCustomerList();
+          this.toastr.success('Delete successful!', 'Success');
+        });
+      }
+    });
   }
 }

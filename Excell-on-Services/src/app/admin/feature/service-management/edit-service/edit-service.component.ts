@@ -25,7 +25,6 @@ export class EditServiceComponent implements OnInit {
       serviceId: [this.data?.serviceId],
       serviceName: [this.data?.serviceName || '', Validators.required],
       description: [this.data?.description || '', Validators.required],
-      totalDay: [this.data?.totalDay || '', Validators.required],
      
     });
   }

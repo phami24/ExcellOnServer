@@ -14,7 +14,6 @@ export class AddServiceComponent {
     serviceId: 0,
     serviceName: '',
     description: '',
-    totalDay: 0,
   };
 
   constructor(

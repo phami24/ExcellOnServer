@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { EditServiceComponent } from './edit-service/edit-service.component';
 import { AddServiceComponent } from './add-service/add-service.component';
+import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-service-management',
@@ -91,11 +92,24 @@ export class ServiceManagementComponent implements OnInit{
   }
 
   deleteService(id: number): void {
-    if (confirm('Are you sure you want to delete this service?')) {
-      this.serviceManagementService.deleteService(id).subscribe(() => {
-        this.getServiceList();
-      });
-      this.toastr.success('Delete successful!', 'Success');
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirmation',
+        message: 'Are you sure you want to delete this customer?',
+        yesText: 'Delete',
+        noText: 'Cancel',
+        isCritical : true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.serviceManagementService.deleteService(id).subscribe(() => {
+          this.getServiceList();
+          this.toastr.success('Delete successful!', 'Success');
+        });
+      }
+    });
   }
 }
