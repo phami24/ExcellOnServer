@@ -4,6 +4,8 @@ import { CartService } from '../../services/cart/cart.service';
 import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { ProfileService } from '../../services/profile/profile.service';
 import { ToastrService } from 'ngx-toastr';
+import { OrderService } from '../../services/order/order.service';
+import { OrderDetail } from 'src/app/interfaces/orderDetail';
 
 @Component({
   selector: 'app-payments',
@@ -19,6 +21,7 @@ export class PaymentsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cartService: CartService,
+    private orderService: OrderService,
     private profileService: ProfileService,
     private toastr: ToastrService
   ) {}
@@ -118,7 +121,6 @@ export class PaymentsComponent implements OnInit {
             if (this.userId !== undefined) {
               this.cartService.deleteCartByClientId(this.userId).subscribe(() => {
                 // this.cartService.updateCartTotal(this.userId);
-                console.log('Cart deleted successfully'+this.userId);
               });
             } else {
               console.error(
@@ -139,6 +141,63 @@ export class PaymentsComponent implements OnInit {
       console.error('Token is null. Handle this case appropriately.');
     }
   }
+
+  async addOrder(): Promise<void> {
+    // Prepare order data
+    const orderData = {
+      orderDate: new Date().toISOString(),
+      orderStatus: 0,
+      orderTotal: this.totalPrice,
+      clientId: this.userId,
+    };
+  
+    // Call the addOrder method from the service to add the order
+    this.orderService.addOrder(orderData).subscribe(
+      (response) => {
+        // Handle success response
+        console.log('Order added successfully:', response);
+  
+        // Extract the orderId from the response
+        const orderId: number = response.orderId;
+  
+        // Iterate through service charges and add order details
+        for (const clientId in this.serviceCharges) {
+          if (this.serviceCharges.hasOwnProperty(clientId)) {
+            const charges = this.serviceCharges[clientId];            
+            for (const charge of charges) {
+              // Call addOrderDetail for each service charge
+              this.addOrderDetail(orderId, charge.serviceChargesId);
+              
+            }
+          }
+        }
+  
+        this.toastr.success('Order placed successfully!', 'Success');
+      },
+      (error) => {
+        // Handle error response
+        console.error('Error adding order:', error);
+        
+        this.toastr.error('Error placing order', 'Error');
+      }
+    );
+  }
+  
+  
+  addOrderDetail(orderId: number, serviceChargeId: number) {
+    this.orderService.addOrderDetail(orderId, serviceChargeId).subscribe(
+      response => {
+        // Handle success
+        console.log('Order detail added successfully:', response);
+      },
+      error => {
+        // Handle error
+        console.error('Error adding order detail:', error);
+      }
+    );
+  }
+  
+  
 
   pay(amount: any) {
     var handler = (<any>window).StripeCheckout.configure({

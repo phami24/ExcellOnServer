@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart/cart.service';
 import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { ProfileService } from '../../services/profile/profile.service';
+import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +32,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private cartService: CartService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -94,14 +97,36 @@ export class HeaderComponent implements OnInit {
       });
     }
   }
-  logout() {
-    const confirmLogout = confirm('Are you sure you want to log out?');
+  // logout() {
+  //   const confirmLogout = confirm('Are you sure you want to log out?');
 
-    if (confirmLogout) {
-      this.toastr.success('Logout Successfully!', 'Success');
-      this.store.dispatch(new fromUser.Logout());
-      this.router.navigate(['/home']);
-    }
+  //   if (confirmLogout) {
+  //     this.toastr.success('Logout Successfully!', 'Success');
+  //     this.store.dispatch(new fromUser.Logout());
+  //     this.router.navigate(['/home']);
+  //   }
+  // }
+
+  logout() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirmation',
+        message: 'Are you sure you want to log out?',
+        yesText: 'Yes',
+        noText: 'Cancel',
+        isCritical: false,
+        icon: '<i class="fa-solid fa-right-from-bracket text-[48px]"></i>',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.toastr.success('Logout Successfully!', 'Success');
+        this.store.dispatch(new fromUser.Logout());
+        this.router.navigate(['/user/home']);
+      }
+    });
   }
 
   getRandomColor(): string {

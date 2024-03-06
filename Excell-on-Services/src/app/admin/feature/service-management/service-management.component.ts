@@ -70,10 +70,10 @@ export class ServiceManagementComponent implements OnInit{
     }
   }
 
-  openEditForm(customer: any): void {
+  openEditForm(service: any): void {
     const dialogRef = this.dialog.open(EditServiceComponent, {
       width: '700px',
-      data: customer,
+      data: service,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -96,7 +96,7 @@ export class ServiceManagementComponent implements OnInit{
       width: '250px',
       data: {
         title: 'Confirmation',
-        message: 'Are you sure you want to delete this customer?',
+        message: 'Are you sure you want to delete this service?',
         yesText: 'Delete',
         noText: 'Cancel',
         isCritical : true,

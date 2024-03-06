@@ -18,10 +18,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './Effects';
 import { ErrorPageComponent } from './Shared/error-page/error-page.component';
 import { ChatBoxComponent } from './Shared/chat-box/chat-box.component';
-import { AlertSuccessComponent } from './Shared/alert-success/alert-success.component';
 import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ConfirmDialogComponent } from './Shared/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -29,7 +29,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AppComponent,
     ErrorPageComponent,
     ChatBoxComponent,
-    AlertSuccessComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

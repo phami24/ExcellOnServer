@@ -40,12 +40,53 @@ export class HomeComponent implements OnInit {
   }
 
   imageService = [
-    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
-    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
-    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
-    { imageSrc: '../../../assets/images/InBound.png', altText: 'In-Bound' },
-    { imageSrc: '../../../assets/images/TeleSale.png', altText: 'Out-Bound' },
-    { imageSrc: '../../../assets/images/OutBound.png', altText: 'Tele Sale' },
+    {
+      imageSrc: '../../../assets/images/special_services02.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services04.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services06.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services03.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services05.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services01.svg',
+      altText: 'Services',
+    },
+  ];
+  imageSlide = [
+    {
+      imageSrc: '../../../assets/images/Slide1.jpg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/Slide2.jpg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/Slide1.jpg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/Slide2.jpg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/Slide1.jpg',
+      altText: 'Services',
+    },
+    
   ];
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
 
@@ -94,5 +135,18 @@ export class HomeComponent implements OnInit {
     };
 
     new Swiper(swiperEl, swiperParams);
+  }
+
+  backgroundClasses = [
+    'special-services-image-bg-one',
+    'special-services-image-bg-two',
+    'special-services-image-bg-three',
+    'special-services-image-bg-four',
+    'special-services-image-bg-five',
+    'special-services-image-bg-six',
+  ];
+
+  getBackgroundClass(index: number) {
+    return this.backgroundClasses[index % this.backgroundClasses.length];
   }
 }
