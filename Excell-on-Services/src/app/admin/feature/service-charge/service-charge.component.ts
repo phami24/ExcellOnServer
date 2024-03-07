@@ -1,23 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Inject,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ServiceChargeService } from '../../services/service-charge/service-charge.service';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { Service } from 'src/app/interfaces/service';
-import { ServiceManagementService } from '../../services/service-management/service-management.service';
+import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { EditServiceComponent } from './edit-service/edit-service.component';
-import { AddServiceComponent } from './add-service/add-service.component';
+import { AddServiceChargeComponent } from './add-service-charge/add-service-charge/add-service-charge.component';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
-import { ServiceChargeComponent } from '../service-charge/service-charge.component';
 
 @Component({
-  selector: 'app-service-management',
-  templateUrl: './service-management.component.html',
-  styleUrls: ['./service-management.component.css'],
+  selector: 'app-service-charge',
+  templateUrl: './service-charge.component.html',
+  styleUrls: ['./service-charge.component.css'],
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -28,32 +33,38 @@ import { ServiceChargeComponent } from '../service-charge/service-charge.compone
     MatIconModule,
   ],
 })
-export class ServiceManagementComponent implements OnInit{
+export class ServiceChargeComponent implements OnInit {
   displayedColumns: string[] = [
-    'id',
-    'serviceName',
-    'description',
-    // 'totalDay',
+    'serviceChargesId',
+    'serviceChargesName',
+    'serviceChargesDescription',
+    'price',
+    'serviceId',
     'actions',
   ];
-  dataSource: MatTableDataSource<Service>;
+  dataSource: MatTableDataSource<ServiceCharge>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('addServiceContainer', { read: ViewContainerRef })
+  addServiceContainer!: ViewContainerRef;
 
   constructor(
-    private serviceManagementService: ServiceManagementService,
+    private serviceManagementService: ServiceChargeService,
+    public dialogRef: MatDialogRef<ServiceChargeComponent>,
     public dialog: MatDialog,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(MAT_DIALOG_DATA) public data: number
   ) {
-    this.dataSource = new MatTableDataSource<Service>();
+    this.dataSource = new MatTableDataSource<ServiceCharge>();
   }
 
   ngOnInit(): void {
     this.getServiceList();
   }
   getServiceList() {
-    this.serviceManagementService.getAllService().subscribe({
+    this.serviceManagementService.getServiceById(this.data).subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
@@ -71,37 +82,25 @@ export class ServiceManagementComponent implements OnInit{
     }
   }
 
-  openEditForm(service: any): void {
-    const dialogRef = this.dialog.open(EditServiceComponent, {
-      width: '700px',
-      data: service,
-    });
+  // openEditForm(service: any): void {
+  //   const dialogRef = this.dialog.open(EditServiceComponent, {
+  //     width: '700px',
+  //     data: service,
+  //   });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.getServiceList();
-    });
-  }
-  createService() {
-    const dialogRef = this.dialog.open(AddServiceComponent, {
-      width: '700px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      this.getServiceList();
-    });
-  }
-
-  openServiceChargeDialog(id: number):void{
-    const dialogRef = this.dialog.open(ServiceChargeComponent,{
-      width: '960px',
-      height:'550px',
-      data: id,
-    });
-    console.log(id);
-    dialogRef.afterClosed().subscribe((result) => {
-
-    });
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     this.getServiceList();
+  //   });
+  // }
+  openAddServiceComponent(): void {
+    this.addServiceContainer.clear();
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(
+        AddServiceChargeComponent
+      );
+    const componentRef =
+      this.addServiceContainer.createComponent(componentFactory);
+    componentRef.instance.data = this.data;
   }
 
   deleteService(id: number): void {
@@ -124,5 +123,9 @@ export class ServiceManagementComponent implements OnInit{
         });
       }
     });
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
   }
 }

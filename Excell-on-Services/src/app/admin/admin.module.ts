@@ -22,6 +22,8 @@ import { EditCustomerComponent } from './feature/customer-management/edit-custom
 import { EditServiceComponent } from './feature/service-management/edit-service/edit-service.component';
 import { AddServiceComponent } from './feature/service-management/add-service/add-service.component';
 import { MainComponent } from './feature/main/main.component';
+import { ServiceChargeComponent } from './feature/service-charge/service-charge.component';
+import { AddServiceChargeComponent } from './feature/service-charge/add-service-charge/add-service-charge/add-service-charge.component';
 // import { MainModule } from './feature/main/main.module';
 
 
@@ -41,7 +43,7 @@ import { MainComponent } from './feature/main/main.component';
     EditCustomerComponent,
     EditServiceComponent,
     AddServiceComponent,  
-    MainComponent
+    MainComponent, AddServiceChargeComponent,
   ],
   imports: [
     CommonModule,
