@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from './payment-services/payment.service';
 import { Router } from '@angular/router';
-import { UserClinet } from './model/UserClient.model'; 
 
 @Component({
   selector: 'app-payments',
@@ -9,15 +8,26 @@ import { UserClinet } from './model/UserClient.model';
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent implements OnInit {
-  clients: UserClinet[] = [];
+  clients: any[] = [];
+  orders : any[] = [];
+  carts: any[] = [];
   selectedClientId: string | null = null;
   selectedClient: any | null = null;
+  selectedOrder: any | null = null;
   searchTerm: string = '';
   searchResults: any[] = [];
   filteredClient: any[] = [];
   showNoResultsMessage: boolean = false;
   showSearchResults: boolean = false;
+  error: string | undefined;
+  totalPrice: number | undefined;
+  clientCart: any[] = [];
+  cartDetails: any[] = [];
+  clientId : any;
+  filteredPayment: any[] = [];
   
+
+
   constructor(
     private paymentService: PaymentService,
     private router: Router
@@ -25,99 +35,59 @@ export class PaymentsComponent implements OnInit {
 
   ngOnInit(): void { 
     this.loadClient();
+    this.getOrders();
   }
 
+  
   loadClient(): void {
+    
     this.paymentService.getClient().subscribe(
-      (data) => {
-        this.clients = data;
+      (clients) => {
+        this.clients = clients;
       },
       (error) => {
         console.error('Error fetching clients:', error);
       }
     );
+    
   }
 
+  getOrders() {
+    this.paymentService.getOrders().subscribe(
+      (orders) => {
+        this.orders = orders;
+      },
+      (error) => {
+        console.error('Error fetching orders:', error);
+      }
+    );
+  }
+
+  
   showPayment(clientId: string) {
- 
     this.selectedClientId = clientId;
     this.selectedClient = this.clients.find(client => client.clientId === clientId);
+    this.selectedOrder = this.orders.find(order => order.clientId === clientId);
+}
 
-    console.log(this.selectedClient);
-    console.log(this.selectedClientId);
+
+  calculateTotalPrice() {
+    if (this.orders && this.orders.length > 0) {
+      this.totalPrice = this.orders.reduce((total, order) => total + order.price, 0);
+    } else {
+      this.totalPrice = 0;
+    }
   }
 
-  
-
-  search(): void {
-    this.paymentService.searchClientByName(this.searchTerm).subscribe(
-      results => {
-        console.log('Search results:', results);
-        console.log('Search term:', this.searchTerm);
-  
-        // Kiểm tra nếu searchTerm không null hoặc rỗng
-        if (!this.searchTerm || this.searchTerm.trim() === '') {
-          // Thực hiện tìm kiếm tương tự như phía backend
-          const searchTermLower = this.searchTerm.toLowerCase();
-          this.searchResults = results.filter((employee: any) => {
-            const fullName = `${employee.firstName} ${employee.lastName}`.toLowerCase();
-            return fullName.includes(searchTermLower);
-          });
-  
-          console.log('Filtered Employees:', this.searchResults);
-  
-          this.filteredClient = [...this.searchResults];
-        } else {
-          // Nếu searchTerm là null hoặc rỗng, hiển thị tất cả nhân viên
-          this.filteredClient = [...results];
-        }
-  
-        console.log('After copying:', this.filteredClient);
-  
-        // Hiển thị "0 result" nếu không có kết quả
-        this.showNoResultsMessage = this.searchResults.length === 0;
-  
-        // Đặt giá trị cho showSearchResults
-        this.showSearchResults = this.searchResults.length > 0;
-      },
-      error => {
-        console.error('Search error:', error);
-        // Đặt giá trị cho showSearchResults khi có lỗi (nếu cần)
-        this.showSearchResults = false;
-      },
-      () => console.log('Search completed') // Log completion of observable
-    );
+  searchByName() {
+    if (this.searchTerm) {
+      this.paymentService.searchClientsByName(this.searchTerm).subscribe(clients => {
+        this.clients = clients; // Gán kết quả tìm kiếm vào mảng clients
+      }, error => {
+        console.log('Error:', error);
+      });
+    }
   }
   
-
-  createPayment() {
-    const paymentIntentDto = { amount: 1000, currency: 'usd' };
-    this.paymentService.createPaymentIntent(paymentIntentDto).subscribe(
-      (response) => {
-        console.log('Payment intent created successfully:', response);
-        // Do something with the response
-      },
-      (error) => {
-        console.error('Error creating payment intent:', error);
-        // Handle error
-      }
-    );
-  }
-
-  confirmPayment() {
-    const confirmPaymentDto = { tokenId: 'your-token-id', clientSecret: 'your-client-secret' };
-    this.paymentService.confirmPayment(confirmPaymentDto).subscribe(
-      (response) => {
-        console.log('Payment confirmed successfully:', response);
-        // Do something with the response
-      },
-      (error) => {
-        console.error('Error confirming payment:', error);
-        // Handle error
-      }
-    );
-  }
-
- 
 
 }
