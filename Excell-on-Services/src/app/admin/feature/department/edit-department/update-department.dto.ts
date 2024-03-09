@@ -1,5 +1,5 @@
 export interface UpdateDepartmentDto {
-    id: string;
+    id?: string;
     departmentName?: string;
     departmentDescription?: string;
   }

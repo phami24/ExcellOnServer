@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CreateDepartmentComponent } from './create-department/create-department.component';
 import { EditDepartmentComponent } from './edit-department/edit-department.component';
 import { UpdateDepartmentDto } from './edit-department/update-department.dto';
+import Swal from 'sweetalert2';
+import { Department } from './model/department.model';
 
 @Component({
   selector: 'app-department',
@@ -13,7 +15,7 @@ import { UpdateDepartmentDto } from './edit-department/update-department.dto';
   styleUrls: ['./department.component.css'],
 })
 export class DepartmentComponent implements OnInit {
-  departments: any[] = [];
+  departments: Department[] = [];
   currentDepartment: any = {};
   navbarOpen = false;
   
@@ -42,7 +44,7 @@ export class DepartmentComponent implements OnInit {
     );
   }
 
-  editDepartment(department: any) {
+  editDepartment(department: Department) {
     const dialogRef = this.dialog.open(EditDepartmentComponent, {
       width: '325px',
       data: { department },
@@ -51,7 +53,7 @@ export class DepartmentComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: UpdateDepartmentDto) => {
       if (result) {
         const updateDto: UpdateDepartmentDto = result;
-
+        
         this.departmentService.updateDepartment(updateDto).subscribe(
           () => {
             this.toastr.success('Update successful!', 'Success');
@@ -67,17 +69,26 @@ export class DepartmentComponent implements OnInit {
   }
 
 
- 
 
   deleteDepartment(department: any): void {
-    if (confirm('Are you sure you want to delete this employee?')) {
-      this.departmentService
-        .deleteDepartment(department.id)
-        .subscribe(() => {
-          this.toastr.success('Delete successful!', 'Success');
-          this.loadDepartments();
-        });
-    }
+    Swal.fire({
+      width: 350,
+      title: 'Are you sure you want to delete this department?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.departmentService.deleteDepartment(department.id)
+          .subscribe(() => {
+            this.toastr.success('Delete successful!', 'Success');
+            this.loadDepartments();
+          });
+      }
+    });
   }
 
   createDepartment() {
