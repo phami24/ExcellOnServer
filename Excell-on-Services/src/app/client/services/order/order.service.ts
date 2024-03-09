@@ -23,8 +23,8 @@ export class OrderService {
   addOrder(orderData: any): Observable<any> {
     return this.httpClient.post<any>(`${baseUrl}/Order/create-order`, orderData);
   }
-  addOrderDetail(orderId: number, serviceChargeId: number): Observable<any> {
-    return this.httpClient.post<any>(`${baseUrl}/Order/order-detail`, { orderId, serviceChargeId });
+  addOrderDetail(orderData: any): Observable<any> {
+    return this.httpClient.post<any>(`${baseUrl}/Order/order-detail`, orderData);
   }
 
   deleteOrder(orderId: number): Observable<any> {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../services/cart/cart.service';
 import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { ProfileService } from '../../services/profile/profile.service';
@@ -18,16 +18,17 @@ export class PaymentsComponent implements OnInit {
   userProfile: any;
   userId: number | undefined;
   totalPrice: number = 0;
+  orderId: number | undefined;
   constructor(
     private route: ActivatedRoute,
     private cartService: CartService,
     private orderService: OrderService,
     private profileService: ProfileService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
   ) {}
   handler: any = null;
   ngOnInit() {
-    this.loadStripe();
     this.getCartByUserId();
   }
   async getCartByUserId(): Promise<void> {
@@ -108,7 +109,7 @@ export class PaymentsComponent implements OnInit {
       });
     }
   }
-  deleteCart(): void {
+  async deleteCart(): Promise<void> {
     if (this.token !== null) {
       this.profileService.GetProfileByJwt(this.token).subscribe(
         (response) => {
@@ -119,9 +120,11 @@ export class PaymentsComponent implements OnInit {
             this.userId = this.userProfile.id;
             // Check if userId is defined before calling getCart
             if (this.userId !== undefined) {
-              this.cartService.deleteCartByClientId(this.userId).subscribe(() => {
-                // this.cartService.updateCartTotal(this.userId);
-              });
+              this.cartService
+                .deleteCartByClientId(this.userId)
+                .subscribe(() => {
+                  // this.cartService.updateCartTotal(this.userId);
+                });
             } else {
               console.error(
                 'User ID is undefined. Handle this case appropriately.'
@@ -142,104 +145,60 @@ export class PaymentsComponent implements OnInit {
     }
   }
 
-  async addOrder(): Promise<void> {
-    // Prepare order data
-    const orderData = {
-      orderDate: new Date().toISOString(),
-      orderStatus: 0,
-      orderTotal: this.totalPrice,
-      clientId: this.userId,
-    };
-  
-    // Call the addOrder method from the service to add the order
-    this.orderService.addOrder(orderData).subscribe(
-      (response) => {
-        // Handle success response
-        console.log('Order added successfully:', response);
-  
-        // Extract the orderId from the response
-        const orderId: number = response.orderId;
-  
-        // Iterate through service charges and add order details
-        for (const clientId in this.serviceCharges) {
-          if (this.serviceCharges.hasOwnProperty(clientId)) {
-            const charges = this.serviceCharges[clientId];            
-            for (const charge of charges) {
-              // Call addOrderDetail for each service charge
-              this.addOrderDetail(orderId, charge.serviceChargesId);
-              
-            }
-          }
-        }
-  
-        this.toastr.success('Order placed successfully!', 'Success');
-      },
-      (error) => {
-        // Handle error response
-        console.error('Error adding order:', error);
-        
-        this.toastr.error('Error placing order', 'Error');
-      }
-    );
-  }
-  
-  
-  addOrderDetail(orderId: number, serviceChargeId: number) {
-    this.orderService.addOrderDetail(orderId, serviceChargeId).subscribe(
-      response => {
-        // Handle success
-        console.log('Order detail added successfully:', response);
-      },
-      error => {
-        // Handle error
-        console.error('Error adding order detail:', error);
-      }
-    );
-  }
-  
-  
+  // async addOrder(): Promise<void> {
+  //   // Prepare order data
+  //   const orderData = {
+  //     orderDate: new Date().toISOString(),
+  //     orderStatus: 0,
+  //     orderTotal: this.totalPrice,
+  //     clientId: this.userId,
+  //   };
 
-  pay(amount: any) {
-    var handler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_51OUUZ3LKYUk9aF2AEApyxIYiwUGMvSE0WUC6a81grdSwXomwY6riRnQpwDvTGwmpCcDkwbfVCWDTtogJ8xSbUtzA00MvGRvJDq',
-      locale: 'auto',
-      token: function (token: any) {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use.
-        console.log(token);
-        alert('Token Created!!');
-        console.log("DELETE ID"+this.userProfile.id)
-        this.deleteCart();
-      },
-    });
+  //   // Call the addOrder method from the service to add the order
+  //   this.orderService.addOrder(orderData).subscribe(
+  //     (response) => {
+  //       // Handle success response
+  //       console.log('Order added successfully:', response);
 
-    handler.open({
-      name: 'Demo Site',
-      description: '2 widgets',
-      amount: amount * 100,
-    });
-  }
+  //       // Extract the orderId from the response
+  //       this.orderId = response.orderId;
+  //       this.toastr.success('Order placed successfully!', 'Success');
+  //     },
+  //     (error) => {
+  //       // Handle error response
+  //       console.error('Error adding order:', error);
+  //       this.orderId = error.orderId;
+  //       this.toastr.error('Error placing order', 'Error');
+  //     }
+  //   );
+  // }
 
-  loadStripe() {
-    if (!window.document.getElementById('stripe-script')) {
-      var s = window.document.createElement('script');
-      s.id = 'stripe-script';
-      s.type = 'text/javascript';
-      s.src = 'https://checkout.stripe.com/checkout.js';
-      s.onload = () => {
-        this.handler = (<any>window).StripeCheckout.configure({
-          key: 'pk_test_51OUUZ3LKYUk9aF2AEApyxIYiwUGMvSE0WUC6a81grdSwXomwY6riRnQpwDvTGwmpCcDkwbfVCWDTtogJ8xSbUtzA00MvGRvJDq',
-          locale: 'auto',
-          token: function (token: any) {
-            // You can access the token ID with `token.id`.
-            // Get the token ID to your server-side code for use.
-            console.log(token);
-            alert('Payment Success!!');
-          },
-        });
+  async addOrderDetail(): Promise<void> {
+    try {
+      const orderData = {
+        orderDate: new Date().toISOString(),
+        orderStatus: 0,
+        orderTotal: this.totalPrice,
+        clientId: this.userId,
       };
-
-      window.document.body.appendChild(s);
+  
+      const orderResponse = await this.orderService.addOrder(orderData).toPromise();
+      this.orderId = orderResponse.orderId;
+  
+      
+      const orderDetailData = {
+        serviceChargeId: 5,
+        orderId: this.orderId,
+      };
+      await this.orderService.addOrderDetail(orderDetailData).toPromise();
+  
+      // this.router.navigateByUrl('/user/services');
+      await this.deleteCart();
+      this.toastr.success('Order placed successfully!', 'Success');
+    } catch (error) {
+      console.error('Error adding order detail:', error);
+      this.toastr.error('Error placing order', 'Error');
     }
   }
+  
 }

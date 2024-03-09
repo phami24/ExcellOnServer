@@ -104,12 +104,30 @@ export class ServicesPricingComponent implements OnInit {
   }
 
   imageService = [
-    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
-    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
-    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
-    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
-    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
-    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
+    {
+      imageSrc: '../../../assets/images/special_services02.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services04.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services06.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services03.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services05.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services01.svg',
+      altText: 'Services',
+    },
   ];
   reviewService: string[] = [
     'Solving IT Problems',
