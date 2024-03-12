@@ -18,7 +18,8 @@ export class DepartmentComponent implements OnInit {
   departments: Department[] = [];
   currentDepartment: any = {};
   navbarOpen = false;
-  
+  currentPage = 1;
+  itemsPerPage = 6;
 
   constructor(
     public dialog: MatDialog,
@@ -131,7 +132,23 @@ export class DepartmentComponent implements OnInit {
   //   return colors[colorIndex];
   // }
 
-  
+  paginate(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.departments.length);
+    return this.departments.slice(startIndex, endIndex);
+  }
+
+  totalPage(): number {
+    return Math.ceil(this.departments.length / this.itemsPerPage);
+  }
+
+  getPagesArray(): number[] {
+    return Array(this.totalPage()).fill(0).map((x, i) => i + 1);
+  }
+
+  changePage(pageNumber: number) {
+    this.currentPage = pageNumber;
+  }
 
   viewRoomDepartment(id: any) {
     this.router.navigate(['department/room-department', id]);

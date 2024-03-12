@@ -57,22 +57,6 @@ export class PaymentService {
     const url = `${this.apiUrl}/Client/search?name=${name}`;
     return this.http.get(url, { headers });
   }
- searchClientsByName(name: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/search?name=${name}`);
-  }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // Xảy ra lỗi mạng hoặc lỗi client-side
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // Backend trả về một response không thành công
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // Trả về một observable với thông điệp lỗi cho component gọi
-    return throwError('Something bad happened; please try again later.');
-  }
 
 }

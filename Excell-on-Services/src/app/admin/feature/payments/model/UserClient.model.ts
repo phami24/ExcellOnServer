@@ -6,11 +6,5 @@ export interface UserClient {
   dob: string;
   email: string;
   phone: string;
-  cartDetail: {
-    cartId: number;
-    serviceChargeId: number;
-    serviceChargesName: string;
-    price: number;
-    serviceChargesDescription: string;
-  }[];
+  
 }

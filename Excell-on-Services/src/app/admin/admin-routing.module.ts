@@ -37,12 +37,7 @@ const routes: Routes = [
         component: DepartmentComponent,
         canActivate: [AuthAdminGuard],
         data: { title: 'Department' },
-        // children: [                     
-        //   {
-        //     path: 'department/room-department/:id',
-        //     component: RoomDepartmentComponent,
-        //   },
-        // ],
+       
       },
       {
         path: 'employee',
