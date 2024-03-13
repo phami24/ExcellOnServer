@@ -58,6 +58,7 @@ export class ServiceManagementComponent implements OnInit{
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        console.table(res)
       },
       error: console.log,
     });
@@ -84,6 +85,7 @@ export class ServiceManagementComponent implements OnInit{
   createService() {
     const dialogRef = this.dialog.open(AddServiceComponent, {
       width: '700px',
+      height: '400px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

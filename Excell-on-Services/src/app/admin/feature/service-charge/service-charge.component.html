@@ -12,7 +12,7 @@
             <button (click)="openAddServiceComponent()"
                 class="ml-2 relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 min-w-[180px] h-10 max-h-[40px] rounded-lg text-xs bg-blue-300 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-200/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                 type="button"><i class="fa-solid fa-plus mr-2"></i>
-                Create Service
+                Add service charge
             </button>
 
         </div>
@@ -55,7 +55,7 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let row" class="flex mt-14">
-                    <button class="text-blueGray-500 pb-10 px-3 transition">
+                    <button (click)="openEditForm(row)" class="text-blueGray-500 pb-10 px-3 transition">
                         <svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
                             fill="none">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

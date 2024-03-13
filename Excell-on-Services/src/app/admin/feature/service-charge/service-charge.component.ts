@@ -24,6 +24,7 @@ import { AddServiceChargeComponent } from './add-service-charge/add-service-char
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 import { Service } from 'src/app/interfaces/service';
 import { CommonModule } from '@angular/common';
+import { EditServiceChargeComponent } from './edit-service-charge/edit-service-charge.component';
 
 @Component({
   selector: 'app-service-charge',
@@ -92,16 +93,16 @@ export class ServiceChargeComponent implements OnInit {
     }
   }
 
-  // openEditForm(service: any): void {
-  //   const dialogRef = this.dialog.open(EditServiceComponent, {
-  //     width: '700px',
-  //     data: service,
-  //   });
+  openEditForm(service: any): void {
+    const dialogRef = this.dialog.open(EditServiceChargeComponent, {
+      width: '700px',
+      data: service,
+    });
 
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     this.getServiceList();
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getServiceList();
+    });
+  }
   openAddServiceComponent(): void {
     this.addServiceContainer.clear();
     const componentFactory =
