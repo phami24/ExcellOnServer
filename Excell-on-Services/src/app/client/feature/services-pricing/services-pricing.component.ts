@@ -130,12 +130,12 @@ export class ServicesPricingComponent implements OnInit {
     },
   ];
   reviewService: string[] = [
-    'Solving IT Problems',
+    'Solve economic problems',
     'IT Security Services',
-    'Cloud Services',
-    'Practice IT Management',
-    'Managed IT Service',
-    'Remote IT Assistance',
+    'Expertise and Experience',
+    'Practice Management',
+    'Diverse Range of Services',
+    'Exceptional Customer Service',
   ];
 
   tabs = [

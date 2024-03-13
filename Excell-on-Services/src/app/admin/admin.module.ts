@@ -24,6 +24,7 @@ import { AddServiceComponent } from './feature/service-management/add-service/ad
 import { MainComponent } from './feature/main/main.component';
 import { ServiceChargeComponent } from './feature/service-charge/service-charge.component';
 import { AddServiceChargeComponent } from './feature/service-charge/add-service-charge/add-service-charge/add-service-charge.component';
+import { EditServiceChargeComponent } from './feature/service-charge/edit-service-charge/edit-service-charge.component';
 // import { MainModule } from './feature/main/main.module';
 
 
@@ -43,7 +44,7 @@ import { AddServiceChargeComponent } from './feature/service-charge/add-service-
     EditCustomerComponent,
     EditServiceComponent,
     AddServiceComponent,  
-    MainComponent, AddServiceChargeComponent,
+    MainComponent, AddServiceChargeComponent, EditServiceChargeComponent,
   ],
   imports: [
     CommonModule,

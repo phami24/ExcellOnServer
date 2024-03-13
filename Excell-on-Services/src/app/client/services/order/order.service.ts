@@ -6,10 +6,9 @@ import { environment } from 'src/app/Environments/environment';
 const baseUrl = environment.apiUrl;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
-
   private cartDetailTotalSubject: Subject<number> = new Subject<number>();
   cartDetailTotal$: Observable<number> =
     this.cartDetailTotalSubject.asObservable();
@@ -21,15 +20,24 @@ export class OrderService {
   }
 
   addOrder(orderData: any): Observable<any> {
-    return this.httpClient.post<any>(`${baseUrl}/Order/create-order`, orderData);
+    return this.httpClient.post<any>(
+      `${baseUrl}/Order/create-order`,
+      orderData
+    );
   }
-  addOrderDetail(orderData: any): Observable<any> {
-    return this.httpClient.post<any>(`${baseUrl}/Order/order-detail`, orderData);
+  addOrderDetail(orderDetailData: any): Observable<any> {
+    return this.httpClient.post<any>(
+      `${baseUrl}/Order/order-detail`,
+      orderDetailData
+    );
   }
 
   deleteOrder(orderId: number): Observable<any> {
     const url = `${baseUrl}/Order/${orderId}`;
     return this.httpClient.delete(url);
   }
- 
+  getOrder(): Observable<any> {
+    const url = `${baseUrl}/Order`;
+    return this.httpClient.get(url);
+  }
 }

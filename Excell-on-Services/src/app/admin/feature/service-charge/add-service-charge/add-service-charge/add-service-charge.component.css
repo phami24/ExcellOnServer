@@ -6,9 +6,8 @@
 }
 .center .inputbox {
   position: relative;
-  width: 260px;
-  height: 180px;
-  margin-bottom: 5px;
+  height: 50px;
+  margin-top: 30px;
 }
 .center .inputbox input {
   position: absolute;
@@ -21,7 +20,6 @@
   padding: 10px;
   border-radius: 10px;
   font-size: 1.2em;
-  margin-top: 10px ;
 }
 .center .inputbox textarea {
   position: absolute;
@@ -44,24 +42,17 @@
   left: 20px;
   font-size: 1em;
   transition: 0.6s;
-  font-family: sans-serif;
 }
 .center .inputbox input:focus ~ span,
 .center .inputbox input:valid ~ span {
-  transform: translateX(-13px) translateY(-35px);
-  font-size: 1em;
+  transform: translateX(-13px) translateY(-40px);
+  font-size: 1.2em;
+  color: black;
 }
 .center .inputbox textarea:focus ~ span,
 .center .inputbox textarea:valid ~ span {
-  transform: translateX(-13px) translateY(-35px);
-  font-size: 1em;
-}
-.center .inputbox [type="button"] {
-  width: 50%;
-  background: #93c5fd;
-  color: #fff;
-  border: #fff;
-}
-.center .inputbox:hover [type="button"] {
-  background: linear-gradient(45deg, #93c5fd, #93c5fd);
+  transform: translateX(-13px) translateY(-40px);
+  font-size: 1.2em;
+  color: black;
+  font-weight: medium;
 }
