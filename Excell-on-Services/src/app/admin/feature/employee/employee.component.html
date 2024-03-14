@@ -49,11 +49,11 @@
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                                    First Name
+                                    Full Name
                                     <span *ngIf="sortedField === 'firstName'" class="arrow"
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
                                 </th>
-                                <th (click)="sortData('lastName')"
+                                <!-- <th (click)="sortData('lastName')"
                                     class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
               color === 'light'
@@ -63,7 +63,7 @@
                                     Last Name
                                     <span *ngIf="sortedField === 'lastName'" class="arrow"
                                         [class.asc]="sortOrder === 'asc'" [class.desc]="sortOrder === 'desc'"></span>
-                                </th>
+                                </th> -->
                                 <th (click)="sortData('age')"
                                     class="px-6 align-middle border border-solid py-3 text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left"
                                     [ngClass]="
@@ -123,15 +123,15 @@
                                     <img src="{{employee.avatar}}" class="h-12 w-12 bg-white rounded-full border"
                                         alt="..." />
 
-                                    <span class="ml-3 font-bold"
+                                        <span class="ml-3 font-bold"
                                         [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-                                        {{ employee.firstName }}
-                                    </span>
+                                        {{ employee.firstName + ' ' + employee.lastName }}
+                                      </span>
                                 </th>
-                                <td
+                                <!-- <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     {{ employee.lastName }}
-                                </td>
+                                </td> -->
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     {{ employee.dob }}

@@ -71,3 +71,24 @@ input[type="file"] {
     transform: translateY(-50%);
     cursor: pointer;
 }
+
+.image-preview {
+    position: relative;
+    z-index: 1;
+}
+
+.content {
+    position: relative;
+}
+
+.image-preview {
+    max-width: 200%; /* Đảm bảo ảnh không bị vượt quá kích thước của phần tử cha */
+    max-height: 80px;
+    margin-bottom: 200px; /* Điều chỉnh khoảng cách giữa ảnh và các trường input */
+    z-index: 1; /* Đảm bảo ảnh nằm phía trên các trường input */
+}
+
+.row {
+    margin-top: 10px;
+}
+
