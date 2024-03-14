@@ -112,8 +112,7 @@ export class NavbarComponent implements OnInit {
         // Khoảng cách từ vị trí cuộn tới dưới cùng của dropdown
         const distanceToBottom = totalHeight - (scrollPosition + visibleHeight);
     
-        // Kiểm tra xem đã cuộn gần dưới cùng của dropdown hay không (sử dụng giá trị ngưỡng là h/2)
-        const scrolledNearBottom = distanceToBottom < (400 / 400); // 200px
+        const scrolledNearBottom = distanceToBottom < (400 / 400);
     
         if (scrolledNearBottom) {
           // Thực hiện hành động khi cuộn gần dưới cùng của dropdown

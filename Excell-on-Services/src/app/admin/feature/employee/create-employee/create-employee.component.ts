@@ -1,9 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from './create-employee.service';
 import { ToastrService } from 'ngx-toastr';
-import { NotificationService  } from '../../../shared/notification/notification.service';
+import { NotificationService } from '../../../shared/notification/notification.service';
+import { DepartmentService } from '../../department/services/department.service';
+import { Department } from '../../department/model/department.model'; 
 
 
 
@@ -16,17 +18,22 @@ export class CreateEmployeeComponent implements OnInit {
   // employee: any = {}; // Add this line
   // @Input() data: any;
   @ViewChild('loadingSpinner') loadingSpinner: ElementRef | undefined;
+  @ViewChild('fileInput') fileInput!: ElementRef;
   employees: any[] = [];
   empForm!: FormGroup;
   formErrors: any = {};
   updating: boolean = false;
+  selectedAvatarUrl: string | ArrayBuffer | null = null;
   showPassword = false;
+  avatarSelected: boolean = false;
+  departments: any[] = [];
   constructor(public dialogRef: MatDialogRef<CreateEmployeeComponent>,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private employeeService: EmployeeService,
     private notificationService: NotificationService,
-    ) { }
+    private departmentService: DepartmentService
+  ) { }
 
   ngOnInit(): void {
     this.empForm = this.formBuilder.group({
@@ -43,6 +50,19 @@ export class CreateEmployeeComponent implements OnInit {
       // Kiểm tra lỗi và cập nhật formErrors ngay khi có sự thay đổi
       this.formErrors = this.getFormValidationErrors();
     });
+    this.loadDepartmentsForSelection();
+  }
+
+  loadDepartmentsForSelection() {
+    this.departmentService.getDepartments().subscribe(
+      (departments: Department[]) => {
+        // Gán danh sách phòng ban để hiển thị cho người dùng chọn
+        this.departments = departments;
+      },
+      (error) => {
+        console.error('Error loading departments for selection:', error);
+      }
+    );
   }
 
   togglePasswordVisibility() {
@@ -62,14 +82,14 @@ export class CreateEmployeeComponent implements OnInit {
             } else if (keyError === 'email') {
               return `Email must be a valid email address.`; // Thêm thông báo lỗi cho email không đúng định dạng
             } else if (keyError === 'invalidPhone') {
-              return `Phone must have exactly 10 numbers.`; 
+              return `Phone must have exactly 10 numbers.`;
             } else if (keyError === 'passwordRequirementsValidator') {
               return `Password must contain at least one uppercase letter, one digit and one special character.`;
             }
             // Thêm các trường hợp lỗi khác nếu cần
             return ''; // Trường hợp mặc định, có thể là chuỗi trống hoặc một thông báo khác
-        }),
-        
+          }),
+
         });
       }
     });
@@ -80,7 +100,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   phoneValidator(control: any): { [key: string]: boolean } | null {
     const phoneNumber = control.value;
-  
+
     // Kiểm tra số điện thoại có đúng 10 kí tự không
     if (phoneNumber && phoneNumber.length === 10) {
       return null; // Số điện thoại hợp lệ
@@ -107,22 +127,51 @@ export class CreateEmployeeComponent implements OnInit {
     const uppercaseRegex = /[A-Z]/;
     const digitRegex = /\d/;
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-  
+
     // Kiểm tra xem mật khẩu có đáp ứng tất cả các yêu cầu không
     if (!(uppercaseRegex.test(password) && digitRegex.test(password) && specialCharRegex.test(password))) {
       return { 'passwordRequirementsValidator': true };
     }
-  
+
     return null;
   }
-  onFileChange(event: any) {
-    const file = (event.target as HTMLInputElement).files?.[0];
+  onFileChange(event: any): void {
+    const fileInput = event.target;
 
-    if (file) {
-      this.empForm.patchValue({
-        avatar: file,
-      });
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+
+      // Đọc và chuyển đổi tệp thành dữ liệu URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // Kiểm tra nếu e.target?.result không phải là undefined trước khi gán giá trị
+        if (e.target?.result) {
+          this.selectedAvatarUrl = e.target.result;
+        }
+      };
+
+      reader.readAsDataURL(file);
+
+      // Gán giá trị tệp vào FormControl
+      this.empForm.get('avatar')?.setValue(file);
     }
+    this.avatarSelected = true;
+  }
+
+  // Phương thức mới để trả về đường dẫn hình ảnh đã chọn
+  getAvatarPreview(): string | ArrayBuffer | null {
+    return this.selectedAvatarUrl;
+  }
+
+  openFileInput() {
+    // Sử dụng ElementRef để truy cập đến phần tử input type="file"
+    const fileInput = this.fileInput.nativeElement;
+
+    // Reset giá trị của input để có thể chọn ảnh mới
+    fileInput.value = '';
+
+    // Gọi sự kiện click để mở cửa sổ chọn ảnh
+    fileInput.click();
   }
 
   createEmployee(): void {
@@ -151,6 +200,7 @@ export class CreateEmployeeComponent implements OnInit {
     } else {
       this.toastr.error('Create fail!', 'Error');
     }
+    console.log('Creating employee...', this.empForm.value);
 
   }
 
