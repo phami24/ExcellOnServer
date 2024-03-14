@@ -12,3 +12,29 @@
 .scroll-container::-webkit-scrollbar-track {
   background-color: #f0f0f0;
 }
+
+
+.message {
+  margin-bottom: 10px; /* Khoảng cách giữa các tin nhắn */
+  color :black;
+}
+
+.message-content {
+  padding: 10px; /* Khoảng cách nội dung của tin nhắn từ các cạnh */
+  
+}
+
+.message-right {
+  border-radius: 20px; /* Định dạng góc bo tròn cho tin nhắn */
+  text-align: right; /* Hiển thị tin nhắn bên phải */
+  background-color: #7eabf4; /* Màu nền cho tin nhắn của bạn */
+  width: 30%;
+  margin-left: auto;
+}
+
+.message-left {
+  border-radius: 20px; /* Định dạng góc bo tròn cho tin nhắn */
+  text-align: left; /* Hiển thị tin nhắn bên trái */
+  background-color: #dae5fb; /* Màu nền cho tin nhắn của người khác */
+  width: 30%;
+}

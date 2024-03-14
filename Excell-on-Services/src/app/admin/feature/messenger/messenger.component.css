@@ -42,3 +42,34 @@
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+.chat-body {
+  flex: 1; /* Sử dụng flex để đảm bảo chiếm phần còn lại của màn hình */
+  overflow-y: auto; /* Sử dụng cuộn dọc khi nội dung vượt quá kích thước */
+  max-height: calc(100vh - 100px - 100px); /* Đảm bảo chiều cao của chat body không vượt quá chiều cao của màn hình trừ đi chiều cao của header và footer */
+}
+
+.message {
+  margin-bottom: 10px; /* Khoảng cách giữa các tin nhắn */
+  color :black;
+}
+
+.message-content {
+  padding: 10px; /* Khoảng cách nội dung của tin nhắn từ các cạnh */
+  
+}
+
+.message-right {
+  border-radius: 20px; /* Định dạng góc bo tròn cho tin nhắn */
+  text-align: right; /* Hiển thị tin nhắn bên phải */
+  background-color: #7eabf4; /* Màu nền cho tin nhắn của bạn */
+  width: 30%;
+  margin-left: auto;
+}
+
+.message-left {
+  border-radius: 20px; /* Định dạng góc bo tròn cho tin nhắn */
+  text-align: left; /* Hiển thị tin nhắn bên trái */
+  background-color: #dae5fb; /* Màu nền cho tin nhắn của người khác */
+  width: 30%;
+}
+

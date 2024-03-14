@@ -1,409 +1,108 @@
-<div class=" md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 mt-13 min-h-screen transition-all">
-    <div class="h-screen w-full flex antialiased text-gray-200 bg-white overflow-hidden">
-        <div class="flex-1 flex flex-col">
+<div
+  class="md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 mt-13 min-h-screen transition-all"
+>
+  <div
+    class="h-screen w-full flex antialiased text-gray-200 bg-white overflow-hidden"
+  >
+    <div class="flex-1 flex flex-col">
+      <main class="flex-grow flex flex-row min-h-0">
+        <section
+          class="flex flex-col flex-none overflow-auto w-20 hover:w-64 group lg:max-w-sm md:w-1/5 duration-300 ease-in-out"
+        >
+          <div class="contacts p-2 flex-1 overflow-y-scroll">
+            <!-- ngFor loop starts here -->
+            <div
+              *ngFor="let group of groups"
+              class="flex justify-between items-center p-3 hover:bg-gray-300 rounded-lg relative"
+            >
+              <!-- [style.background-color]="randomColor()" -->
+              <div
+                class="w-16 h-16 relative flex flex-shrink-0 rounded-full bg-gray-300 text-white justify-center items-center cursor-pointer"
+                (click)="showChat(group)"
+              >
+                <span class="text-xl font-bold">
+                  {{ getInitials(group.customerName) }}
+                </span>
+              </div>
+              <div
+                class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block"
+              >
+                <p
+                  class="text-black font-bold text-xl cursor-pointer"
+                  (click)="showChat(group)"
+                >
+                  {{ group.customerName }}
+                </p>
+              </div>
+            </div>
+            <!-- ngFor loop ends here -->
+          </div>
+        </section>
+        <section class="flex flex-col flex-auto border-l border-gray-300">
+          <div *ngIf="selectedGroup" class="chat-section">
+            <div
+              class="chat-header px-2 py-4 flex flex-row flex-none justify-between items-center shadow"
+            >
+              <div class="flex items-center">
+                <div
+                  class="w-16 h-16 relative flex flex-shrink-0 rounded-full bg-gray-300 text-white justify-center items-center cursor-pointer"
+                >
+                  <span class="text-xl font-bold">
+                    {{ getInitials(selectedGroup.customerName) }}
+                  </span>
+                </div>
+                <div class="ml-4 text-lg">
+                  <p class="font-bold text-black">
+                    {{ selectedGroup.customerName }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div #scrollContainer  class="chat-body flex-1  p-4 overflow-y-scroll">
+              <div *ngFor="let msg of message" class="message">
+                <!-- Tin nhắn bên phải -->
+                <div *ngIf="msg.senderUserName=== employee.email" class="message-right">
+                  <div class="message-content">
+                    {{msg.content}}
+                  </div>
+                </div>
+                <!-- Tin nhắn bên trái -->
+                <div *ngIf="msg.senderUserName != employee.email" class="message-left">
+                  <div class="message-content">
+                    {{msg.content}}
+                  </div>
+                </div>
+              </div>
+              
+            </div>
 
-            <main class="flex-grow flex flex-row min-h-0">
-                <section
-                    class="flex flex-col flex-none overflow-auto w-24 hover:w-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
-                    <!-- <div class="header  p-4 flex flex-row justify-between items-center flex-none">
-                        <div class="w-16  h-16 relative flex flex-shrink-0">
-                            <img class="rounded-full w-full h-full object-cover bg-blue-700" alt="avatar"
-                                src="../../../../assets/images/avatar.png" />
-                        </div>
-                       
-                    </div>
-                    <div class="search-box p-4 flex-none">
-                        <form onsubmit="">
-                            <div class="relative">
-                                <label>
-                                    <input
-                                        class="rounded-full py-2 pr-6 pl-10 w-full border border-gray-400 focus:border-gray-400 bg-gray-100 focus:bg-gray-200 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in"
-                                        type="text" value="" placeholder="Search Messenger" />
-                                    <span class="absolute top-0 left-0 mt-2 ml-3 inline-block border-gray-400">
-                                        <div class="w-4 h-4">
-                                            <i class="fa-solid fa-magnifying-glass"></i>
-                                        </div>
-                                    </span>
-                                </label>
-                            </div>
-                        </form>
-                    </div> -->
-                    <div class="active-users flex flex-row p-2 overflow-auto w-0 min-w-full">
-
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1  rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/women/12.jpg" alt="" />
-                                </div>
-                            </div>
-                            <p>Anna</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1 border-4  rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/men/75.jpg" alt="" />
-                                    <div class="absolute bg-white p-1 rounded-full bottom-0 right-0">
-                                        <div class="bg-green-500 rounded-full w-3 h-3"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>Jeff</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1 border-4 border-blue-600 rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/women/42.jpg" alt="" />
-                                </div>
-                            </div>
-                            <p>Cathy</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1  rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/women/87.jpg" alt="" />
-                                    <div class="absolute bg-white p-1 rounded-full bottom-0 right-0">
-                                        <div class="bg-green-500 rounded-full w-3 h-3"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>Madona</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1 border-4 border-transparent rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/women/23.jpg" alt="" />
-                                    <div class="absolute bg-white p-1 rounded-full bottom-0 right-0">
-                                        <div class="bg-green-500 rounded-full w-3 h-3"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>Emma</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1 border-4 border-blue-600 rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/men/65.jpg" alt="" />
-                                </div>
-                            </div>
-                            <p>Mark</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1 border-4 border-blue-600 rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
-                                </div>
-                            </div>
-                            <p>Eva</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1 border-4 border-transparent rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/men/31.jpg" alt="" />
-                                    <div class="absolute bg-white p-1 rounded-full bottom-0 right-0">
-                                        <div class="bg-green-500 rounded-full w-3 h-3"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>Max</p>
-                        </div>
-                        <div class="text-sm text-center mr-4">
-                            <div class="p-1 border-4 border-blue-600 rounded-full">
-                                <div class="w-16 h-16 relative flex flex-shrink-0">
-                                    <img class="shadow-md rounded-full w-full h-full object-cover"
-                                        src="https://randomuser.me/api/portraits/men/81.jpg" alt="" />
-                                </div>
-                            </div>
-                            <p>Adam</p>
-                        </div>
-                    </div>
-                    <div class="contacts p-2 flex-1 overflow-y-scroll">
-                        <div class="flex justify-between items-center p-3 hover:bg-gray-300 rounded-lg relative">
-                            <div class="w-16 h-16 relative flex flex-shrink-0">
-                                <img class="shadow-md rounded-full w-full h-full object-cover"
-                                    src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
-                            </div>
-                            <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
-                                <p class="text-gray-600">Tạ Thị Thanh Thuỷ</p>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <div class="min-w-0">
-                                        <p class="truncate">Ok, see you at the subway in a bit.</p>
-                                    </div>
-                                    <p class="ml-2 whitespace-no-wrap">Just now</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center p-3 hover:bg-gray-300 rounded-lg relative">
-                            <div class="w-16 h-16 relative flex flex-shrink-0">
-                                <img class="shadow-md rounded-full w-full h-full object-cover"
-                                    src="https://randomuser.me/api/portraits/men/97.jpg" alt="" />
-                                <div class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
-                                    <div class="bg-green-500 rounded-full w-3 h-3"></div>
-                                </div>
-                            </div>
-                            <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
-                                <p class="text-gray-600">Tony Stark</p>
-                                <div class="flex items-center text-sm  text-gray-600">
-                                    <div class="min-w-0">
-                                        <p class="truncate">Hey, Are you there?</p>
-                                    </div>
-                                    <p class="ml-2 whitespace-no-wrap">10min</p>
-                                </div>
-                            </div>
-                            <div
-                                class="bg-blue-700 w-3 h-3 rounded-full flex flex-shrink-0 hidden md:block group-hover:block">
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center p-3 bg-gray-800 rounded-lg relative">
-                            <div class="w-16 h-16 relative flex flex-shrink-0">
-                                <img class="shadow-md rounded-full w-full h-full object-cover"
-                                    src="https://randomuser.me/api/portraits/women/33.jpg" alt="" />
-                            </div>
-                            <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block ">
-                                <p>Scarlett Johansson</p>
-                                <div class="flex items-center text-sm text-black text-gray-300">
-                                    <div class="min-w-0">
-                                        <p class="truncate">You sent a photo.</p>
-                                    </div>
-                                    <p class="ml-2 whitespace-no-wrap">1h</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative ">
-                            <div class="w-16 h-16 relative flex flex-shrink-0">
-                                <img class="shadow-md rounded-full w-full h-full object-cover"
-                                    src="https://randomuser.me/api/portraits/men/12.jpg" alt="" />
-                            </div>
-                            <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block text-gray-300">
-                                <p>John Snow</p>
-                                <div class="flex items-center text-sm text-gray-300">
-                                    <div class="min-w-0">
-                                        <p class="truncate ">You missed a call John.
-                                        </p>
-                                    </div>
-                                    <p class="ml-2 whitespace-no-wrap">4h</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-                <section class="flex flex-col flex-auto border-l border-gray-300">
-                    <div class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow">
-                        <div class="flex">
-                            <div class="w-12 h-12 mr-4 relative flex flex-shrink-0">
-                                <img class="shadow-md rounded-full w-full h-full object-cover"
-                                    src="https://randomuser.me/api/portraits/women/33.jpg" alt="" />
-                            </div>
-                            <div class="text-sm">
-                                <p class="font-bold text-gray-600">Scarlett Johansson</p>
-                                <p class="text-gray-400">Active 1h ago</p>
-                            </div>
-                        </div>
-
-                        <div class="flex">
-
-                            <a href="#" class="block rounded-full hover:bg-gray-400 bg-white w-10 h-10 p-2 ml-4">
-                                <svg viewBox="0 0 20 20" class="w-full h-full fill-current text-blue-500">
-                                    <path
-                                        d="M2.92893219,17.0710678 C6.83417511,20.9763107 13.1658249,20.9763107 17.0710678,17.0710678 C20.9763107,13.1658249 20.9763107,6.83417511 17.0710678,2.92893219 C13.1658249,-0.976310729 6.83417511,-0.976310729 2.92893219,2.92893219 C-0.976310729,6.83417511 -0.976310729,13.1658249 2.92893219,17.0710678 Z M9,11 L9,10.5 L9,9 L11,9 L11,15 L9,15 L9,11 Z M9,5 L11,5 L11,7 L9,7 L9,5 Z" />
-                                </svg>
-
-                            </a>
-                        </div>
-                    </div>
-                    <div class="chat-body p-4 flex-1 overflow-y-scroll">
-                        <div class="flex flex-row justify-start">
-                            <div class="w-8 h-8 relative flex flex-shrink-0 mr-4">
-                                <img class="shadow-md rounded-full w-full h-full object-cover"
-                                    src="https://randomuser.me/api/portraits/women/33.jpg" alt="" />
-                            </div>
-                            <div class="messages text-sm text-gray-700 grid grid-flow-row gap-2">
-                                <div class="flex items-center group">
-                                    <p
-                                        class="px-6 py-3 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
-                                        Hey! How are you?</p>
-
-                                </div>
-                                <div class="flex items-center group">
-                                    <p class="px-6 py-3 rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
-                                        Shall we go for Hiking this weekend?</p>
-
-                                </div>
-                                <div class="flex items-center group">
-                                    <p
-                                        class="px-6 py-3 rounded-b-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
-                                        Lorem ipsum
-                                        dolor sit
-                                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                        dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.</p>
-                                    <button type="button"
-                                        class="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
-                                        <div class="w-full h-full fill-current">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
-                                    </button>
-                                    <button type="button"
-                                        class="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
-                                        <div class="w-full h-full fill-current">
-                                            <i class="fa-solid fa-share"></i>
-                                        </div>
-                                    </button>
-                                    <button type="button"
-                                        class="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
-                                        <div class="w-full h-full fill-current">
-                                            <i class="fa-solid fa-face-smile"></i>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="p-4 text-center text-sm text-gray-500">FRI 3:04 PM</p>
-                        <div class="flex flex-row justify-end">
-                            <div class="messages text-sm text-white grid grid-flow-row gap-2">
-                                <div class="flex items-center flex-row-reverse group">
-                                    <p class="px-6 py-3 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">
-                                        Hey! How are you?</p>
-                                    
-                                </div>
-                                <div class="flex items-center flex-row-reverse group">
-                                    <p class="px-6 py-3 rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">Shall we go for
-                                        Hiking this weekend?</p>
-                                  
-                                </div>
-                                <div class="flex items-center flex-row-reverse group">
-                                    <p class="px-6 py-3 rounded-b-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">
-                                        Lorem ipsum
-                                        dolor sit
-                                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                        dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.</p>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                        <p class="p-4 text-center text-sm text-gray-500">SAT 2:10 PM</p>
-                        <div class="flex flex-row justify-start">
-                            <div class="w-8 h-8 relative flex flex-shrink-0 mr-4">
-                                <img class="shadow-md rounded-full w-full h-full object-cover"
-                                    src="https://randomuser.me/api/portraits/women/33.jpg" alt="" />
-                            </div>
-                            <div class="messages text-sm text-gray-700 grid grid-flow-row gap-2">
-                                <div class="flex items-center group">
-                                    <p
-                                        class="px-6 py-3 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
-                                        Hey! How are you?</p>
-                                   
-                                </div>
-                                <div class="flex items-center group">
-                                    <p class="px-6 py-3 rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
-                                        Shall we go for Hiking this weekend?</p>
-                                   
-                                </div>
-                                <div class="flex items-center group">
-                                    <p
-                                        class="px-6 py-3 rounded-b-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
-                                        Lorem ipsum
-                                        dolor sit
-                                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                        dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.</p>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                        <p class="p-4 text-center text-sm text-gray-500">12:40 PM</p>
-                        <div class="flex flex-row justify-end">
-                            <div class="messages text-sm text-white grid grid-flow-row gap-2">
-                                <div class="flex items-center flex-row-reverse group">
-                                    <p class="px-6 py-3 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">
-                                        Hey! How are you?</p>
-                                   
-                                </div>
-                                <div class="flex items-center flex-row-reverse group">
-                                    <p class="px-6 py-3 rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">Shall we go for
-                                        Hiking this weekend?</p>
-                                    
-                                </div>
-                                <div class="flex items-center flex-row-reverse group">
-                                    <a class="block w-64 h-64 relative flex flex-shrink-0 max-w-xs lg:max-w-md"
-                                        href="#">
-                                        <img class="absolute shadow-md w-full h-full rounded-l-lg object-cover"
-                                            src="https://unsplash.com/photos/8--kuxbxuKU/download?force=true&w=640"
-                                            alt="hiking" />
-                                    </a>
-                                   
-                                </div>
-                                <div class="flex items-center flex-row-reverse group">
-                                    <p class="px-6 py-3 rounded-b-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">
-                                        Lorem ipsum
-                                        dolor sit
-                                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                        dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.</p>
-                                        <button type="button"
-                                        class="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
-                                        <div class="w-full h-full fill-current">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </div>
-                                    </button>
-                                    <button type="button"
-                                        class="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
-                                        <div class="w-full h-full fill-current">
-                                            <i class="fa-solid fa-share"></i>
-                                        </div>
-                                    </button>
-                                    <button type="button"
-                                        class="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
-                                        <div  class="w-full h-full fill-current">
-                                            <i class="fa-solid fa-face-smile"></i>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-footer flex-none">
-                        <div class="flex flex-row items-center p-4">
-                            <button type="button"
-                                class="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-4 h-4">
-                                <i class="fa-solid fa-circle-plus"></i>
-                            </button>
-                            <button type="button"
-                                class="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-4 h-4">
-                                <i class="fa-regular fa-image"></i>
-                            </button>
-                            <button type="button"
-                                class="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-4 h-4">
-                                <i class="fa-solid fa-camera"></i>
-                            </button>
-                            <button type="button"
-                                class="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-4 h-4">
-                                <i class="fa-solid fa-microphone"></i>
-                            </button>
-                            <div class="relative flex-grow">
-                                <label>
-                                    <input
-                                        class="rounded-full py-2 pl-3 pr-10 w-full border border-gray-300 focus:border-gray-100 bg-gray-50  focus:outline-none text-black focus:shadow-md transition duration-300 ease-in"
-                                        type="text" value="" placeholder="Aa" />
-                                    <button type="button"
-                                        class="absolute top-1 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none block text-blue-600 hover:text-blue-700 w-4 h-1">
-                                        <i class="fa-regular fa-face-smile"></i>
-                                    </button>
-                                </label>
-                            </div>
-                            <button type="button"
-                                class="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-4 h-4">
-                                <i class="fa-solid fa-thumbs-up "></i>
-                            </button>
-                        </div>
-                    </div>
-                </section>
-            </main>
-        </div>
+            <div class="chat-footer flex-none w-full bg-white fixed bottom-0">
+              <div class="flex items-center p-4 w-full">
+                <div class="grid grid-cols-10 w-full">
+                  <div class="relative col-span-6">
+                    <label>
+                      <input
+                        class="rounded-full w-full px-3 pr-5 border border-gray-300 focus:border-gray-100 bg-gray-50 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in"
+                        type="text"
+                        value=""
+                        placeholder="Aa"
+                        [(ngModel)]="messageContent"
+                      />
+                    </label>
+                  </div>
+                  <button
+                    type="button"
+                    class="flex flex-shrink-0 m-2 text-lg focus:outline-none block text-blue-600 hover:text-blue-700 col-span-2"
+                    (click)="sendChatMessage(messageContent)"
+                  >
+                    Send
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
+  </div>
 </div>
