@@ -28,6 +28,7 @@ export class RoomDepartmentComponent implements OnInit {
       this.loadEmployees();
       // console.log(this.departmentId);
     });
+    
   }
   
   showDepartmentDetail(id: number): void {
@@ -87,6 +88,7 @@ export class RoomDepartmentComponent implements OnInit {
       }
     );
   }
+  
   
   goBackToDepartment() {
     this.router.navigate(['/admin/department']);

@@ -1,121 +1,153 @@
-<div class="hero-header bg-[url('/assets/images/servicesBg.png')] bg-cover">
-    <div class="mx-auto py-5 lg:px-0">
+<div class="hero-header grid grid-cols-12 main-banner">
+    <div class=" col-span-6 ">
         <div class="grid grid-cols-1 lg:grid-cols-1">
-            <div class="col-span-full text-center">
-                <h1 class="text-4xl text-event">Service</h1>
-
+            <div class="col-span-full text-center left-content">
+                <h2 class="text-2xl">Service</h2>
             </div>
+        </div>
+    </div>
+    <div class="col-span-6">
+        <div class="">
+            <img class="image-banner" src="../../../../assets/images/serviceBanner.jpg" alt="">
         </div>
     </div>
 </div>
 
 
-
-<!-- <div class="grid grid-cols-12">
-    <div class="col-span-6">
-        <h1>heheheh</h1>
-    </div>
-    <div class="col-span-6">
-        navigation="true"
-        <swiper-container class="mySwiper"  pagination="true" pagination-clickable="true" space-between="30"
-            slides-per-view="3" autoplay-delay="2500" autoplay-disable-on-interaction="false" loop="true">
-
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-            <swiper-slide><img class="w-full md:mb-4" src="../../../assets/images/servicesItem.png"
-                    alt="" /></swiper-slide>
-        </swiper-container>
-    </div>
-</div> -->
-
-
 <!-- Service new -->
 
-<div class="mx-10 py-4">
+<div class="mx-16 pb-4 pt-10 bg-[url('/assets/images/bannerLayer.png')] bg-cover">
     <ng-container *ngIf="services">
-        <div class="grid grid-cols-12 mb-5 justify-items-center" *ngFor="let item of services; let i = index">
-            <div class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6">
-                <div class="flex justify-center">
-                    <!-- <img class="w-24 h-24" [src]="imageService[i].imageSrc" [alt]="imageService[i].altText"> -->
+        <div class="grid grid-cols-12 mb-16 justify-items-center"
+            *ngFor="let item of services; let i = index">
+            <ng-container *ngIf="item.serviceId % 2 === 0; else oddService">
+                <div class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6 my-3 bg-[url('/assets/images/bgservice3.png')] bg-cover">
+                    <div class="flex justify-center">
+                        <img class="w-24 h-24 p-3" [src]="imageService[i].imageSrc" [alt]="imageService[i].altText">
+                    </div>
+                    <div>
+                        <h5
+                            class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            {{ item.serviceName }}</h5>
+                    </div>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 description">{{ item.description }}</p>
+                    <a (click)="openServiceDetailForm(item)"
+                        class="cursor-pointer inline-flex items-center text-blue-600 hover:underline">See more
+                        <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778" />
+                        </svg>
+                    </a>
                 </div>
-                <div>
-                    <h5 class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{
-                        item.serviceName }}</h5>
-                </div>
-                <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 description">{{ item.description }}</p>
-                <a (click)="openServiceDetailForm(item)"
-                    class="cursor-pointer inline-flex items-center text-blue-600 hover:underline">See more
-                    <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778" />
-                    </svg>
-                </a>
-            </div>
-            <div class="col-span-12 lg:col-span-8 lg:ml-5 lg:mr-2 flex items-center">
-                <div class="grid lg:grid-cols-12">
-                    <div class="lg:col-span-6 col-span-12 mr-2 my-1"
-                        *ngFor="let charge of serviceCharges[item.serviceId]">
-                        <div class="grid grid-cols-12 bg-sky-50 border border-blue-100 py-3 px-5 rounded-[8px]">
-                            <div class="col-span-3">
-                                <svg class="w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path
-                                            d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10"
-                                            stroke="#93c5fd" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                        </path>
-                                    </g>
-                                </svg>
-                                <p class="font-medium">{{ charge.serviceChargesName }}</p>
-                            </div>
-                            <div class="col-span-9 break-all">
-                                <div class="grid grid-cols-12">
-                                    <p class="col-span-8 text-xl font-medium">{{ charge.price | currency }}</p>
-                                    <button (click)="addToCart(userProfile?.id, charge.serviceChargesId)"
-                                        class="hover:cursor-pointer col-span-4 text-end"><i
-                                            class="fa-solid fa-cart-plus text-lg text-[#06346d]"></i></button>
+                <div class="col-span-12 lg:col-span-8 lg:ml-5 lg:mr-2 flex items-center">
+                    <div class="grid lg:grid-cols-12">
+                        <div class="lg:col-span-6 col-span-12 mr-2 my-1"
+                            *ngFor="let charge of serviceCharges[item.serviceId]">
+                            <div class="grid grid-cols-12 bg-sky-50 border border-blue-100 py-3 px-5 rounded-[8px]">
+                                <div class="col-span-3">
+                                    <svg class="w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10"
+                                                stroke="#93c5fd" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                    <p class="font-medium">{{ charge.serviceChargesName }}</p>
                                 </div>
-                                <p class="break-all truncate">
-                                    {{ charge.serviceChargesDescription }}</p>
+                                <div class="col-span-9 break-all">
+                                    <div class="grid grid-cols-12">
+                                        <p class="col-span-8 text-xl font-medium">{{ charge.price | currency }}</p>
+                                        <button (click)="addToCart(userProfile?.id, charge.serviceChargeId)"
+                                            class="hover:cursor-pointer col-span-4 text-end"><i
+                                                class="fa-solid fa-cart-plus text-lg text-[#06346d]"></i></button>
+                                    </div>
+                                    <p class="break-all truncate">
+                                        {{ charge.serviceChargesDescription }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
+            <ng-template #oddService>
+                <div class="col-span-12 lg:col-span-8 lg:ml-5 lg:mr-2 flex items-center">
+                    <div class="grid lg:grid-cols-12">
+                        <div class="lg:col-span-6 col-span-12 mr-2 my-1"
+                            *ngFor="let charge of serviceCharges[item.serviceId]">
+                            <div class="grid grid-cols-12 bg-sky-50 border border-blue-100 py-3 px-5 rounded-[8px]">
+                                <div class="col-span-3">
+                                    <svg class="w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10"
+                                                stroke="#93c5fd" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                    <p class="font-medium">{{ charge.serviceChargesName }}</p>
+                                </div>
+                                <div class="col-span-9 break-all">
+                                    <div class="grid grid-cols-12">
+                                        <p class="col-span-8 text-xl font-medium">{{ charge.price | currency }}</p>
+                                        <button (click)="addToCart(userProfile?.id, charge.serviceChargeId)"
+                                            class="hover:cursor-pointer col-span-4 text-end"><i
+                                                class="fa-solid fa-cart-plus text-lg text-[#06346d]"></i></button>
+                                    </div>
+                                    <p class="break-all truncate">
+                                        {{ charge.serviceChargesDescription }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6 m-3 bg-[url('/assets/images/bgservice4.png')] bg-cover">
+                    <div class="flex justify-center">
+                        <img class="w-24 h-24 p-3" [src]="imageService[i].imageSrc" [alt]="imageService[i].altText">
+                    </div>
+                    <div>
+                        <h5
+                            class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            {{ item.serviceName }}</h5>
+                    </div>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 description">{{ item.description }}</p>
+                    <a (click)="openServiceDetailForm(item)"
+                        class="cursor-pointer inline-flex items-center text-blue-600 hover:underline">See more
+                        <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778" />
+                        </svg>
+                    </a>
+                </div>
+            </ng-template>
         </div>
     </ng-container>
+
 </div>
 
 <!-- Service new end -->
 
 
 <section class="py-0">
-    <div class="bg-[url('/assets/images/servicesBg.png')] bg-no-repeat bg-cover">
+    <div class="bg-[url('/assets/images/bg.png')] bg-no-repeat bg-cover">
         <div class="hide md:flex md:flex-row items-center">
             <div class="md:w-1/2 px-14 text-center md:text-start md:offset-1">
                 <h2 class="text-xl font-bold leading-loose uppercase">
                     why choose us?
                 </h2>
-                <p class="my-4 md:pe-xl-5 text-3xl">Safeguard Your Brand with Cyber Security
-                    and IT Solutions</p>
-                <p class="text-md my-4">Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua</p>
+                <p class="my-4 md:pe-xl-5 text-3xl">Grow your brand with excellent Consulting Services.</p>
+                <p class="text-md my-4">These solutions allow their customers to capitalize on new technologies to
+                    create innovative products and services for the economy.</p>
 
                 <div class="grid grid-cols-2 grid-row-4 gap-4">
                     <ng-container *ngFor="let item of reviewService">

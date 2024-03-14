@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from './payment-services/payment.service';
 import { Router } from '@angular/router';
-import { UserClinet } from './model/UserClient.model'; 
+import { UserClient } from './model/UserClient.model';
 
 @Component({
   selector: 'app-payments',
@@ -9,28 +9,36 @@ import { UserClinet } from './model/UserClient.model';
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent implements OnInit {
-  clients: UserClinet[] = [];
+  clients: any[] = [];
+  orders: any[] = [];
   selectedClientId: string | null = null;
   selectedClient: any | null = null;
+  selectedOrder: any | null = null;
   searchTerm: string = '';
-  searchResults: any[] = [];
-  filteredClient: any[] = [];
   showNoResultsMessage: boolean = false;
   showSearchResults: boolean = false;
-  
+  error: string | undefined;
+  sortBy: 'name' | 'date' = 'name';
+  currentPage = 1;
+  itemsPerPage = 7;
+
+  totalOrderAmount: number = 0;
+
   constructor(
     private paymentService: PaymentService,
     private router: Router
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.loadClient();
+    this.getOrders();
+
   }
 
   loadClient(): void {
     this.paymentService.getClient().subscribe(
-      (data) => {
-        this.clients = data;
+      (clients) => {
+        this.clients = clients;
       },
       (error) => {
         console.error('Error fetching clients:', error);
@@ -38,86 +46,93 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
+  getOrders() {
+    this.paymentService.getOrders().subscribe(
+      (orders) => {
+        this.orders = orders;
+        console.table(orders);
+      },
+      (error) => {
+        console.error('Error fetching orders:', error);
+      }
+    );
+  }
+
   showPayment(clientId: string) {
- 
     this.selectedClientId = clientId;
     this.selectedClient = this.clients.find(client => client.clientId === clientId);
-
-    console.log(this.selectedClient);
-    console.log(this.selectedClientId);
+    this.selectedOrder = this.orders.find(order => order.clientId === clientId);
   }
 
-  
-
-  search(): void {
-    this.paymentService.searchClientByName(this.searchTerm).subscribe(
-      results => {
-        console.log('Search results:', results);
-        console.log('Search term:', this.searchTerm);
-  
-        // Kiểm tra nếu searchTerm không null hoặc rỗng
-        if (!this.searchTerm || this.searchTerm.trim() === '') {
-          // Thực hiện tìm kiếm tương tự như phía backend
-          const searchTermLower = this.searchTerm.toLowerCase();
-          this.searchResults = results.filter((employee: any) => {
-            const fullName = `${employee.firstName} ${employee.lastName}`.toLowerCase();
-            return fullName.includes(searchTermLower);
-          });
-  
-          console.log('Filtered Employees:', this.searchResults);
-  
-          this.filteredClient = [...this.searchResults];
-        } else {
-          // Nếu searchTerm là null hoặc rỗng, hiển thị tất cả nhân viên
-          this.filteredClient = [...results];
+  searchByName() {
+    if (this.searchTerm.trim() !== '') {
+      this.paymentService.searchClientByName(this.searchTerm).subscribe(
+        (clients) => {
+          this.clients = clients;
+          this.showSearchResults = true;
+          this.showNoResultsMessage = clients.length === 0;
+        },
+        (error) => {
+          console.error('Error searching clients:', error);
+          this.error = 'Error occurred while searching clients.';
         }
+      );
+    } else {
+      this.showSearchResults = false;
+      this.showNoResultsMessage = false;
+      this.loadClient();
+    }
+  }
+
+  sortById() {
+    this.orders.sort((a, b) => a.orderId - b.orderId);
+  }
+
+  sortOrdersByDate() {
+    this.orders.sort((a, b) => {
+      const dateA = new Date(a.orderDate).getTime();
+      const dateB = new Date(b.orderDate).getTime();
+      return dateA - dateB;
+    });
+  }
+
+  handleSort() {
+    if (this.sortBy === 'name') {
+      this.sortById();
+    } else if (this.sortBy === 'date') {
+      this.sortOrdersByDate();
+    }
+  }
+
+  paginate(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.orders.length);
+    return this.orders.slice(startIndex, endIndex);
+  }
+
+  totalPage(): number {
+    return Math.ceil(this.orders.length / this.itemsPerPage);
+  }
+
+  getPagesArray(): number[] {
+    return Array(this.totalPage()).fill(0).map((x, i) => i + 1);
+  }
+
+  changePage(pageNumber: number) {
+    this.currentPage = pageNumber;
+  }
+
   
-        console.log('After copying:', this.filteredClient);
-  
-        // Hiển thị "0 result" nếu không có kết quả
-        this.showNoResultsMessage = this.searchResults.length === 0;
-  
-        // Đặt giá trị cho showSearchResults
-        this.showSearchResults = this.searchResults.length > 0;
-      },
-      error => {
-        console.error('Search error:', error);
-        // Đặt giá trị cho showSearchResults khi có lỗi (nếu cần)
-        this.showSearchResults = false;
-      },
-      () => console.log('Search completed') // Log completion of observable
-    );
+  calculateTotalOrderAmount() {
+    if (this.orders && this.orders.length > 0) {
+      this.totalOrderAmount = this.orders.reduce((total, order) => total + order.orderTotal, 0);
+    } else {
+      this.totalOrderAmount = 0; 
+    }
+    console.table(this.orders);
   }
   
 
-  createPayment() {
-    const paymentIntentDto = { amount: 1000, currency: 'usd' };
-    this.paymentService.createPaymentIntent(paymentIntentDto).subscribe(
-      (response) => {
-        console.log('Payment intent created successfully:', response);
-        // Do something with the response
-      },
-      (error) => {
-        console.error('Error creating payment intent:', error);
-        // Handle error
-      }
-    );
-  }
-
-  confirmPayment() {
-    const confirmPaymentDto = { tokenId: 'your-token-id', clientSecret: 'your-client-secret' };
-    this.paymentService.confirmPayment(confirmPaymentDto).subscribe(
-      (response) => {
-        console.log('Payment confirmed successfully:', response);
-        // Do something with the response
-      },
-      (error) => {
-        console.error('Error confirming payment:', error);
-        // Handle error
-      }
-    );
-  }
-
- 
-
+  
+  
 }

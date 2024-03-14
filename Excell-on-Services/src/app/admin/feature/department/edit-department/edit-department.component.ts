@@ -27,8 +27,9 @@ export class EditDepartmentComponent {
       departmentName: [departmentName, Validators.required],
       departmentDescription: [departmentDescription, Validators.required],
     });
+    console.log()
   }
-
+  
   saveChanges() {
     if (this.departmentForm.valid) {
       const updatedDepartment: UpdateDepartmentDto = this.departmentForm.value;

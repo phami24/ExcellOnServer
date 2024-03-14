@@ -19,7 +19,6 @@ export class CreateDepartmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Additional initialization logic if needed
   }
 
   saveDepartment() {

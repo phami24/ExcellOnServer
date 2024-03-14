@@ -62,8 +62,8 @@ export class ServicesPricingComponent implements OnInit {
       this.getService();
     });
   }
-  addToCart(clientId: number, serviceChargeId: number): void {
-    this.cartService.addCart(clientId, serviceChargeId).subscribe(
+  addToCart(clientId: number, serviceChargesId: number): void {
+    this.cartService.addCart(clientId, serviceChargesId).subscribe(
       () => {
         this.cartService.updateCartTotal(clientId);
         this.toastr.success('Add to cart successfully!', 'Success');
@@ -71,7 +71,7 @@ export class ServicesPricingComponent implements OnInit {
       (error) => {
         this.cartService.updateCartTotal(clientId);
         console.error(error);
-        this.toastr.success('Add to cart successfully!', 'Success');
+        this.toastr.error('Add to cart error!', 'Error');
       }
     );
   }
@@ -104,20 +104,38 @@ export class ServicesPricingComponent implements OnInit {
   }
 
   imageService = [
-    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
-    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
-    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
-    { imageSrc: '../../../assets/images/InBound.gif', altText: 'In-Bound' },
-    { imageSrc: '../../../assets/images/teleSale.gif', altText: 'Out-Bound' },
-    { imageSrc: '../../../assets/images/OutBound.gif', altText: 'Tele Sale' },
+    {
+      imageSrc: '../../../assets/images/special_services02.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services04.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services06.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services03.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services05.svg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/special_services01.svg',
+      altText: 'Services',
+    },
   ];
   reviewService: string[] = [
-    'Solving IT Problems',
+    'Solve economic problems',
     'IT Security Services',
-    'Cloud Services',
-    'Practice IT Management',
-    'Managed IT Service',
-    'Remote IT Assistance',
+    'Expertise and Experience',
+    'Practice Management',
+    'Diverse Range of Services',
+    'Exceptional Customer Service',
   ];
 
   tabs = [

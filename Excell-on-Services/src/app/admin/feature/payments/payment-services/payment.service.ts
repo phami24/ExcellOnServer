@@ -25,6 +25,19 @@ export class PaymentService {
     });
   }
 
+  getOrders(): Observable<any[]> {
+    const headers = this.addTokenToHeader();
+    
+    return this.http
+      .get<any[]>(`${this.apiUrl}/Order`, { headers: headers })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error fetching departments:', error);
+          return throwError('Error fetching departments');
+        })
+      );
+  }
+
   getClient(): Observable<any[]> {
     const headers = this.addTokenToHeader();
     
@@ -38,23 +51,6 @@ export class PaymentService {
       );
   }
 
-  createPaymentIntent(paymentIntentDto: any): Observable<any> {
-    const headers = this.addTokenToHeader();
-
-    return this.http.post<any>(`${this.apiUrl}/payment/create-payment-intent`, paymentIntentDto,{ headers: headers })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  confirmPayment(confirmPaymentDto: any): Observable<any> {
-    const headers = this.addTokenToHeader();
-
-    return this.http.post<any>(`${this.apiUrl}/payment/confirm-payment`, confirmPaymentDto,{ headers: headers })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
 
   searchClientByName(name: string): Observable<any> {
     const headers = this.addTokenToHeader();
@@ -62,20 +58,5 @@ export class PaymentService {
     return this.http.get(url, { headers });
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // Xảy ra lỗi mạng hoặc lỗi client-side
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // Backend trả về một response không thành công
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // Trả về một observable với thông điệp lỗi cho component gọi
-    return throwError('Something bad happened; please try again later.');
-  }
-
-  
 
 }

@@ -17,7 +17,7 @@ export class AddServiceChargeComponent implements OnInit{
     serviceChargesDescription: '',
     serviceChargesName: '',
     price:0,
-    serviceChargesId: 0,
+    serviceChargeId: 0,
     cartId: 0,
   };
 

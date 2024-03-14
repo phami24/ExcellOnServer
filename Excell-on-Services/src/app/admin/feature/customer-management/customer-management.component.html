@@ -45,7 +45,7 @@
                 <!-- DOB Column -->
                 <ng-container matColumnDef="dob">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> DOB </th>
-                    <td mat-cell *matCellDef="let row"> {{row.dob}} </td>
+                    <td mat-cell *matCellDef="let row"> {{ row.dob | date:'yyyy-MM-dd' }}</td>
                 </ng-container>
 
                 <!-- Email Column -->
@@ -111,3 +111,4 @@
         </div>
     </div>
 </div>
+

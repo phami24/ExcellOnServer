@@ -58,6 +58,7 @@ export class ServiceManagementComponent implements OnInit{
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        console.table(res)
       },
       error: console.log,
     });
@@ -84,6 +85,7 @@ export class ServiceManagementComponent implements OnInit{
   createService() {
     const dialogRef = this.dialog.open(AddServiceComponent, {
       width: '700px',
+      height: '400px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -92,17 +94,16 @@ export class ServiceManagementComponent implements OnInit{
     });
   }
 
-  openServiceChargeDialog(id: number):void{
-    const dialogRef = this.dialog.open(ServiceChargeComponent,{
+  openServiceChargeDialog(id: number, serviceName: string): void {
+    const dialogRef = this.dialog.open(ServiceChargeComponent, {
       width: '960px',
-      height:'550px',
-      data: id,
+      height: '550px',
+      data: { serviceId: id, serviceName: serviceName },
     });
-    console.log(id);
-    dialogRef.afterClosed().subscribe((result) => {
-
-    });
+  
+    dialogRef.afterClosed().subscribe((result) => {});
   }
+  
 
   deleteService(id: number): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

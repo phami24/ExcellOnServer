@@ -10,7 +10,11 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ServiceChargeService } from '../../services/service-charge/service-charge.service';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { AddServiceChargeComponent } from './add-service-charge/add-service-charge/add-service-charge.component';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
+import { Service } from 'src/app/interfaces/service';
+import { CommonModule } from '@angular/common';
+import { EditServiceChargeComponent } from './edit-service-charge/edit-service-charge.component';
 
 @Component({
   selector: 'app-service-charge',
@@ -31,6 +38,7 @@ import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-di
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
+    CommonModule,
   ],
 })
 export class ServiceChargeComponent implements OnInit {
@@ -39,7 +47,7 @@ export class ServiceChargeComponent implements OnInit {
     'serviceChargesName',
     'serviceChargesDescription',
     'price',
-    'serviceId',
+    // 'serviceId',
     'actions',
   ];
   dataSource: MatTableDataSource<ServiceCharge>;
@@ -55,23 +63,26 @@ export class ServiceChargeComponent implements OnInit {
     public dialog: MatDialog,
     private toastr: ToastrService,
     private componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(MAT_DIALOG_DATA) public data: number
+    @Inject(MAT_DIALOG_DATA) public data: Service
   ) {
     this.dataSource = new MatTableDataSource<ServiceCharge>();
   }
 
   ngOnInit(): void {
+    console.log(this.data.serviceName);
     this.getServiceList();
   }
   getServiceList() {
-    this.serviceManagementService.getServiceById(this.data).subscribe({
-      next: (res) => {
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      },
-      error: console.log,
-    });
+    this.serviceManagementService
+      .getServiceById(this.data.serviceId)
+      .subscribe({
+        next: (res) => {
+          this.dataSource.data = res;
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        },
+        error: console.log,
+      });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -82,16 +93,16 @@ export class ServiceChargeComponent implements OnInit {
     }
   }
 
-  // openEditForm(service: any): void {
-  //   const dialogRef = this.dialog.open(EditServiceComponent, {
-  //     width: '700px',
-  //     data: service,
-  //   });
+  openEditForm(service: any): void {
+    const dialogRef = this.dialog.open(EditServiceChargeComponent, {
+      width: '700px',
+      data: service,
+    });
 
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     this.getServiceList();
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getServiceList();
+    });
+  }
   openAddServiceComponent(): void {
     this.addServiceContainer.clear();
     const componentFactory =
@@ -100,7 +111,7 @@ export class ServiceChargeComponent implements OnInit {
       );
     const componentRef =
       this.addServiceContainer.createComponent(componentFactory);
-    componentRef.instance.data = this.data;
+    componentRef.instance.data = this.data.serviceId;
   }
 
   deleteService(id: number): void {
@@ -111,7 +122,7 @@ export class ServiceChargeComponent implements OnInit {
         message: 'Are you sure you want to delete this service?',
         yesText: 'Delete',
         noText: 'Cancel',
-        isCritical : true,
+        isCritical: true,
       },
     });
 

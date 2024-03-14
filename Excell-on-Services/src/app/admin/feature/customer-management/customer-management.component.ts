@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-customer-management',
@@ -24,7 +25,9 @@ import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-di
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
+    CommonModule,
   ],
+  providers: [DatePipe]
 })
 export class CustomerManagementComponent implements OnInit {
   displayedColumns: string[] = [
