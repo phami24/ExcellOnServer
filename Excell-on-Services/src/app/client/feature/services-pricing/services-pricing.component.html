@@ -63,7 +63,7 @@
                                 <div class="col-span-9 break-all">
                                     <div class="grid grid-cols-12">
                                         <p class="col-span-8 text-xl font-medium">{{ charge.price | currency }}</p>
-                                        <button (click)="addToCart(userProfile?.id, charge.serviceChargesId)"
+                                        <button (click)="addToCart(userProfile?.id, charge.serviceChargeId)"
                                             class="hover:cursor-pointer col-span-4 text-end"><i
                                                 class="fa-solid fa-cart-plus text-lg text-[#06346d]"></i></button>
                                     </div>
@@ -99,7 +99,7 @@
                                 <div class="col-span-9 break-all">
                                     <div class="grid grid-cols-12">
                                         <p class="col-span-8 text-xl font-medium">{{ charge.price | currency }}</p>
-                                        <button (click)="addToCart(userProfile?.id, charge.serviceChargesId)"
+                                        <button (click)="addToCart(userProfile?.id, charge.serviceChargeId)"
                                             class="hover:cursor-pointer col-span-4 text-end"><i
                                                 class="fa-solid fa-cart-plus text-lg text-[#06346d]"></i></button>
                                     </div>

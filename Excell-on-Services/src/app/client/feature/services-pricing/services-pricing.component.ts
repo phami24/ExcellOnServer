@@ -62,8 +62,8 @@ export class ServicesPricingComponent implements OnInit {
       this.getService();
     });
   }
-  addToCart(clientId: number, serviceChargeId: number): void {
-    this.cartService.addCart(clientId, serviceChargeId).subscribe(
+  addToCart(clientId: number, serviceChargesId: number): void {
+    this.cartService.addCart(clientId, serviceChargesId).subscribe(
       () => {
         this.cartService.updateCartTotal(clientId);
         this.toastr.success('Add to cart successfully!', 'Success');
@@ -71,7 +71,7 @@ export class ServicesPricingComponent implements OnInit {
       (error) => {
         this.cartService.updateCartTotal(clientId);
         console.error(error);
-        this.toastr.success('Add to cart successfully!', 'Success');
+        this.toastr.error('Add to cart error!', 'Error');
       }
     );
   }

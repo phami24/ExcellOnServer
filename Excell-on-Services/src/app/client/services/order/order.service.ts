@@ -22,13 +22,13 @@ export class OrderService {
   addOrder(orderData: any): Observable<any> {
     return this.httpClient.post<any>(
       `${baseUrl}/Order/create-order`,
-      orderData
+      orderData,{ responseType: 'text' as 'json' }
     );
   }
   addOrderDetail(orderDetailData: any): Observable<any> {
     return this.httpClient.post<any>(
       `${baseUrl}/Order/order-detail`,
-      orderDetailData
+      orderDetailData,{ responseType: 'text' as 'json' }
     );
   }
 

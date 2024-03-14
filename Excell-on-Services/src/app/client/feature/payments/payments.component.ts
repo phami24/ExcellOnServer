@@ -28,7 +28,7 @@ export class PaymentsComponent implements OnInit {
     private orderService: OrderService,
     private profileService: ProfileService,
     private toastr: ToastrService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
 
   handler: any = null;
@@ -163,13 +163,10 @@ export class PaymentsComponent implements OnInit {
       orderStatus: 1,
       orderDate: new Date().toISOString(),
     };
-    
+
     this.orderService.addOrder(orderData).subscribe(
       (res) => {
-        if (
-          res &&
-          res.includes('Order successfully created. Order ID:')
-        ) {
+        if (res && res.includes('Order successfully created. Order ID:')) {
           const orderId = parseInt(res.split(':')[1].trim());
           this.addOrderDetails(orderId);
           this.deleteCart();
@@ -186,25 +183,32 @@ export class PaymentsComponent implements OnInit {
       }
     );
   }
-  
+
   addOrderDetails(orderId: number): void {
     const orderDetailRequests: Observable<any>[] = [];
-
+  
     for (const clientId in this.serviceCharges) {
       if (this.serviceCharges.hasOwnProperty(clientId)) {
         const charges = this.serviceCharges[clientId];
         for (const charge of charges) {
+          console.log('Charge object:', charge);
           const orderDetailData = {
             orderId: orderId,
-            serviceChargesId: charge.serviceChargesId,
+            serviceChargesId: charge.serviceChargeId,
           };
+          console.log(
+            'Order Detail - Order ID:',
+            orderDetailData.orderId,
+            ', Service Charge ID:',
+            orderDetailData.serviceChargesId 
+          );
           orderDetailRequests.push(
             this.orderService.addOrderDetail(orderDetailData)
           );
         }
       }
     }
-
+  
     forkJoin(orderDetailRequests).subscribe(
       () => {
         this.toastr.success('Order placed successfully!', 'Success');
@@ -212,9 +216,9 @@ export class PaymentsComponent implements OnInit {
       },
       (error) => {
         console.error('Error adding order details:', error);
-        this.deleteCart();
         this.toastr.error('Error adding order details', 'Error');
       }
     );
-  }
+  }  
+  
 }

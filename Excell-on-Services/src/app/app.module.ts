@@ -46,7 +46,7 @@ import { ConfirmDialogComponent } from './Shared/confirm-dialog/confirm-dialog.c
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-      timeOut: 3000,
+      timeOut: 2000,
       closeButton: true,
       progressBar: true,
     }),

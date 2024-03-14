@@ -22,15 +22,14 @@ export class CartService {
     return this.httpClient.get(url);
   }
 
-  addCart(clientId: number, serviceChargeId: number): Observable<any> {
+  addCart(clientId: number, serviceChargesId: number): Observable<any> {
     const data = {
       clientId: clientId,
-      serviceChargeId: serviceChargeId,
+      serviceChargeId: serviceChargesId,
     };
 
-    return this.httpClient.post<any>(`${baseUrl}/Cart/add-to-cart`, data).pipe(
+    return this.httpClient.post<any>(`${baseUrl}/Cart/add-to-cart`, data, { responseType: 'text' as 'json' }).pipe(
       tap(() => {
-        // Update total items count after adding to cart
         this.updateCartTotal(clientId);
       })
     );
