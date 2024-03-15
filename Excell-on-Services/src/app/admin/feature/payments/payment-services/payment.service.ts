@@ -25,18 +25,25 @@ export class PaymentService {
     });
   }
 
-  getOrders(): Observable<any[]> {
+  getOrderByClientId(clientId: number): Observable<any> {
     const headers = this.addTokenToHeader();
-    
-    return this.http
-      .get<any[]>(`${this.apiUrl}/Order`, { headers: headers })
+
+    return this.http.get<any>(`${this.apiUrl}/Order/getByClientId/${clientId}`,{ headers: headers })
       .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.error('Error fetching departments:', error);
-          return throwError('Error fetching departments');
-        })
+        catchError(this.handleError)
       );
   }
+
+
+  getServiceChargesByServiceId(): Observable<any> {
+    const headers = this.addTokenToHeader();
+
+    return this.http.get<any>(`${this.apiUrl}/ServiceCharges`, {headers: headers})
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   getClient(): Observable<any[]> {
     const headers = this.addTokenToHeader();
@@ -57,6 +64,10 @@ export class PaymentService {
     const url = `${this.apiUrl}/Client/search?name=${name}`;
     return this.http.get(url, { headers });
   }
-
+  
+  private handleError(error: any) {
+    console.error('An error occurred:', error);
+    return throwError('Something went wrong; please try again later.');
+  }
 
 }

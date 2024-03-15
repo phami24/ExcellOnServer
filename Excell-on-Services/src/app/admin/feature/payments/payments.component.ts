@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from './payment-services/payment.service';
 import { Router } from '@angular/router';
-import { UserClient } from './model/UserClient.model';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import { Order } from './model/order';
 
 @Component({
   selector: 'app-payments',
@@ -11,14 +13,16 @@ import { UserClient } from './model/UserClient.model';
 export class PaymentsComponent implements OnInit {
   clients: any[] = [];
   orders: any[] = [];
-  selectedClientId: string | null = null;
+  serviceCharges: any[] = [];
+
+  selectedClientId: number | null = null;
   selectedClient: any | null = null;
   selectedOrder: any | null = null;
   searchTerm: string = '';
   showNoResultsMessage: boolean = false;
   showSearchResults: boolean = false;
   error: string | undefined;
-  sortBy: 'name' | 'date' = 'name';
+  sortBy: 'name' | 'date' | 'status' | 'total' = 'name';
   currentPage = 1;
   itemsPerPage = 7;
 
@@ -31,8 +35,7 @@ export class PaymentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClient();
-    this.getOrders();
-
+    this.calculateTotalOrderAmount();
   }
 
   loadClient(): void {
@@ -46,22 +49,61 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
-  getOrders() {
-    this.paymentService.getOrders().subscribe(
-      (orders) => {
-        this.orders = orders;
-        console.table(orders);
+  
+  getServiceChargesByServiceId(): void {
+    this.paymentService.getServiceChargesByServiceId().subscribe(
+      (serviceCharges) => {
+        this.serviceCharges = serviceCharges;
+        console.log(serviceCharges);
       },
       (error) => {
-        console.error('Error fetching orders:', error);
+        console.error('Error fetching service charges by service ID:', error);
       }
     );
   }
 
-  showPayment(clientId: string) {
+  addServiceChargesNameToOrders(): void {
+    this.orders.forEach(order => {
+      this.paymentService.getServiceChargesByServiceId().subscribe(
+        (serviceCharges) => {
+          order.serviceChargesName = serviceCharges?.serviceChargesName; 
+          console.error(order.serviceChargesName);
+        },
+        (error) => {
+          console.error('Error fetching service charges:', error);
+        }
+      );
+    });
+  }
+  
+  getOrderByClientId(clientId: number) {
+    this.paymentService.getOrderByClientId(clientId).pipe(
+      mergeMap((orders: Order[]) => {
+        const observables = orders.map(order => this.paymentService.getServiceChargesByServiceId().pipe(
+          map(serviceCharges => ({ ...order, serviceChargesName: serviceCharges[0]?.serviceName })) 
+        ));
+        return forkJoin(observables);
+      })
+    ).subscribe(
+      ordersWithServiceChargesName => {
+        this.orders = ordersWithServiceChargesName;
+        this.calculateTotalOrderAmount();
+      },
+      error => {
+        console.error('Error fetching orders:', error);
+      }
+    );
+  }
+  
+  
+  showPayment(clientId: number) {
     this.selectedClientId = clientId;
     this.selectedClient = this.clients.find(client => client.clientId === clientId);
     this.selectedOrder = this.orders.find(order => order.clientId === clientId);
+    this.getOrderByClientId(clientId);
+   
+      this.getServiceChargesByServiceId();
+    
   }
 
   searchByName() {
@@ -84,26 +126,6 @@ export class PaymentsComponent implements OnInit {
     }
   }
 
-  sortById() {
-    this.orders.sort((a, b) => a.orderId - b.orderId);
-  }
-
-  sortOrdersByDate() {
-    this.orders.sort((a, b) => {
-      const dateA = new Date(a.orderDate).getTime();
-      const dateB = new Date(b.orderDate).getTime();
-      return dateA - dateB;
-    });
-  }
-
-  handleSort() {
-    if (this.sortBy === 'name') {
-      this.sortById();
-    } else if (this.sortBy === 'date') {
-      this.sortOrdersByDate();
-    }
-  }
-
   paginate(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.orders.length);
@@ -122,17 +144,34 @@ export class PaymentsComponent implements OnInit {
     this.currentPage = pageNumber;
   }
 
-  
   calculateTotalOrderAmount() {
     if (this.orders && this.orders.length > 0) {
       this.totalOrderAmount = this.orders.reduce((total, order) => total + order.orderTotal, 0);
     } else {
       this.totalOrderAmount = 0; 
     }
-    console.table(this.orders);
   }
   
+  getStatusText(status: number): string {
+    return status === 1 ? 'Success' : 'Processing';
+  }
 
-  
-  
+  sortOrders(): void {
+    switch (this.sortBy) {
+      case 'name':
+        this.orders.sort((a, b) => (a.clientName > b.clientName ? 1 : -1));
+        break;
+      case 'date':
+        this.orders.sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());
+        break;
+      case 'status':
+        this.orders.sort((a, b) => a.orderStatus - b.orderStatus);
+        break;
+      case 'total':
+        this.orders.sort((a, b) => a.orderTotal - b.orderTotal);
+        break;
+      default:
+        break;
+    }
+  }
 }
