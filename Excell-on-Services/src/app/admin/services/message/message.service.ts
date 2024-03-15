@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Group } from 'src/app/interfaces/group';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Message } from 'src/app/interfaces/message';
@@ -10,10 +10,10 @@ import { Message } from 'src/app/interfaces/message';
 })
 export class MessageService {
   private chatConnection?: signalR.HubConnection;
-  public message?: Message[];
   constructor(private http: HttpClient) {
-
   }
+  private messageSubject: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
+  public message$ = this.messageSubject.asObservable();
   public createChatConnection(email: string) {
     this.chatConnection = new signalR.HubConnectionBuilder()
       .withUrl("https://localhost:7260/chat", {
@@ -23,12 +23,20 @@ export class MessageService {
       .build();
     this.chatConnection.start().catch(error => {
       console.log("Error : ");
-      console.log(error);
+      console.log(error); 
 
-    })
+    });
+    this.chatConnection.on('ReciveMessage', (message: Message) => {
+      var curruntMessage = this.messageSubject.getValue();
+      var updateMessage = [...curruntMessage,message]
+      this.messageSubject.next(updateMessage);
+    });
   }
 
-
+  setMessage(message:Message[]){
+    this.messageSubject.next(message)
+    console.log(this.messageSubject.getValue());
+  }
   public getAllGroupsByEmployeeId(id: number): Observable<Group[]> {
     return this.http.get<Group[]>(`https://localhost:7260/api/Chat/GetAllGroupByEmployeeId?employeeId=${id}`);
   }
@@ -56,19 +64,7 @@ export class MessageService {
 
   async sendMessage(message: Message): Promise<any> {
     return this.chatConnection?.invoke('RecivePrivateMessage', message)
-      .then(() => message)
-      .catch(error => {
-        console.log(error);
-        throw error;
-      });
-  }
-
-  private messageSource = new BehaviorSubject<Message[]>([]);
-  currentMessages = this.messageSource.asObservable();
-
-  updateMessages(messages: Message[]) {
-    this.messageSource.next(messages);
-    console.log(this.currentMessages);
+      .catch(err => console.log(err));
   }
 
 }
