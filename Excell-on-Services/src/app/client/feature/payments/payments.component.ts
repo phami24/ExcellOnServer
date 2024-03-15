@@ -123,34 +123,6 @@ export class PaymentsComponent implements OnInit {
     });
   }
 
-  async deleteCart(): Promise<void> {
-    if (this.token !== null) {
-      this.profileService.GetProfileByJwt(this.token).subscribe(
-        (response) => {
-          this.userProfile = response.userProfile;
-          if (this.userProfile && this.userProfile.id) {
-            this.userId = this.userProfile.id;
-            this.userId !== undefined
-              ? this.cartService
-                  .deleteCartByClientId(this.userId)
-                  .subscribe(() => {})
-              : console.error(
-                  'User ID is undefined. Handle this case appropriately.'
-                );
-          } else {
-            console.error(
-              'User profile or user ID is missing. Handle this case appropriately.'
-            );
-          }
-        },
-        (error) => {
-          console.error('Error:', error);
-        }
-      );
-    } else {
-      console.error('Token is null. Handle this case appropriately.');
-    }
-  }
   addOrder(): void {
     if (!this.userId) {
       console.error('User ID is undefined. Handle this case appropriately.');
@@ -169,7 +141,6 @@ export class PaymentsComponent implements OnInit {
         if (res && res.includes('Order successfully created. Order ID:')) {
           const orderId = parseInt(res.split(':')[1].trim());
           this.addOrderDetails(orderId);
-          this.deleteCart();
           this.toastr.success('Order placed successfully!', 'Success');
         } else {
           console.error('Unexpected response from server:', res);
@@ -179,36 +150,28 @@ export class PaymentsComponent implements OnInit {
       (error) => {
         console.error('Error creating order:', error);
         this.toastr.error('Error creating order', 'Error');
-        this.deleteCart();
       }
     );
   }
 
   addOrderDetails(orderId: number): void {
     const orderDetailRequests: Observable<any>[] = [];
-  
+
     for (const clientId in this.serviceCharges) {
       if (this.serviceCharges.hasOwnProperty(clientId)) {
         const charges = this.serviceCharges[clientId];
         for (const charge of charges) {
-          console.log('Charge object:', charge);
           const orderDetailData = {
             orderId: orderId,
             serviceChargesId: charge.serviceChargeId,
           };
-          console.log(
-            'Order Detail - Order ID:',
-            orderDetailData.orderId,
-            ', Service Charge ID:',
-            orderDetailData.serviceChargesId 
-          );
           orderDetailRequests.push(
             this.orderService.addOrderDetail(orderDetailData)
           );
         }
       }
     }
-  
+
     forkJoin(orderDetailRequests).subscribe(
       () => {
         this.toastr.success('Order placed successfully!', 'Success');
@@ -219,6 +182,38 @@ export class PaymentsComponent implements OnInit {
         this.toastr.error('Error adding order details', 'Error');
       }
     );
-  }  
-  
+  }
+
+  async deleteCart(): Promise<void> {
+    if (this.token !== null) {
+      this.profileService.GetProfileByJwt(this.token).subscribe(
+        (response) => {
+          this.userProfile = response.userProfile;
+          if (this.userProfile && this.userProfile.id) {
+            this.userId = this.userProfile.id;
+            this.userId !== undefined
+              ? this.cartService
+                  .deleteCartByClientId(this.userId)
+                  .subscribe(() => {
+                    this.cartService.updateCartDetailTotal(0);
+                    this.serviceCharges = {};
+                    this.totalPrice = 0;
+                  })
+              : console.error(
+                  'User ID is undefined. Handle this case appropriately.'
+                );
+          } else {
+            console.error(
+              'User profile or user ID is missing. Handle this case appropriately.'
+            );
+          }
+        },
+        (error) => {
+          console.error('Error:', error);
+        }
+      );
+    } else {
+      console.error('Token is null. Handle this case appropriately.');
+    }
+  }
 }
