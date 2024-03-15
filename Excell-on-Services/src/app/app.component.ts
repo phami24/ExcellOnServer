@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, Event as RouterEvent } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Excell-on';
-  constructor(private activatedRoute: ActivatedRoute,private router: Router) {}
+  
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+    // Subscribe to router events
+    this.router.events
+      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+  }
 
   isAdminPage(): boolean {
     return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'admin';
