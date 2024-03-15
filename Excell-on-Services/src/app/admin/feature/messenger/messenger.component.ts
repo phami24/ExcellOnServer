@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from '../../services/message/message.service';
 import { Group } from 'src/app/interfaces/group';
 import { Message } from 'src/app/interfaces/message';
+
 @Component({
   selector: 'app-messenger',
   templateUrl: './messenger.component.html',
@@ -12,9 +13,9 @@ export class MessengerComponent implements OnInit {
   public groups: Group[] = [];
   public selectedGroup?: Group;
   public employee?: any;
-  public message?: Message[];
+  public message: Message[] = [];
   public messageContent: string = '';
-  constructor(private messageService: MessageService) { }
+  constructor(public messageService: MessageService) { }
   ngOnInit(): void {
     const email = localStorage.getItem('loginEmail');
     if (email != null) {
@@ -22,7 +23,10 @@ export class MessengerComponent implements OnInit {
       this.messageService.createChatConnection(email.toString());
     }
     this.getEmployee();
-    this.messageService.currentMessages.subscribe(messages => this.message = messages);
+    this.messageService.message$.subscribe((message) => {
+      // Xử lý tin nhắn mới ở đây và cập nhật UI nếu cần
+      this.message = message
+    });
   }
 
   getAllGroupsByEmployeeId(id: number): void {
@@ -88,6 +92,7 @@ export class MessengerComponent implements OnInit {
       (response: Message[]) => {
         this.message = [];
         this.message = response;
+        this.messageService.setMessage(this.message);
         console.log(this.message);
       },
       error => {
@@ -106,11 +111,8 @@ export class MessengerComponent implements OnInit {
       senderUserName: this.employee.email,
       reciveUserName: this.selectedGroup.customerEmail
     };
-
-    this.messageService.sendMessage(message).then((response ) => {
-      this.message?.push(response);
-      if(this.message)
-      this.messageService.updateMessages(this.message);
+    
+    this.messageService.sendMessage(message).then(( ) => {
       console.log(this.message);
       this.messageContent = '';
     }).catch(error => {

@@ -13,7 +13,7 @@ export class ChatBoxComponent implements OnInit {
   public group?: Group;
   public message?: Message[];
   public messageContent: string = '';
-  constructor(private messageService: MessageService) { }
+  constructor(public messageService: MessageService) { }
   ngOnInit(): void {
     const email = localStorage.getItem('userEmail');
     if (email != null) {
@@ -24,7 +24,7 @@ export class ChatBoxComponent implements OnInit {
         console.log("Employee : " + this.group);
       }
     }
-    this.messageService.currentMessages.subscribe(messages => this.message = messages);
+    this.messageService.message$.subscribe((message) => this.message = message);
   }
   closePopup() {
     const popup = window.document.getElementById('myPopup');
@@ -78,7 +78,7 @@ export class ChatBoxComponent implements OnInit {
       (response: Message[]) => {
         this.message = [];
         this.message = response;
-        console.log(this.message);
+        this.messageService.setMessage(this.message);
       },
       error => {
         console.error('Error fetching messages:', error);
@@ -91,23 +91,16 @@ export class ChatBoxComponent implements OnInit {
       return;
     }
     if (this.group != null) {
-      console.log(this.group.customerEmail + " " + this.group.employeeEmail);
-      console.log(messageContent);
       const message: Message = {
         groupName: this.group.groupName,
         content: messageContent,
         senderUserName: this.group.customerEmail,
         reciveUserName: this.group.employeeEmail
       };
-
-      this.messageService.sendMessage(message).then((response) => {
-        this.message?.push(response);
-        if(this.message)
-        this.messageService.updateMessages(this.message);
+      this.messageService.sendMessage(message).then(() => {
         this.messageContent = '';
       }).catch(error => {
         console.error('Error sending message:', error);
-        // Handle error as needed
       });
     }
   }

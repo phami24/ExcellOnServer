@@ -59,14 +59,12 @@
               </div>
             </div>
             <div #scrollContainer  class="chat-body flex-1  p-4 overflow-y-scroll">
-              <div *ngFor="let msg of message" class="message">
-                <!-- Tin nhắn bên phải -->
+              <div *ngFor="let msg of message" class="message">        
                 <div *ngIf="msg.senderUserName=== employee.email" class="message-right">
                   <div class="message-content">
                     {{msg.content}}
                   </div>
                 </div>
-                <!-- Tin nhắn bên trái -->
                 <div *ngIf="msg.senderUserName != employee.email" class="message-left">
                   <div class="message-content">
                     {{msg.content}}
