@@ -4,127 +4,143 @@ import { CreateEmployeeComponent } from './create-employee/create-employee.compo
 import { MatDialog } from '@angular/material/dialog';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { ToastrService } from 'ngx-toastr';
-import { NotificationService  } from '../../shared/notification/notification.service';
+import { NotificationService } from '../../shared/notification/notification.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { Employee } from 'src/app/interfaces/employee';
+import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
+import { Customer } from 'src/app/interfaces/customer';
+import { CustomerService } from '../../services/customer/customer.service';
+import { DepartmentService } from '../department/services/department.service';
+import { Department } from 'src/app/interfaces/department';
 
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 
 
-@Component({  
+
+
+@Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css'],
+  standalone: true,
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatIconModule,
+    CommonModule,
+  ],
+  providers: [DatePipe]
 })
+
+
 export class EmployeeComponent implements OnInit {
-  employees: any[] = [];
-  dropdownShowStates: { show: boolean }[] = [];
-  isDropdownVisible: boolean[] = [];
-  searchTerm: string = '';
-  searchResults: any[] = [];
-  filteredEmployees: any[] = [];
-  isModalVisible = false;
-  showForm = false;
-  selectedEmployee: any;
-  isCreating: boolean = true;
-  sortedField: string = '';
-  sortOrder: 'asc' | 'desc' = 'asc';
-  showNoResultsMessage: boolean = false;
-  showSearchResults: boolean = false;
-  dataSource = new MatTableDataSource<any>(this.filteredEmployees);
+  displayedColumns: string[] = [
+    'id',
+    'avatar',
+    'fullName',
+    'dob',
+    'email',
+    'phone',
+    'department',
+    'actions',
+  ];
+  dataSource: MatTableDataSource<Employee>;
+  departments: Department[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  pageSize: number = 5; // Đặt kích thước trang mong muốn của bạn
-  currentPage: number = 1;
-  pagedEmployees: any[] = [];
-
-  @Input()
-  get color(): string {
-    return this._color;
-  }
-  set color(color: string) {
-    this._color = color !== 'light' && color !== 'dark' ? 'light' : color;
-  }
-  private _color = 'light';
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private employeeService: EmployeeService,
     public dialog: MatDialog,
     private toastr: ToastrService,
-    private notificationService: NotificationService,
+    private departmentService: DepartmentService,
+  ) {
+    this.dataSource = new MatTableDataSource<Employee>();
+  }
 
-  ) { }
   ngOnInit(): void {
-    this.showForm = false;
-    this.employeeService.getEmployees().subscribe((data) => {
-      this.employees = data;
-      this.dropdownShowStates = this.employees.map((_, index) => ({ index, show: false }));
-      this.filteredEmployees = this.employees;
-    
-      this.dataSource = new MatTableDataSource<any>(this.filteredEmployees);
-    
-      // Thiết lập paginator cho dataSource
-      this.dataSource.paginator = this.paginator;
+    this.getEmployeeList();
+    this.getDepartments();
+  }
+  getEmployeeList() {
+    this.employeeService.getEmployees().subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      },
+      error: console.log,
+    });
+  }
+
+  getDepartmentName(departmentId: number): string {
+    // Tìm tên phòng ban tương ứng với departmentId
+    const department = this.departments.find(dep => dep.id === departmentId);
+    return department ? department.departmentName : '';
+  }
+  
+  getDepartments(): void {
+    this.departmentService.getDepartments().subscribe({
+      next: (departments: Department[]) => {
+        this.departments = departments;
+      },
+      error: (error) => {
+        console.error('Error fetching departments:', error);
+      }
+    });
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  openEditForm(customer: any): void {
+    const dialogRef = this.dialog.open(EditEmployeeComponent, {
+      width: '700px',
+      data: customer,
     });
 
-    
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getEmployeeList();
+    });
   }
-  //table-dropdown
 
-  dropdownPopoverShow = false;
-
-  @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef!: ElementRef;
-  @ViewChild('popoverDropdownRef', { static: false })
-  popoverDropdownRef!: ElementRef;
-
-  onPageChange(event: any): void {
-    this.pageSize = this.paginator.pageSize;
-  
-    const startIndex = this.paginator.pageIndex * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.pagedEmployees = this.filteredEmployees.slice(startIndex, endIndex);
-  }
-  
-
-  search(): void {
-    this.employeeService.searchEmployeesByName(this.searchTerm).subscribe(
-      results => {
-        console.log('Search results:', results);
-        console.log('Search term:', this.searchTerm);
-  
-        // Kiểm tra nếu searchTerm không null hoặc rỗng
-        if (!this.searchTerm || this.searchTerm.trim() === '') {
-          // Thực hiện tìm kiếm tương tự như phía backend
-          const searchTermLower = this.searchTerm.toLowerCase();
-          this.searchResults = results.filter((employee: any) => {
-            const fullName = `${employee.firstName} ${employee.lastName}`.toLowerCase();
-            return fullName.includes(searchTermLower);
-          });
-  
-          console.log('Filtered Employees:', this.searchResults);
-  
-          this.filteredEmployees = [...this.searchResults];
-        } else {
-          // Nếu searchTerm là null hoặc rỗng, hiển thị tất cả nhân viên
-          this.filteredEmployees = [...results];
-        }
-  
-        console.log('After copying:', this.filteredEmployees);
-  
-        // Hiển thị "0 result" nếu không có kết quả
-        this.showNoResultsMessage = this.searchResults.length === 0;
-  
-        // Đặt giá trị cho showSearchResults
-        this.showSearchResults = this.searchResults.length > 0;
+  deleteCustomer(id: number): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirmation',
+        message: 'Are you sure you want to delete this customer?',
+        yesText: 'Delete',
+        noText: 'Cancel',
+        isCritical: true,
+        icon: '<i class="fa-solid fa-circle-exclamation text-[48px]"></i>',
       },
-      error => {
-        console.error('Search error:', error);
-        // Đặt giá trị cho showSearchResults khi có lỗi (nếu cần)
-        this.showSearchResults = false;
-      },
-      () => console.log('Search completed') // Log completion of observable
-    );
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.employeeService.deleteEmployee(id).subscribe(() => {
+          this.getEmployeeList();
+          this.toastr.success('Delete successful!', 'Success');
+        });
+      }
+    });
   }
-  
+
   createEmployee() {
     const dialogRef = this.dialog.open(CreateEmployeeComponent, {
       width: '550px',
@@ -132,78 +148,7 @@ export class EmployeeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
-      this.loadEmployees();
-    });
-  }
-
-
-  openEditForm(employee: any): void {
-    const dialogRef = this.dialog.open(EditEmployeeComponent, {
-      width: '550px',
-      data: employee
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      this.loadEmployees();
-    });
-  }
-
-  deleteEmployee(employee: any): void {
-    if (confirm('Are you sure you want to delete this employee?')) {
-      console.log('Confirmed to delete');
-      // Gọi service hoặc API để xóa nhân viên
-      this.employeeService.deleteEmployee(employee.id).subscribe(
-        () => {
-          console.log('Delete successful!');
-          // Tiếp tục với các bước sau khi xóa
-          this.toastr.success('Delete successful!', 'Success');
-          this.loadEmployees();
-          this.notificationService.notifyDeleteEmployee(employee.firstName);
-        },
-        (error) => {
-          console.error('Delete failed:', error);
-          // Xử lý lỗi nếu cần thiết
-          this.toastr.error('Delete failed!', 'Error');
-        }
-      );
-    } else {
-       this.toastr.warning('Delete cancel!', 'Warning');
-      // Xử lý khi hủy bỏ xóa (nếu cần)
-    }
-  }
-  
-  
-
-  private loadEmployees(): void {
-    this.employeeService.getEmployees().subscribe((data) => {
-      this.employees = data;
-      this.filteredEmployees = this.searchTerm ? this.searchResults : this.employees;
-    });
-  }
-
-
-
-  sortData(field: string): void {
-    if (field === this.sortedField) {
-      // Đảo ngược hướng sắp xếp nếu trường đã được chọn
-      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
-    } else {
-      // Sắp xếp theo trường mới và đặt mặc định là sắp xếp tăng dần
-      this.sortedField = field;
-      this.sortOrder = 'asc';
-    }
-
-    // Thực hiện sắp xếp dữ liệu
-    this.filteredEmployees.sort((a, b) => {
-      const aValue = a[field];
-      const bValue = b[field];
-
-      if (this.sortOrder === 'asc') {
-        return aValue.localeCompare(bValue);
-      } else {
-        return bValue.localeCompare(aValue);
-      }
+      this.getEmployeeList();
     });
   }
 
