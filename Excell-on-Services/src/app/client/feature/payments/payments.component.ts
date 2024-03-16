@@ -5,11 +5,9 @@ import { ServiceCharge } from 'src/app/interfaces/serviceCharge';
 import { ProfileService } from '../../services/profile/profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { OrderService } from '../../services/order/order.service';
-import { OrderDetail } from 'src/app/interfaces/orderDetail';
 import { Observable, forkJoin } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Order } from 'src/app/interfaces/order';
 
 @Component({
   selector: 'app-payments',

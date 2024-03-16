@@ -15,4 +15,8 @@ export class PaymentHistoryService {
     const url = `${baseUrl}/Order/getByClientId/${clientId}`;
     return this.httpClient.get(url);
   }
+
+  getServiceDetails(serviceChargeIds: number[]): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${baseUrl}/ServiceCharges`, { params: { serviceChargeIds: serviceChargeIds.join(',') }});
+  }
 }
