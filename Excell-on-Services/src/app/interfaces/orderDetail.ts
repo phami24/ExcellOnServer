@@ -1,5 +1,6 @@
 export interface OrderDetail {
-    orderId: number;
-    serviceChargesId: number;
-  }
-  
+  orderId: number;
+  serviceChargeId: number;
+  serviceChargesName?: string;
+  price?: number;
+}

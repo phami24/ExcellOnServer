@@ -10,16 +10,6 @@ const baseUrl = environment.apiUrl;
 export class ProfileService {
   constructor(private httpClient: HttpClient) {}
 
-  // GetProfileByJwt(newService: any): Observable<any> {
-  //   const token = localStorage.getItem('tokenAdmin');
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   });
-
-  //   return this.httpClient.post<any>(`${baseUrl}/Auth/GetEmployeeProfileByJwt`, newService, { headers });
-  // }
-
   GetProfileByJwt(token: string): Observable<any> {
     const headers = new HttpHeaders({
       'accept': '*'

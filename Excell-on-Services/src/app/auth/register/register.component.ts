@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   registrationForm: FormGroup;
-
+  showPassword: boolean = false;
   constructor(
     private fb: FormBuilder,
     private clientService: ClientService,
@@ -25,8 +25,8 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.registrationForm = this.fb.group({
-      firstName: ['', [Validators.required, this.nameValidator]],
-      lastName: ['', [Validators.required, this.nameValidator]],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, this.emailValidator]],
       password: [
         '',
@@ -42,7 +42,7 @@ export class RegisterComponent {
 
   // Custom validator for first name and last name
   nameValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const namePattern = /^[a-zA-Z ]*$/;
+    const namePattern = /^[a-zA-Z\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]*$/;
     if (!namePattern.test(control.value)) {
       return { invalidName: true };
     }
@@ -77,16 +77,16 @@ export class RegisterComponent {
     return null;
   }
 
-  // Custom validator for date of birth (DOB)
-  dateOfBirthValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    // Customize the DOB validation logic as needed
-    // You might want to use a library like 'moment' for more sophisticated date validation
-    const dobPattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dobPattern.test(control.value)) {
-      return { invalidDOB: true };
+  dateOfBirthValidator(control: any): { [key: string]: boolean } | null {
+    const birthDate = new Date(control.value);
+    const currentDate = new Date();
+    const ageInMilliseconds = currentDate.getTime() - birthDate.getTime();
+    const ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
+
+    if (ageInYears < 18) {
+      return { 'underage': true };
     }
+
     return null;
   }
 
@@ -99,5 +99,8 @@ export class RegisterComponent {
 
       this.router.navigate(['/auth/login']);
     }
+  }
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 }
