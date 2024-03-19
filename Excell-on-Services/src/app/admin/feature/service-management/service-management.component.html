@@ -1,6 +1,5 @@
 <div class="md:w-[calc(100%-256px)] md:ml-64 bg-white min-h-screen transition-all p-8">
-    <div class="bg-gray-100 p-6 md:p-10 rounded-xl">
-
+    <div class="rounded-xl">
         <div class="grid grid-cols-12">
             <div class="col-span-6">
                 <div class="relative ml-3 mt-3 mb-6">
@@ -38,7 +37,7 @@
 
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
                     <td mat-cell *matCellDef="let row; let index = index"> {{index + 1}}</td>
                 </ng-container>
 

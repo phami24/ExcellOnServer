@@ -56,9 +56,9 @@ export class ClientEffects {
     this.actions.pipe(
       ofType(fromClient.EClientActions.REGISTER),
       switchMap((action: fromClient.Register) => {
-        const { firstName, lastName,phone, dob, email, password } = action.payload;
+        const { firstName, lastName, phone, dob, email, password } = action.payload;
         return this.clientService
-          .register({ firstName, lastName,phone, dob, email, password })
+          .register({ firstName, lastName, phone, dob, email, password })
           .pipe(
             map((response) => {
               if (response.result) {
@@ -67,8 +67,6 @@ export class ClientEffects {
 
                 // Trigger an alert for successful registration
                 this.toastr.success('Registration successful!', 'Success');
-
-                // Navigate to a component that displays the alert
 
                 return new fromClient.RegisterSuccess({
                   token: response.token,
@@ -79,10 +77,13 @@ export class ClientEffects {
                 return new fromClient.RegisterFail();
               }
             }),
-            catchError(() => {
-              // Trigger an alert for unsuccessful registration due to an error
-              // alert('Registration Failed due to an error!');
-              this.toastr.error('Registration failed. Please check your credentials.', 'Error');
+            catchError((error) => {
+              // Extract error message from HttpErrorResponse
+              const errorMessage = error.error;
+              
+              // Display error message using Toastr
+              this.toastr.error(errorMessage, 'Error');
+
               return of(new fromClient.RegisterFail());
             })
           );

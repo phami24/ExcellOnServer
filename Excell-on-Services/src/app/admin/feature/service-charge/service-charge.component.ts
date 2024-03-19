@@ -25,6 +25,7 @@ import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-di
 import { Service } from 'src/app/interfaces/service';
 import { CommonModule } from '@angular/common';
 import { EditServiceChargeComponent } from './edit-service-charge/edit-service-charge.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-service-charge',
@@ -115,19 +116,17 @@ export class ServiceChargeComponent implements OnInit {
   }
 
   deleteService(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Confirmation',
-        message: 'Are you sure you want to delete this service?',
-        yesText: 'Delete',
-        noText: 'Cancel',
-        isCritical: true,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    Swal.fire({
+      width: 350,
+      title: 'Delete',
+      text: 'Are you sure you want to delete this service?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#FFC374',
+      confirmButtonText: 'Delete!',
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.serviceManagementService.deleteService(id).subscribe(() => {
           this.getServiceList();
           this.toastr.success('Delete successful!', 'Success');

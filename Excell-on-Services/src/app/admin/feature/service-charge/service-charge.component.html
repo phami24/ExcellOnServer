@@ -1,4 +1,4 @@
-<div class="bg-gray-100 p-4 rounded-xl">
+<div class="p-2 rounded-xl">
     <div class="grid justify-items-end">
         <button mat-button (click)="onCancel()"
             class="rounded-md hover:bg-red-300 p-2">
@@ -24,7 +24,7 @@
 
             <!-- ID Column -->
             <ng-container matColumnDef="serviceChargesId">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Index </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
                 <td mat-cell *matCellDef="let row; let index = index"> {{index + 1}}</td>
             </ng-container>
 
@@ -67,7 +67,7 @@
                             </g>
                         </svg>
                     </button>
-                    <button (click)="deleteService(row.serviceChargesId)"
+                    <button (click)="deleteService(row.serviceChargeId)"
                         class="text-blueGray-500 pb-10 px-3 transition">
                         <svg fill="#EB4747" width="20px" height="20px" viewBox="0 0 32 32" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

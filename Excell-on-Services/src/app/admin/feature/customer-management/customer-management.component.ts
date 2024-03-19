@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 import { CommonModule, DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-customer-management',
@@ -27,7 +28,7 @@ import { CommonModule, DatePipe } from '@angular/common';
     MatIconModule,
     CommonModule,
   ],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class CustomerManagementComponent implements OnInit {
   displayedColumns: string[] = [
@@ -86,20 +87,17 @@ export class CustomerManagementComponent implements OnInit {
   }
 
   deleteCustomer(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Confirmation',
-        message: 'Are you sure you want to delete this customer?',
-        yesText: 'Delete',
-        noText: 'Cancel',
-        isCritical : true,
-        icon: '<i class="fa-solid fa-circle-exclamation text-[48px]"></i>',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    Swal.fire({
+      width: 350,
+      title: 'Delete',
+      text: 'Are you sure you want to delete this customer?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#FFC374',
+      confirmButtonText: 'Delete!',
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.customerService.deleteCustomer(id).subscribe(() => {
           this.getCustomerList();
           this.toastr.success('Delete successful!', 'Success');

@@ -77,16 +77,16 @@ export class RegisterComponent {
     return null;
   }
 
-  dateOfBirthValidator(control: any): { [key: string]: boolean } | null {
+  dateOfBirthValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const birthDate = new Date(control.value);
     const currentDate = new Date();
     const ageInMilliseconds = currentDate.getTime() - birthDate.getTime();
     const ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
-
+  
     if (ageInYears < 18) {
-      return { 'underage': true };
+      return { 'invalidDOB': true };
     }
-
+  
     return null;
   }
 

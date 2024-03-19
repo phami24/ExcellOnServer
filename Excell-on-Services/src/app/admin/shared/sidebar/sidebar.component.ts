@@ -7,6 +7,7 @@ import * as fromRoot from '../../../State/index';
 import * as fromAdmin from '../../../State/admin';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sidebar',
@@ -33,34 +34,21 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-  // logout() {
-  //   const confirmLogout = confirm('Are you sure you want to log out?');
-
-  //   if (confirmLogout) {
-  //     this.toastr.success('Logout Admin Successfully!', 'Success');
-  //     this.store.dispatch(new fromAdmin.LogoutAdmin());
-  //     this.router.navigate(['/auth/adminLogin']);
-  //   }
-  // }
-
   logout() {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Confirmation',
-        message: 'Are you sure you want to log out?',
-        yesText: 'Yes',
-        noText: 'Cancel',
-        isCritical: false,
-        icon: '<i class="fa-solid fa-right-from-bracket text-[48px]"></i>',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    Swal.fire({
+      width: 350,
+      title: 'Logout',
+      text: 'Are you sure you want to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#5D9C59',
+      cancelButtonColor: '#FFC374',
+      confirmButtonText: 'Yesss!'
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.toastr.success('Logout Admin Successfully!', 'Success');
-        this.store.dispatch(new fromAdmin.LogoutAdmin());
-        this.router.navigate(['/auth/adminLogin']);
+      this.store.dispatch(new fromAdmin.LogoutAdmin());
+      this.router.navigate(['/auth/adminLogin']);
       }
     });
   }

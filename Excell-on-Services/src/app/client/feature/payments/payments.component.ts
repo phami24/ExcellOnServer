@@ -8,6 +8,7 @@ import { OrderService } from '../../services/order/order.service';
 import { Observable, forkJoin } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-payments',
@@ -89,19 +90,17 @@ export class PaymentsComponent implements OnInit {
   }
 
   deleteCartItem(cartItemId: number, clientId: number): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Confirmation',
-        message: 'Are you sure you want to delete this service charge?',
-        yesText: 'Delete',
-        noText: 'Cancel',
-        isCritical: true,
-        icon: '<i class="fa-solid fa-circle-exclamation text-[48px]"></i>',
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    Swal.fire({
+      width: 350,
+      title: 'Delete',
+      text: 'Are you sure you want to delete this item?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#FFC374',
+      confirmButtonText: 'Delete!',
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.cartService.deleteCartItemById(cartItemId, clientId).subscribe({
           next: () => {
             if (this.serviceCharges[clientId]) {

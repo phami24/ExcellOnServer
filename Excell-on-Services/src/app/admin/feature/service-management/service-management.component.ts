@@ -13,6 +13,7 @@ import { EditServiceComponent } from './edit-service/edit-service.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { ConfirmDialogComponent } from 'src/app/Shared/confirm-dialog/confirm-dialog.component';
 import { ServiceChargeComponent } from '../service-charge/service-charge.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-service-management',
@@ -28,7 +29,7 @@ import { ServiceChargeComponent } from '../service-charge/service-charge.compone
     MatIconModule,
   ],
 })
-export class ServiceManagementComponent implements OnInit{
+export class ServiceManagementComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'serviceName',
@@ -58,7 +59,7 @@ export class ServiceManagementComponent implements OnInit{
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        console.table(res)
+        console.table(res);
       },
       error: console.log,
     });
@@ -100,25 +101,22 @@ export class ServiceManagementComponent implements OnInit{
       height: '550px',
       data: { serviceId: id, serviceName: serviceName },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {});
   }
-  
 
   deleteService(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Confirmation',
-        message: 'Are you sure you want to delete this service?',
-        yesText: 'Delete',
-        noText: 'Cancel',
-        isCritical : true,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    Swal.fire({
+      width: 350,
+      title: 'Delete',
+      text: 'Are you sure you want to delete this service?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#FFC374',
+      confirmButtonText: 'Delete!',
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.serviceManagementService.deleteService(id).subscribe(() => {
           this.getServiceList();
           this.toastr.success('Delete successful!', 'Success');
