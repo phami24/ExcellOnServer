@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { Order } from './model/order';
+import { OrderDetail } from 'src/app/interfaces/orderDetail';
 
 @Component({
   selector: 'app-payments',
@@ -36,12 +37,14 @@ export class PaymentsComponent implements OnInit {
   ngOnInit(): void {
     this.loadClient();
     this.calculateTotalOrderAmount();
+  
   }
 
   loadClient(): void {
     this.paymentService.getClient().subscribe(
-      (clients) => {
+      (clients: any[]) => {
         this.clients = clients;
+        
       },
       (error) => {
         console.error('Error fetching clients:', error);
@@ -50,17 +53,6 @@ export class PaymentsComponent implements OnInit {
   }
 
   
-  getServiceChargesByServiceId(): void {
-    this.paymentService.getServiceChargesByServiceId().subscribe(
-      (serviceCharges) => {
-        this.serviceCharges = serviceCharges;
-        console.log(serviceCharges);
-      },
-      (error) => {
-        console.error('Error fetching service charges by service ID:', error);
-      }
-    );
-  }
 
   addServiceChargesNameToOrders(): void {
     this.orders.forEach(order => {
@@ -76,34 +68,68 @@ export class PaymentsComponent implements OnInit {
     });
   }
   
-  getOrderByClientId(clientId: number) {
-    this.paymentService.getOrderByClientId(clientId).pipe(
-      mergeMap((orders: Order[]) => {
-        const observables = orders.map(order => this.paymentService.getServiceChargesByServiceId().pipe(
-          map(serviceCharges => ({ ...order, serviceChargesName: serviceCharges[0]?.serviceName })) 
-        ));
-        return forkJoin(observables);
-      })
-    ).subscribe(
-      ordersWithServiceChargesName => {
-        this.orders = ordersWithServiceChargesName;
+  getOrdersByClientId(clientId: number): void {
+    this.paymentService.getOrderByClientId(clientId).subscribe(
+      (orders: Order[]) => {
+        this.orders = orders;
         this.calculateTotalOrderAmount();
       },
-      error => {
+      (error) => {
         console.error('Error fetching orders:', error);
       }
     );
   }
-  
+
+  fetchOrderHistory(ClientId: number): void {
+    this.paymentService.getOrderHistory(ClientId).subscribe({
+      next: (data) => {
+        this.orders.push(...data);
+        this.fetchServiceDetails();
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  fetchServiceDetails(): void {
+    const serviceChargeIds = this.orders.reduce((acc, order) => {
+      acc.push(
+        ...order.orderDetail.map(
+          (detail: OrderDetail) => detail.serviceChargeId
+        )
+      );
+      return acc;
+    }, []);
+
+    this.paymentService.getServiceDetails(serviceChargeIds).subscribe({
+      next: (serviceDetails) => {
+        this.mergeServiceDetails(serviceDetails);
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  mergeServiceDetails(serviceDetails: any[]): void {
+    this.orders.forEach((order) => {
+      order.orderDetail.forEach((detail: OrderDetail) => {
+        const service = serviceDetails.find(
+          (service) => service.serviceChargeId === detail.serviceChargeId
+        );
+        if (service) {
+          detail.serviceChargesName = service.serviceChargesName;
+          detail.price = service.price;
+          console.log(detail); // Kiểm tra dữ liệu
+
+        }
+      });
+    });
+  }
   
   showPayment(clientId: number) {
     this.selectedClientId = clientId;
     this.selectedClient = this.clients.find(client => client.clientId === clientId);
     this.selectedOrder = this.orders.find(order => order.clientId === clientId);
-    this.getOrderByClientId(clientId);
-   
-      this.getServiceChargesByServiceId();
-    
+    this.getOrdersByClientId(clientId);
+    this.fetchOrderHistory(clientId);
   }
 
   searchByName() {
@@ -153,7 +179,16 @@ export class PaymentsComponent implements OnInit {
   }
   
   getStatusText(status: number): string {
-    return status === 1 ? 'Success' : 'Processing';
+    switch (status) {
+      case 1:
+        return 'Pending';
+      case 2:
+        return 'Processing';
+      case 3:
+        return 'Completed';
+      default:
+        return 'Unknown';
+    }
   }
 
   sortOrders(): void {

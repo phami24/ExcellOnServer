@@ -33,7 +33,14 @@ export class PaymentService {
         catchError(this.handleError)
       );
   }
+  getOrderHistory(clientId: number): Observable<any> {
+    const headers = this.addTokenToHeader();
 
+    return this.http.get<any>(`${this.apiUrl}/Order/getByClientId/${clientId}`,{ headers: headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
   getServiceChargesByServiceId(): Observable<any> {
     const headers = this.addTokenToHeader();
@@ -69,5 +76,8 @@ export class PaymentService {
     console.error('An error occurred:', error);
     return throwError('Something went wrong; please try again later.');
   }
-
+  
+  getServiceDetails(serviceChargeIds: number[]): Observable<any[]> {
+    return this.http.get<any>(`${this.apiUrl}/ServiceCharges`, { params: { serviceChargeIds: serviceChargeIds.join(',') }});
+  }
 }
