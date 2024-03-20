@@ -1,149 +1,189 @@
-
-
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { initFlowbite } from 'flowbite';
 import * as d3 from 'd3';
-
+interface ChartData {
+  serviceName: string;
+  quantity: number;
+  id: string;
+}
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css'],
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent implements AfterViewInit {
+  chartData: { serviceName: string; total: number; date: Date }[] = [];
+  lineChartData: ChartData[] = [];
 
-  private svg: any;
-  private margin = 10;
-  private width = 550;
-  private height = 400;
-  private radius = Math.min(this.width, this.height) / 2 - this.margin;
-  private colors: any;
-  private data!: any[];
+  constructor(private elementRef: ElementRef, private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {} 
-
-  private createSvg(): void {
-    this.svg = d3.select("figure#pie")
-      .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height)
-      .append("g")
-      .attr(
-        "transform",
-        "translate(" + this.width / 2 + "," + this.height / 2 + ")"
-      );
+  ngAfterViewInit(): void {
+    this.fetchChartData();
+    this.fetchDataAndCreateChart();
   }
 
-  private createColors(): void {
-    this.colors = d3.scaleOrdinal()
-      .domain(this.data.map((d: any) => d.Stars.toString()))
-      .range(["#e0f2fe", "#bae6fd", "#7dd3fc", "#0ea5e9", "#0284c7"]);
-  }
-
-  private drawChart(): void {
-    const pie = d3.pie<any>().value((d: any) => Number(d.Stars));
-
-    this.svg
-      .selectAll('pieces')
-      .data(pie(this.data))
-      .enter()
-      .append('path')
-      .attr('d', d3.arc()
-        .innerRadius(0)
-        .outerRadius(this.radius)
-      )
-      .attr('fill', (d: any, i: any) => (this.colors(i)))
-      .attr("stroke", "#e0f2fe")
-      .style("stroke-width", "1px");
-
-    const labelLocation = d3.arc()
-      .innerRadius(100)
-      .outerRadius(this.radius);
-
-    this.svg
-      .selectAll('pieces')
-      .data(pie(this.data))
-      .enter()
-      .append('text')
-      .text((d: any) => d.data.Framework)
-      .attr("transform", (d: any) => "translate(" + labelLocation.centroid(d) + ")")
-      .style("text-anchor", "middle")
-      .style("font-size", 12);
-  }
-  private svg2: any;
-  private colors2: any;
-  private data2!: any[];
-
-  private createSvg2(): void {
-    this.svg2 = d3.select("figure#pie2")
-      .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height)
-      .append("g")
-      .attr(
-        "transform",
-        "translate(" + this.width / 2 + "," + this.height / 2 + ")"
-      );
-  }
-
-  private createColors2(): void {
-    this.colors2 = d3.scaleOrdinal()
-      .domain(this.data2.map((d: any) => d.Released.toString()))
-      .range(["#f3e8ff", "#e9d5ff", "#d8b4fe", "#c084fc", "#a855f7"]);
-  }
-
-  private drawChart2(): void {
-    const pie2 = d3.pie<any>().value((d: any) => Number(d.Released));
-
-    this.svg2
-      .selectAll('pieces')
-      .data(pie2(this.data2))
-      .enter()
-      .append('path')
-      .attr('d', d3.arc()
-        .innerRadius(0)
-        .outerRadius(this.radius)
-      )
-      .attr('fill', (d: any, i: any) => (this.colors2(i)))
-      .attr("stroke", "#f3e8ff")
-      .style("stroke-width", "1px");
-
-    const labelLocation2 = d3.arc()
-      .innerRadius(100)
-      .outerRadius(this.radius);
-
-    this.svg2
-      .selectAll('pieces')
-      .data(pie2(this.data2))
-      .enter()
-      .append('text')
-      .text((d: any) => d.data.Framework)
-      .attr("transform", (d: any) => "translate(" + labelLocation2.centroid(d) + ")")
-      .style("text-anchor", "middle")
-      .style("font-size", 12);
-  }
-
-  ngOnInit(): void {
-    initFlowbite();
-    
-    // First Pie Chart
-    this.createSvg();
-    this.http.get('https://65a95968219bfa3718691505.mockapi.io/chart/charv1')
-      .subscribe((data: any) => {
-        this.data = data;
-        this.createColors();
-        this.drawChart();
+  fetchChartData(): void {
+    this.http
+      .get<any[]>('https://65a95968219bfa3718691505.mockapi.io/chart/payment')
+      .subscribe((data: any[]) => {
+        this.chartData = data.map((item) => ({
+          serviceName: item.serviceName,
+          total: item.total,
+          date: new Date(item.date),
+        }));
+        this.createChart();
       });
-
-    // Second Pie Chart
-    this.createSvg2();
-    this.http.get('https://65a95968219bfa3718691505.mockapi.io/chart/chartv2')
-      .subscribe((data: any) => {
-        this.data2 = data;
-        this.createColors2();
-        this.drawChart2();
+  }
+  fetchDataAndCreateChart(): void {
+    this.http.get<ChartData[]>('https://65a95968219bfa3718691505.mockapi.io/chart/service')
+      .subscribe(data => {
+        this.lineChartData = data;
+        this.createLineChart();
       });
   }
 
+  createChart(): void {
+    const margin = { top: 20, right: 30, bottom: 80, left: 40 };
+    const width = 1028 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
   
+    const svg = d3
+      .select(this.elementRef.nativeElement)
+      .select('.chart-container')
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  
+    const x = d3
+      .scaleBand()
+      .domain(this.chartData.map((d) => d.date.toLocaleDateString()))
+      .range([0, width])
+      .padding(0.1);
+  
+    const y = d3
+      .scaleLinear()
+      .domain([0, d3.max(this.chartData, (d) => d.total)!])
+      .range([height, 0]);
+  
+    svg
+      .append('g')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(d3.axisBottom(x))
+      .selectAll('text')
+      .attr('transform', 'rotate(-45)')
+      .style('text-anchor', 'end');
+  
+    svg.append('g').call(d3.axisLeft(y));
+  
+    // Add X axis label
+    svg
+      .append('text')
+      .attr('transform', 'translate(' + (width / 2) + ' ,' + (height + margin.top + 20) + ')')
+      .style('text-anchor', 'middle')
+      .text('Date');
+  
+    // Add Y axis label
+    svg
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - (height / 2))
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text('Total');
+  
+    svg
+      .selectAll('.bar')
+      .data(this.chartData)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar')
+      .attr('x', (d) => x(d.date.toLocaleDateString())!)
+      .attr('y', (d) => y(d.total))
+      .attr('width', x.bandwidth())
+      .attr('height', (d) => height - y(d.total))
+      .attr('fill', '#93c6fd');
+  }
+  
+  createLineChart(): void {
+    const margin = { top: 20, right: 30, bottom: 80, left: 40 };
+    const width = 1028 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+  
+    const svg = d3
+      .select(this.elementRef.nativeElement)
+      .select('.line-chart-container')
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  
+    const x = d3
+      .scaleBand()
+      .domain(this.lineChartData.map((d) => d.serviceName))
+      .range([0, width])
+      .padding(0.1);
+  
+    const y = d3
+      .scaleLinear()
+      .domain([0, d3.max(this.lineChartData, (d) => d.quantity)!])
+      .range([height, 0]);
+  
+    svg
+      .append('g')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(d3.axisBottom(x))
+      .selectAll('text')
+      .attr('transform', 'rotate(-45)')
+      .style('text-anchor', 'end');
+  
+    svg.append('g').call(d3.axisLeft(y));
+  
+    // Add X axis label
+    svg
+      .append('text')
+      .attr('transform', 'translate(' + (width / 2) + ' ,' + (height + margin.top + 20) + ')')
+      .style('text-anchor', 'middle')
+      .text('Service Name');
+  
+    // Add Y axis label
+    svg
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - (height / 2))
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text('Quantity');
+  
+    const line = d3
+      .line<ChartData>()
+      .x((d) => x(d.serviceName)! + x.bandwidth() / 2)
+      .y((d) => y(d.quantity));
+  
+    svg
+      .append('path')
+      .datum(this.lineChartData)
+      .attr('fill', 'none')
+      .attr('stroke', '#9ed49a')
+      .attr('stroke-width', 2)
+      .attr('d', line);
+  
+    svg
+      .selectAll('.point')
+      .data(this.lineChartData)
+      .enter()
+      .append('circle')
+      .attr('class', 'point')
+      .attr('cx', (d) => x(d.serviceName)! + x.bandwidth() / 2)
+      .attr('cy', (d) => y(d.quantity))
+      .attr('r', 4)
+      .attr('fill', '#f19959')
+      .attr('stroke', 'white');
+  }
+  
+
 }

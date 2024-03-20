@@ -102,9 +102,13 @@
                             <div class="mb-4">
                                 <div class="flex items-center border-b border-blue-200 py-2">
                                     <span class="mr-3"><i class="fas fa-lock"></i></span>
-                                    <input type="password"
-                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                        placeholder="Password" formControlName="password">
+                                    <input type="{{ showPassword ? 'text' : 'password' }}"
+                                    class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1
+                                    px-2 leading-tight focus:outline-none"
+                                    placeholder="Password" formControlName="password">
+                                    <button type="button" class="focus:outline-none" (click)="toggleShowPassword()">
+                                        <i class="fas" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </button>
                                 </div>
                                 <div *ngIf="registrationForm.get('password')!.hasError('required') && registrationForm.get('password')!.touched"
                                     class="text-red-500 mt-2">Password is required</div>
@@ -185,9 +189,13 @@
                             <div class="mb-4">
                                 <div class="flex items-center border-b border-blue-200 py-2">
                                     <span class="mr-3"><i class="fas fa-lock"></i></span>
-                                    <input type="password"
-                                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                                        placeholder="Password" formControlName="password">
+                                    <input type="{{ showPassword ? 'text' : 'password' }}"
+                                    class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1
+                                    px-2 leading-tight focus:outline-none"
+                                    placeholder="Password" formControlName="password">
+                                    <button type="button" class="focus:outline-none" (click)="toggleShowPassword()">
+                                        <i class="fas" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </button>
                                 </div>
                                 <div *ngIf="registrationForm.get('password')!.hasError('required') && registrationForm.get('password')!.touched"
                                     class="text-red-500 mt-2">Password is required</div>

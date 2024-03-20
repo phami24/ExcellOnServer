@@ -25,6 +25,7 @@ import { MainComponent } from './feature/main/main.component';
 import { ServiceChargeComponent } from './feature/service-charge/service-charge.component';
 import { AddServiceChargeComponent } from './feature/service-charge/add-service-charge/add-service-charge/add-service-charge.component';
 import { EditServiceChargeComponent } from './feature/service-charge/edit-service-charge/edit-service-charge.component';
+import { EmployeeModule } from './feature/employee/employee.module';
 // import { MainModule } from './feature/main/main.module';
 
 
@@ -35,7 +36,6 @@ import { EditServiceChargeComponent } from './feature/service-charge/edit-servic
     SidebarComponent,
     NavbarComponent,
     DepartmentComponent,
-    EmployeeComponent,
     MessengerComponent,
     ProfileAdminComponent,
     CreateEmployeeComponent,
@@ -57,6 +57,7 @@ import { EditServiceChargeComponent } from './feature/service-charge/edit-servic
     ReactiveFormsModule,
     MatNativeDateModule,
     DepartmentModule,
+    EmployeeModule
     
     // MainModule
   ],

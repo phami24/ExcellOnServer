@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
   ];
   imageSlide = [
     {
-      imageSrc: '../../../assets/images/Slide1.jpg',
+      imageSrc: '../../../assets/images/service5.jpg',
       altText: 'Services',
     },
     {
@@ -79,14 +79,21 @@ export class HomeComponent implements OnInit {
       altText: 'Services',
     },
     {
-      imageSrc: '../../../assets/images/Slide2.jpg',
+      imageSrc: '../../../assets/images/service5.jpg',
       altText: 'Services',
     },
     {
       imageSrc: '../../../assets/images/Slide1.jpg',
       altText: 'Services',
     },
-    
+    {
+      imageSrc: '../../../assets/images/service5.jpg',
+      altText: 'Services',
+    },
+    {
+      imageSrc: '../../../assets/images/Slide2.jpg',
+      altText: 'Services',
+    },
   ];
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
 

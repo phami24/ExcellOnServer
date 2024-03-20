@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
 
@@ -10,12 +15,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
 
-  loading$: Observable<boolean> = new Observable(); 
+  loading$: Observable<boolean> = new Observable();
   success$: Observable<boolean> = new Observable();
   error$: Observable<boolean> = new Observable();
   userEmail$: Observable<string> = new Observable();
@@ -28,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
     this.loginForm = this.fb.group({
       email: '',
-      password: ''
+      password: '',
     });
   }
 
@@ -36,11 +41,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email, this.emailValidator]],
       password: ['', [Validators.required, this.passwordValidator]],
-    });   
+    });
 
-    this.loading$ = this.store.select(fromUser.getLoadingLogin).pipe(takeUntil(this.destroy$));
-    this.success$ = this.store.select(fromUser.getSuccessLogin).pipe(takeUntil(this.destroy$));
-    this.error$ = this.store.select(fromUser.getFailLogin).pipe(takeUntil(this.destroy$));
+    this.loading$ = this.store
+      .select(fromUser.getLoadingLogin)
+      .pipe(takeUntil(this.destroy$));
+    this.success$ = this.store
+      .select(fromUser.getSuccessLogin)
+      .pipe(takeUntil(this.destroy$));
+    this.error$ = this.store
+      .select(fromUser.getFailLogin)
+      .pipe(takeUntil(this.destroy$));
     this.userEmail$ = this.store.select(fromUser.getUserEmail);
 
     this.onLoginSuccess();
@@ -55,37 +66,33 @@ export class LoginComponent implements OnInit, OnDestroy {
     const { email, password } = this.loginForm.value;
     this.store.dispatch(new fromUser.Login({ email, password }));
   }
-  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+  passwordValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     if (!passwordPattern.test(control.value)) {
-      return { 'invalidPassword': true };
+      return { invalidPassword: true };
     }
     return null;
   }
   emailValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailPattern.test(control.value)) {
-      return { 'invalidEmail': true };
+      return { invalidEmail: true };
     }
     return null;
   }
   onLoginSuccess() {
-    this.success$.pipe(
-      takeUntil(this.destroy$),
-    ).subscribe(() => {
-      this.userEmail$.pipe(
-        take(1)  
-      ).subscribe(userEmail => {
+    this.success$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.userEmail$.pipe(take(1)).subscribe((userEmail) => {
         if (userEmail) {
           localStorage.setItem('userEmail', userEmail);
           // console.log('User Email:', userEmail);
         }
       });
-      
-      this.store.pipe(
-        select(fromUser.getToken), 
-        take(1)  
-      ).subscribe(token => {
+
+      this.store.pipe(select(fromUser.getToken), take(1)).subscribe((token) => {
         if (token) {
           localStorage.setItem('token', token);
           this.router.navigate(['/user/home']);
@@ -93,5 +100,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
     });
   }
- 
+
+  showPassword: boolean = false;
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 }
