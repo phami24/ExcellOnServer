@@ -3,18 +3,23 @@ import { OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { ProfileService } from '../../services/profile/profile.service';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
   token: string | null = localStorage.getItem('token');
   userProfile: any;
   userEmail$: Observable<string> = new Observable();
 
-  constructor(private profileService: ProfileService) { }
+  constructor(
+    private profileService: ProfileService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     initFlowbite();
@@ -40,12 +45,15 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  getRandomColor(): string {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 3; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  openEditForm(user: any): void {
+    const dialogRef = this.dialog.open(EditProfileComponent, {
+      width: '700px',
+      data: user,
+    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   if (result) {
+    //     this.userProfile = result;
+    //   }
+    // });
   }
 }

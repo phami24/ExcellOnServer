@@ -18,4 +18,15 @@ export class ProfileService {
     const url = `${baseUrl}/Auth/GetEmployeeProfileByJwt?token=${token}`;
     return this.httpClient.post(url, {}, { headers });
   }
+  updateProfile(id: number, updatedData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.put<any>(`${baseUrl}/Client/${id}`, updatedData, {
+      headers,
+    });
+  }
 }

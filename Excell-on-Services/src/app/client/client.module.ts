@@ -16,6 +16,7 @@ import { ServiceDetailComponent } from './feature/service-detail/service-detail.
 import { MatDialogModule } from '@angular/material/dialog';
 import { PaymentsComponent } from './feature/payments/payments.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { EditProfileComponent } from './feature/profile/edit-profile/edit-profile.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -30,6 +31,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     PaymentHistoryComponent,
     ServiceDetailComponent,
     PaymentsComponent,
+    EditProfileComponent,
   ],
   imports: [
     CommonModule,

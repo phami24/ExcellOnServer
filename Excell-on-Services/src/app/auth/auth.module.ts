@@ -8,7 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminService } from './services/admin.service';
 
@@ -27,6 +27,7 @@ import { AdminService } from './services/admin.service';
     StoreModule,
     EffectsModule,
     ReactiveFormsModule,
+    FormsModule,
     
   ],
   providers: [AdminService],

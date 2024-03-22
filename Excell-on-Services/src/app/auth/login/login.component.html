@@ -60,11 +60,32 @@
                                     <p class="px-20 pt-2">Login</p>
                                 </button>
                             </div>
-                            <div class="col-span-6 bg-transparent text-right">
-                                <button type="button" class="">Forgot password?</button>
+                            <div class="col-span-6 border border-blue-50 text-right">
+                                <button type="button" (click)="showForgotPasswordInput()">
+                                    Forgot password?
+                                </button>
+                                <div *ngIf="showForgotPassword" class="forgot-password-input">
+                                    <button type="button" (click)="sendForgotPasswordEmail()"><i
+                                            class="fa-solid fa-envelope-circle-check fa-bounce"></i>
+                                        <p class="mx-1 font-medium">Send OTP</p>
+                                    </button>
+                                </div>
+                                <div *ngIf="showOTPComponent" class="otp-input">
+                                    <input type="text" name="otp" id="otp" #otpInput
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        placeholder="Enter OTP..." required>
+                                    <button type="button" (click)="verifyOTP()"
+                                        class="relative rounded-full inline-flex items-center justify-center p-0.5 mb-2 mt-1 me-2 overflow-hidden text-sm font-medium text-gray-900 group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                                        <span
+                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                            Verify OTP
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="hidden md:block col-span-5 pt-4 bg-[#cfdcfb] rounded-r-[25px]">
                         <a routerLink="/user/home" class="flex justify-end mr-5 text-2xl text-[#4476bd]"><i
                                 class="fa-solid fa-house"></i></a>

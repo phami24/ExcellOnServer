@@ -1,14 +1,14 @@
-<div class="hero-header grid grid-cols-12 main-banner bg-[url('/assets/images/preview.jpg')] bg-cover">
+<div class="hero-header grid grid-cols-12 main-banner bg-[url('/assets/images/servicesBg.png')] bg-cover">
     <div class=" col-span-6 ">
         <div class="grid grid-cols-1 lg:grid-cols-1">
             <div class="col-span-full text-center left-content">
-                <h2 class="text-3xl font-bold text-[#06346d]">"Unlocking Excellence with Excell-on Consulting Services!"</h2>
+                <h2 class="text-2xl">Service</h2>
             </div>
         </div>
     </div>
     <div class="col-span-6">
         <div class="">
-            <img class="image-banner  lg:h-64" src="../../../../assets/images/servicesItem3.png" alt="">
+            <img class="image-banner" style="width: 360px;" src="../../../../assets/images/serviceBanner.jpg" alt="">
         </div>
     </div>
 </div>
@@ -18,16 +18,15 @@
 
 <div class="mx-16 pb-4 pt-10 bg-[url('/assets/images/bannerLayer.png')] bg-cover">
     <ng-container *ngIf="services">
-        <div class="grid grid-cols-12 mb-16 justify-items-center"
-            *ngFor="let item of services; let i = index">
+        <div class="grid grid-cols-12 mb-16 justify-items-center" *ngFor="let item of services; let i = index">
             <ng-container *ngIf="item.serviceId % 2 === 0; else oddService">
-                <div class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6 my-3 bg-[url('/assets/images/bgservice3.png')] bg-cover">
+                <div
+                    class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6 my-3 bg-[url('/assets/images/bgservice3.png')] bg-cover">
                     <div class="flex justify-center">
                         <img class="w-24 h-24 p-3" [src]="imageService[i].imageSrc" [alt]="imageService[i].altText">
                     </div>
                     <div>
-                        <h5
-                            class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900">
+                        <h5 class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900">
                             {{ item.serviceName }}</h5>
                     </div>
                     <p class="mb-3 font-normal text-gray-500 description">{{ item.description }}</p>
@@ -110,13 +109,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6 m-3 bg-[url('/assets/images/bgservice4.png')] bg-cover">
+                <div
+                    class="col-span-12 lg:col-span-4 lg:ml-6 max-w-md p-6 m-3 bg-[url('/assets/images/bgservice4.png')] bg-cover">
                     <div class="flex justify-center">
                         <img class="w-24 h-24 p-3" [src]="imageService[i].imageSrc" [alt]="imageService[i].altText">
                     </div>
                     <div>
-                        <h5
-                            class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900 ">
+                        <h5 class="text-center mb-2 text-2xl font-semibold tracking-tight text-gray-900 ">
                             {{ item.serviceName }}</h5>
                     </div>
                     <p class="mb-3 font-normal text-gray-500 description">{{ item.description }}</p>

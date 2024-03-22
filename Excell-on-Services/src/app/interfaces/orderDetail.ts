@@ -3,4 +3,5 @@ export interface OrderDetail {
   serviceChargeId: number;
   serviceChargesName?: string;
   price?: number;
+  serviceChargesDescription?:string;
 }

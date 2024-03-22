@@ -75,6 +75,7 @@ export class PaymentHistoryComponent implements OnInit {
         if (service) {
           detail.serviceChargesName = service.serviceChargesName;
           detail.price = service.price;
+          detail.serviceChargesDescription = service.serviceChargesDescription;
         }
       });
     });
