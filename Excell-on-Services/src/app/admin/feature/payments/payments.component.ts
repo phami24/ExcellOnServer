@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from './payment-services/payment.service';
 import { Router } from '@angular/router';
-import { UserClient } from './model/UserClient.model';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import { Order } from './model/order';
+import { OrderDetail } from 'src/app/interfaces/orderDetail';
 
 @Component({
   selector: 'app-payments',
@@ -11,14 +14,16 @@ import { UserClient } from './model/UserClient.model';
 export class PaymentsComponent implements OnInit {
   clients: any[] = [];
   orders: any[] = [];
-  selectedClientId: string | null = null;
+  serviceCharges: any[] = [];
+
+  selectedClientId: number | null = null;
   selectedClient: any | null = null;
   selectedOrder: any | null = null;
   searchTerm: string = '';
   showNoResultsMessage: boolean = false;
   showSearchResults: boolean = false;
   error: string | undefined;
-  sortBy: 'name' | 'date' = 'name';
+  sortBy: 'name' | 'date' | 'status' | 'total' = 'name';
   currentPage = 1;
   itemsPerPage = 7;
 
@@ -31,14 +36,15 @@ export class PaymentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClient();
-    this.getOrders();
-
+    this.calculateTotalOrderAmount();
+  
   }
 
   loadClient(): void {
     this.paymentService.getClient().subscribe(
-      (clients) => {
+      (clients: any[]) => {
         this.clients = clients;
+        
       },
       (error) => {
         console.error('Error fetching clients:', error);
@@ -46,11 +52,27 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
-  getOrders() {
-    this.paymentService.getOrders().subscribe(
-      (orders) => {
+  
+
+  addServiceChargesNameToOrders(): void {
+    this.orders.forEach(order => {
+      this.paymentService.getServiceChargesByServiceId().subscribe(
+        (serviceCharges) => {
+          order.serviceChargesName = serviceCharges?.serviceChargesName; 
+          console.error(order.serviceChargesName);
+        },
+        (error) => {
+          console.error('Error fetching service charges:', error);
+        }
+      );
+    });
+  }
+  
+  getOrdersByClientId(clientId: number): void {
+    this.paymentService.getOrderByClientId(clientId).subscribe(
+      (orders: Order[]) => {
         this.orders = orders;
-        console.table(orders);
+        this.calculateTotalOrderAmount();
       },
       (error) => {
         console.error('Error fetching orders:', error);
@@ -58,10 +80,56 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
-  showPayment(clientId: string) {
+  fetchOrderHistory(ClientId: number): void {
+    this.paymentService.getOrderHistory(ClientId).subscribe({
+      next: (data) => {
+        this.orders.push(...data);
+        this.fetchServiceDetails();
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  fetchServiceDetails(): void {
+    const serviceChargeIds = this.orders.reduce((acc, order) => {
+      acc.push(
+        ...order.orderDetail.map(
+          (detail: OrderDetail) => detail.serviceChargeId
+        )
+      );
+      return acc;
+    }, []);
+
+    this.paymentService.getServiceDetails(serviceChargeIds).subscribe({
+      next: (serviceDetails) => {
+        this.mergeServiceDetails(serviceDetails);
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  mergeServiceDetails(serviceDetails: any[]): void {
+    this.orders.forEach((order) => {
+      order.orderDetail.forEach((detail: OrderDetail) => {
+        const service = serviceDetails.find(
+          (service) => service.serviceChargeId === detail.serviceChargeId
+        );
+        if (service) {
+          detail.serviceChargesName = service.serviceChargesName;
+          detail.price = service.price;
+          console.log(detail); // Kiểm tra dữ liệu
+
+        }
+      });
+    });
+  }
+  
+  showPayment(clientId: number) {
     this.selectedClientId = clientId;
     this.selectedClient = this.clients.find(client => client.clientId === clientId);
     this.selectedOrder = this.orders.find(order => order.clientId === clientId);
+    this.getOrdersByClientId(clientId);
+    this.fetchOrderHistory(clientId);
   }
 
   searchByName() {
@@ -84,26 +152,6 @@ export class PaymentsComponent implements OnInit {
     }
   }
 
-  sortById() {
-    this.orders.sort((a, b) => a.orderId - b.orderId);
-  }
-
-  sortOrdersByDate() {
-    this.orders.sort((a, b) => {
-      const dateA = new Date(a.orderDate).getTime();
-      const dateB = new Date(b.orderDate).getTime();
-      return dateA - dateB;
-    });
-  }
-
-  handleSort() {
-    if (this.sortBy === 'name') {
-      this.sortById();
-    } else if (this.sortBy === 'date') {
-      this.sortOrdersByDate();
-    }
-  }
-
   paginate(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.orders.length);
@@ -122,17 +170,43 @@ export class PaymentsComponent implements OnInit {
     this.currentPage = pageNumber;
   }
 
-  
   calculateTotalOrderAmount() {
     if (this.orders && this.orders.length > 0) {
       this.totalOrderAmount = this.orders.reduce((total, order) => total + order.orderTotal, 0);
     } else {
       this.totalOrderAmount = 0; 
     }
-    console.table(this.orders);
   }
   
+  getStatusText(status: number): string {
+    switch (status) {
+      case 1:
+        return 'Pending';
+      case 2:
+        return 'Processing';
+      case 3:
+        return 'Completed';
+      default:
+        return 'Unknown';
+    }
+  }
 
-  
-  
+  sortOrders(): void {
+    switch (this.sortBy) {
+      case 'name':
+        this.orders.sort((a, b) => (a.clientName > b.clientName ? 1 : -1));
+        break;
+      case 'date':
+        this.orders.sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());
+        break;
+      case 'status':
+        this.orders.sort((a, b) => a.orderStatus - b.orderStatus);
+        break;
+      case 'total':
+        this.orders.sort((a, b) => a.orderTotal - b.orderTotal);
+        break;
+      default:
+        break;
+    }
+  }
 }
