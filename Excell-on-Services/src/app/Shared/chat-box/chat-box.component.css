@@ -20,21 +20,26 @@
 }
 
 .message-content {
-  padding: 10px; /* Khoảng cách nội dung của tin nhắn từ các cạnh */
+  padding: 10px;
   
 }
 
 .message-right {
-  border-radius: 20px; /* Định dạng góc bo tròn cho tin nhắn */
-  text-align: right; /* Hiển thị tin nhắn bên phải */
-  background-color: #7eabf4; /* Màu nền cho tin nhắn của bạn */
-  width: 30%;
+  border-radius: 20px;
+  text-align: left; 
+  padding: 0 10px 0 10px ;
+  background-color: #7eabf4; 
+  width:fit-content;
+  max-width: 65%;
   margin-left: auto;
+  color: white;
 }
 
 .message-left {
-  border-radius: 20px; /* Định dạng góc bo tròn cho tin nhắn */
-  text-align: left; /* Hiển thị tin nhắn bên trái */
-  background-color: #dae5fb; /* Màu nền cho tin nhắn của người khác */
-  width: 30%;
+  border-radius: 20px;
+  text-align: left;
+  padding: 0 10px 0 10px ;
+  background-color: #dae5fb; 
+  width: fit-content;
+  max-width: 65%;
 }

@@ -8,9 +8,9 @@
     </svg>
     <div
         class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
-        5</div>
+        1</div>
 </button>
-<div id="myPopup" class="grid grid-cols-12">
+<div #chatContainer id="myPopup" class="grid grid-cols-12">
     <div data-popover id="popover-click" role="tooltip" class="absolute z-10 invisible inline-block w-96 text-sm text-gray-500 transition-opacity 
     duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0
      ">
@@ -20,22 +20,22 @@
             <path d="M6 18L18 6M6 6l12 12"></path>
         </svg>
     </button>
-        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg flex">
+        <div class="px-3 py-1 bg-gray-100 border-b border-gray-200 rounded-t-lg flex">
             <div class="flex-shrink-0">
                 <img class="w-8 h-8 rounded-full mr-2" src="../../../assets/images/Customer6.jpg" alt="Neil image">
             </div>
             <div>
-                <h3 class="font-semibold text-gray-900">Excell-on Services</h3>
+                <h3 class="font-semibold text-gray-900 pt-1">Excell-on Services</h3>
             </div>
         </div>
-        <div class="overflow-y-auto h-48 scroll-container">
+        <div class="overflow-y-auto h-[280px] scroll-container">
             <div *ngFor="let msg of message" class="message">        
-                <div *ngIf="msg.senderUserName=== user.email" class="message-right">
+                <div *ngIf="msg.senderUserName=== user.email" class="message-right mr-1">
                     <div class="message-content">
                       {{msg.content}}
                     </div>
                 </div>
-                <div *ngIf="msg.senderUserName != user.email" class="message-left">
+                <div *ngIf="msg.senderUserName != user.email" class="message-left ml-1">
                     <div class="message-content">
                       {{msg.content}}
                     </div>

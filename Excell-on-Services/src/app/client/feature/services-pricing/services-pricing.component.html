@@ -180,7 +180,7 @@
             </div>
             <div class="flex-initial w-2/3 my-6 mx-10">
                 <div [hidden]="openTab !== tab.id" class="tab-content" *ngFor="let tab of tabs">
-                    <h1 class="text-3xl">{{ tab.title }}</h1>
+                    <h1 class="text-3xl text-center">{{ tab.title }}</h1>
                     <ul class="list-none">
                         <li class="flex items-center" *ngFor="let strength of tab.strengths">
                             <div class="bg-no-repeat bg-center w-8 h-8 bg-cover"
@@ -192,20 +192,20 @@
                     <br>
                     <p class="font-medium">{{ tab.advantages }}</p>
                     <p class="font-medium">{{ tab.stages }}</p>
-                    <ol class="list-decimal">
+                    <ol class="list-decimal ml-10">
                         <li *ngFor="let stage of tab.marketingStages">
                             {{ stage }}
                         </li>
                     </ol>
                     <br>
                     <p class="font-medium">{{ tab.types }}</p>
-                    <ol class="list-decimal">
-                        <li *ngFor="let type of tab.marketingTypes">
+                    <ol class="list-decimal ml-10">
+                        <li *ngFor="let type of tab.marketingTypes" >
                             {{ type }}
                         </li>
                     </ol>
-                    <p class="font-medium">{{ tab.importance }}</p>
-                    <ol class="list-decimal">
+                    <p class="font-medium ">{{ tab.importance }}</p>
+                    <ol class="list-decimal ml-10">
                         <li *ngFor="let importance of tab.importancePoints">
                             {{ importance }}
                         </li>
